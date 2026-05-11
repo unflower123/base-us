@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/country";
+
+package pb;
+
+// create bank info request
+message CreateCountryInfoReq {
+  string name = 1;
+  string currency = 2 ;
+  string code = 3;
+}
+
+message CountryInfoResp {
+  uint64 id = 1;
+  string name = 2;
+  string currency = 3;
+  string code = 4;
+}
+
+message GetCountryListReq {
+  string name = 1;
+  string currency = 2 ;
+  string code = 3;
+}
+
+message GetCountryListResp {
+  int64  total = 1;
+  repeated CountryInfoResp list = 2;
+}
+
+message DeleteCountryReq {
+  int64  id = 1;
+}
+
+message DeleteCountryResp {
+
+}
+
+service Country {
+  // create Country
+  rpc CreateCountry (CreateCountryInfoReq) returns (CountryInfoResp);
+  // get Country list
+  rpc GetCountryList (GetCountryListReq) returns (GetCountryListResp);
+  // delete Country
+  rpc DeleteCountry (DeleteCountryReq) returns (DeleteCountryResp);
+
+}

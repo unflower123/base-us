@@ -1,0 +1,44 @@
+// cd ./rpc
+// goctl rpc protoc ./pb/cron.proto --go_out=. --go-grpc_out=. --zrpc_out=. --style=go_zero
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+message BankRegisterCronTakeParam {
+  uint64 bank_id = 1;
+  string bank_name = 2;
+  uint64 TradeRateType = 3;
+  uint64 cron_type = 4;
+  repeated string cron_time_list = 5;
+  uint64 lock_days = 6;
+  string lock_cron_time = 7;
+  string currency = 8;
+  int64 cycles = 20;
+}
+
+message BankRegisterCronTakeResponse {
+
+}
+
+message BankRemoveCronTakeParam {
+  uint64 bank_id = 1;
+  string bank_name = 2;
+  uint64 TradeRateType = 3;
+}
+
+message BankRemoveAllCronTakeParam {
+  uint64 bank_id = 1;
+  string bank_name = 2;
+}
+
+message BankRemoveCronTakeResponse {
+
+}
+
+service Cron {
+  rpc BankRegisterCronTake(BankRegisterCronTakeParam) returns (BankRegisterCronTakeResponse);
+  rpc BankRemoveCronTake(BankRemoveCronTakeParam) returns (BankRemoveCronTakeResponse);
+  rpc BankRemoveAllCronTake(BankRemoveAllCronTakeParam) returns (BankRemoveCronTakeResponse);
+}

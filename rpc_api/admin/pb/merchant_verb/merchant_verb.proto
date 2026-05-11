@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+
+option go_package="base/rpc_api/admin/pb/merchant_verb";
+package pb;
+
+
+message Request {
+  string ping = 1;
+}
+
+message Response {
+  string pong = 1;
+}
+
+service Merchant_verb {
+  rpc Ping(Request) returns(Response);
+}

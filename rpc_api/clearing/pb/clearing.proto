@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/clearing/pb";
+
+package pb;
+
+// get clearing order list req
+message GetOrderListReq {
+  int64 page = 1;
+  int64 size = 2;
+}
+
+// get clearing order list resp
+message GetOrderListResp {
+  int64 total = 1;
+  repeated OrderInfo list = 2;
+}
+
+// clearing order info
+message OrderInfo {
+  int64 id = 1;
+  string system_order_no = 2;          // 系统订单号
+  string merchant_no = 3;              // 商户编号
+  string merchant_name = 4;            // 商户名称
+  string merchant_order_no = 5;        // 商户订单号
+  string bank_name = 6;                // 银行名称
+  string bank_order_no = 7;             // 银行订单号
+  string bank_transaction_voucher = 8;  // 银行交易凭证
+  string bank_identifier = 9;           // 银行标识
+  int32 bank_status = 10;               // 银行状态(1:启用、2:禁用，默认1)
+  string withdrawal_account_name = 11;  // 提款账户名
+  string withdrawal_account = 12;       // 提款账号
+  string withdrawal_phone = 13;         // 提款手机号
+  int64 settlement_amount = 14;         // 结算金额
+  int64 settlement_fee_rate = 15;       // 结算费率
+  int64 settlement_fee = 16;            // 结算费用
+  string transaction_result = 17;       // 交易结果(银行返回的描述)
+  string auditor = 18;                  // 审核人
+  int64 audit_time = 19;               // 审核时间
+  int32 audit_status = 20;              // 审核状态(审核结果，3:未审核、2:驳回、1:已提交银行，默认3)
+  string audit_reject_remark = 21;      // 审核驳回备注
+  int32 order_status = 22;              // 订单状态(1:成功、2:失败、3:处理中，默认3)
+  int32 settlement_status = 23;         // 结算单状态(3:处理中(未审核)、4:已提交、5:运营驳回、6:银行驳回、1:完成(银行处理完成)、2:订单异常(银行响应的异常)，默认3)
+  int64 creation_time = 24;            // 创建时间
+  int64 submission_time = 25;          // 提交时间(提交银行)
+  int64 callback_time = 26;            // 回调时间(银行回调时间)
+  int64 success_time = 27;             // 成功时间(银行成功)
+  int64 notification_time = 28;        // 通知时间(通知商户时间)
+  int32 notification_status = 29;       // 通知状态(1:已通知、3:未通知，默认3)
+  string remark = 30;                   // 备注(结算备注)
+  int64 create_time = 34;              // 创建时间
+  int32 bank_account_type = 35;        // 银行账户类型(1:原生、2:转账、3:二维码)
+  string withdrawal_bank_name = 36;    // 提现银行名称
+}
+
+
+// clearing order audit req
+message OrderAuditReq {
+  repeated AuditInfo audit_list = 1;
+}
+// clearing order audit info
+message AuditInfo {
+  int64 id = 1;
+  int32 audit_status = 2;
+  string audit_remark = 3;
+}
+
+// clearing order audit resp
+message OrderAuditResp {
+  string msg = 1;
+}
+
+// ------------------------------------
+// Rpc Func
+// ------------------------------------
+
+service clearing {
+  // get clearing order list
+  rpc GetOrderList(GetOrderListReq) returns (GetOrderListResp);
+  // clearing order audit
+  rpc OrderAudit(OrderAuditReq) returns (OrderAuditResp);
+}

@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/release_manage";
+
+package pb;
+
+message ReleaseManageModel {
+  string create_time = 1;
+  string update_time = 2;
+  uint64 id = 3;
+  uint64 bank_id = 4;
+  uint64 merchant_id = 5;
+  string currency = 6;
+  int64 release_amount = 7;
+  string release_time = 8;
+  int64 release_status = 9;
+  string release_cycle = 10;
+  string bank_name = 11;
+  string merchant_name = 12;
+  int64 already_release_amount = 13;
+  int64 remaining_release_amount = 14;
+  int64 release_type = 15;
+  int64 total_release_amt = 16;
+  string plan_release_time = 17;
+}
+
+message UpdateReleaseManageParam {
+  uint64 merchant_id = 5;
+  uint64 bank_id = 4;
+  uint64 release_amount = 7;
+  int64 trade_rate_type = 8;
+  string currency = 6;
+  uint64 payin_order_id = 1;
+  string payin_order_no = 2;
+  string order_create_time = 3;
+}
+
+message ManualReleaseParam {
+  uint64 release_manage_id = 1;
+  uint64 release_amount = 2;
+  string remark = 3;
+}
+
+message ReleaseInterfaceResponse {
+  int32 code = 1;
+  string msg = 2;
+}
+
+message QueryReleaseManageListParam {
+  int64 offset = 1;
+  int64 limit = 2;
+  uint64 bank_id = 4;
+  repeated uint64 bank_ids = 7;
+  uint64 merchant_id = 5;
+  repeated uint64 merchant_ids = 8;
+  string currency = 6;
+  string bank_name = 11;
+  string merchant_name = 12;
+  int64 release_status = 13;
+  uint64 id = 14;
+  int64 release_type = 15;
+  string start_time = 16;
+  string end_time = 17;
+}
+
+message QueryReleaseManageListResponse {
+  int64 total = 1;
+  repeated ReleaseManageModel list = 2;
+}
+
+message CloseAllReleaseManageParam {
+  uint64 bank_id = 1;
+  int64 trade_rate_type = 8;
+}
+
+service ReleaseManage {
+  rpc UpdateReleaseManage(UpdateReleaseManageParam) returns (ReleaseInterfaceResponse);
+  rpc ManualRelease(ManualReleaseParam) returns (ReleaseInterfaceResponse);
+  rpc QueryReleaseManageList(QueryReleaseManageListParam) returns (QueryReleaseManageListResponse);
+  rpc QueryReleaseLogList(QueryReleaseManageListParam) returns (QueryReleaseManageListResponse);
+  rpc CloseAllReleaseManage(CloseAllReleaseManageParam) returns (ReleaseInterfaceResponse);
+}

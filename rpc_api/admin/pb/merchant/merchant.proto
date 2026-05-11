@@ -1,0 +1,470 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/merchant";
+
+package pb;
+
+// create merchant info request
+message CreateMerchantInfoReq {
+
+}
+
+// create merchant info response
+message CreateMerchantInfoResp {
+
+}
+
+// modify merchant info request
+message ModifyMerchantInfoReq {
+
+}
+
+// modify merchant info response
+message ModifyMerchantInfoResp {
+
+}
+
+// get merchant list info request
+message GetMerchantListInfoReq {
+  int64  merchant_id = 1;
+  string merchant_name = 2;
+  string email = 3;
+  int64 page = 4;
+  int64 size = 5;
+  repeated int64 merchant_ids = 6;
+}
+
+// get merchant list info response
+message GetMerchantListInfoResp {
+  int64 total = 1;
+  repeated MerchantInfo list = 2;
+}
+
+// delete merchant info request
+message DeleteMerchantInfoReq {
+
+}
+
+// delete merchant info response
+message DeleteMerchantInfoResp {
+
+}
+message UpdateMerchantRequest {
+  string appsecret = 2;
+  int32 status = 3;
+  string currency = 4;
+  string country = 5;
+  string ip_white_list = 6;
+  string email = 7;
+  int32 enable_email_notice = 8;
+  int32 enable_url_notice = 9;
+  string return_url = 10;
+  string deposit_notice_url = 11;
+  string payout_notice_url = 12;
+  int32 enable_google_auth = 13;
+  string google_verification = 14;
+  int64 id = 15;
+  string payin_notice_url = 16;
+  string withdraw_notice_url = 17;
+  string phone_number =18;
+  string name = 19;
+  string merchant_domain = 20;
+  string withdrawal_password = 21;
+  string email_verified = 22;
+  string client_public_key = 23;
+  string lang = 24 ;
+}
+
+
+// ==
+
+// get merchant detail info request
+message GetMerchantDetailInfoReq {
+  string appid = 1;
+  int32 pay_method = 2; //1 pay in native 2 pay in qrcode 3 pay in transfer 4 pay out 5 settlement
+  uint64 amount = 3;
+  int64 merchant_id = 4;
+  int32 type = 5; //0-only get info 1- info and withdrawal info
+}
+
+// get merchant detail info response
+message GetMerchantDetailInfoResp {
+  MerchantInfo merchant_info = 1;
+  TxRateAndFee tx_rate_and_fee = 2;
+}
+
+
+message CanCreateOrderReq {
+  string appid = 1;
+  int32 paymethod = 2; //1 pay in native 2 pay in qrcode 3 pay in transfer 4 pay out 5 settlement
+  string device = 3;
+  string ip = 4;
+  int64 transaction_amount = 5;
+  string merchant_order_no = 6;
+  string currency = 7;
+}
+message CanCreateOrderResp {
+  MerchantInfo merchant_info = 1;
+  TxRateAndFee tx_rate_and_fee = 2;
+}
+
+
+message GetMerchantIdByAppId {
+  int64 merchant_id = 1;
+}
+
+message MerchantInfo {
+  string appid = 1;
+  string appsecret = 2;
+  int32 status = 3;
+  string currency = 4;
+  string country = 5;
+  string ip_white_list = 6;
+  string email = 7;
+  int32 enable_email_notice = 8;
+  int32 enable_url_notice = 9;
+  string return_url = 10;
+  string deposit_notice_url = 11;
+  string payout_notice_url = 12;
+  int32 enable_google_auth = 13;
+  int64 id = 14;
+  string payin_notice_url = 15;
+  string withdraw_notice_url = 16;
+  int64 merchant_id = 17;
+  string name = 18;
+  string merchant_domain = 19;      // 商户域名
+  string withdrawal_password = 20; // 提现密码
+  string phone_number =21;
+  string ed_public_key =22;
+  string ed_private_key =23;
+  string client_public_key =24;
+  int32 withdraw_switch =25;
+  int64 withdraw_rate =26;
+  int64 withdraw_fee =27;
+  int32 sign_type = 28;
+  string lang = 29 ;
+}
+message MerchantBalanceInfo {
+  int64 merchant_id = 1;
+  string currency = 2;
+  int64 balance = 3;
+  int64 withdraw_balance = 4;
+  int64 unsettle_balance = 5;
+  int64 unpay_balance = 6;
+  int64 freeze_balance = 7;
+  int64 id = 8;
+}
+message GetMerchantPayoutOrderIdByMerchantOrderNo {
+  string id = 1;
+}
+message TxRateAndFee {
+  int64 paymethod = 1;//1 pay in  4 pay out 5 settlement
+  int64 trade_rate_type = 2; //1 Per transaction percentage+fixed fee ;2 Per transaction fixed fee+floating percentage; 3 Per transaction fixed fee ; 4  Per transaction fixed percentage
+  int64 rate = 3;
+  int64 fee = 4;
+  uint64 st_min_amt = 8;
+  uint64 st_max_amt = 9;
+}
+message ChooseBankInfoByWeightReq {
+  int32 paymethod = 1; //1 pay in native 2 pay in qrcode 3 pay in transfer 4 pay out 5 settlement
+  int64 merchant_id = 2;
+}
+message ChooseBankInfoByWeightResp {
+  MerchantBankInfo merchant_bank = 1;
+}
+
+message MerchantBankInfo {
+  int64 merchant_id = 1;
+  string channel_group_id = 2;
+  int32 type = 3;//1 pay in native 2 pay in qrcode 3 pay in transfer 4 pay out 5 settlement
+  uint64 bank_id = 4;
+  string bank_name = 5;
+  int32 weight = 6;
+  string cash_register_url = 7;
+  int32 cron_type = 8;
+  string call_back_notify_url = 9;
+  repeated string ip_list = 10;
+  int64 status = 11;
+}
+
+message MerchantBankList {
+  repeated MerchantBankInfo bank_list = 1;
+}
+
+message ChangeBalanceReq {
+  string appid = 1;
+  string currency = 2;
+  int64 amount = 3;
+  int64 type = 4; //1 add balance 2 decr balance 3
+  int64 merchant_id = 5;
+  string merchant_order_no = 6;
+  string bank_order_no = 7;
+  string system_order_no = 8;
+  int64 trade_type = 9;
+  int64 trade_command = 10;
+  string trade_time = 11;
+  int64 trade_cost = 12;
+  int64 total_amount = 13;
+  int64 freeze_trade_command = 14;
+  int64 settle_trade_command = 15;
+  string remark = 16;
+  string desc = 17;
+  string attach_url_list = 18;
+  int64 creator_id = 19;
+  string creator_name = 20;
+  string  bank_name = 21;
+  string  release_time = 22;
+  int64  add_charges = 23;
+
+}
+message ChangeBalanceResp {
+  // 1:success锛?2 :failed
+  int64 code = 1;
+}
+
+
+message GetBankListByMerchantIdAndPaymentReq {
+  int64 merchant_id = 1;
+  int32 paymethod = 2; //1 pay in native 2 pay in qrcode 3 pay in transfer 4 pay out 5 settlement
+}
+
+message GetBankListByMerchantIdAndPaymentResp {
+  repeated MerchantBankInfo bank_list = 1;
+}
+
+message MerchantConfig {
+  int64 merchant_id = 1;
+  int64 type = 2;
+  int64 daily_max_tx_count = 3;
+  int64 st_tx_min_amt = 4;
+  int64 st_tx_max_amt = 5;
+  int64 trade_rate_type = 6;
+  int64 tx_amt_gt_val = 7;
+  int64 tx_amt_lt_val = 8;
+  int64 gt_rate = 9;
+  int64 gt_fixed_fee = 10;
+  int64 lt_rate = 11;
+  int64 lt_fixed_fee = 12;
+  int64 tx_fee = 13;
+  int64 tx_rate = 14;
+  int64 fixed_fee = 15;
+  int64 fixed_rate = 16;
+  int64 workload = 17;
+  string channel_id = 18;
+  int32 control_flag = 19;
+
+}
+
+message MerchantConfigList {
+  repeated MerchantConfig list = 1;
+}
+
+message MerchantBalanceLogInfo {
+  int64 id = 1;
+  string currency = 2;
+  int64 merchant_id = 3;
+  int64 balance = 4;
+  int64 type = 5;
+  int64 pay_type = 6;
+  int64  amount = 7;
+  int64 before_amount = 8;
+  int64 after_amount = 9;
+}
+
+message MerchantChangeBalanceQueue {
+  int64 merchant_id = 1;
+  int64 type = 2;
+  int64 amount = 3;
+  string merchant_name = 4;
+  string merchant_order_no = 5;
+  string bank_order_no = 6;
+  string system_order_no = 7;
+  int64 trade_type = 8;
+  int64 trade_command = 9;
+  string trade_time = 10;
+  int64 trade_cost = 11;
+  int64 total_amount = 12;
+  int64 freeze_trade_command = 13;
+  int64 settle_trade_command = 14;
+  string remark = 15;
+  string desc = 16;
+  string attach_url_list = 17;
+  int64 creator_id = 18;
+  string creator_name = 19;
+  string create_time = 20;
+  string  message_id = 21;
+  string  bank_name = 22;
+  string currency = 23;
+  int32 send_num = 24;
+  string  release_time = 25;
+  int64  add_charges = 26;
+}
+
+message GetMerchantBalanceInfoReq {
+  int64 merchant_id = 1;
+  string appid = 2;
+}
+
+message GetMerchantBalanceInfoResp {
+  string currency = 1;
+  int64  balance = 2;
+  int64  withdraw_balance = 3;
+  int64  unsettle_balance = 4;
+  int64  freeze_balance = 5;
+}
+
+message UpdateMerchantResponse {
+  string status = 1;   // 状态："成功" 或 "失败"
+  string message = 2;  // 错误信息
+}
+
+message CanCreateOrderV2Req {
+  string appid = 1;
+  int32 paymethod = 2; //1 pay in native 2 pay in qrcode 3 pay in transfer 4 pay out 5 settlement
+  string device = 3;
+  string ip = 4;
+  int64 transaction_amount = 5;
+  string merchant_order_no = 6;
+  string currency = 7;
+}
+
+message ResultInfo {
+  int32 code = 1;
+  string message = 2;
+}
+
+message CanCreateOrderV2Resp {
+  MerchantInfo merchant_info = 1;
+  TxRateAndFee tx_rate_and_fee = 2;
+  MerchantBankInfo merchant_bank = 3;
+  ResultInfo result = 4;
+  repeated CreateOrderBankInfo bank_list = 5;
+}
+
+message CreateOrderBankInfo {
+   MerchantBankInfo merchant_bank = 1;
+   TxRateAndFee tx_rate_and_fee = 2;
+}
+
+message SyncMerchantDailyTxAmountCountRep {
+  int64 merchant_id = 1;
+  int32 pay_method = 2; //1 pay in native 2 pay in qrcode 3 pay in transfer 4 pay out 5 settlement
+  int64 transaction_amount = 3;
+  int32 change_type = 4; //1 -inr 2 -decr
+  int64 create_time = 5;
+  uint64 bank_id = 6;
+}
+
+message GetMerchantBankRateAndFeeRep {
+  int64 merchant_id = 1;
+  int64 bank_id = 2;
+  int32 pay_method = 3; //1 pay in native 2 pay in qrcode 3 pay in transfer 4 pay out 5 settlement
+  int64 transaction_amount = 4;
+}
+
+message AddMerchantExchangeRatesRep {
+  uint64 id = 1;
+  uint64 merchant_id = 2;
+  int32 trade_type = 3;
+  string currency = 4;
+  string target_currency = 5;
+  uint64 rate = 6;
+}
+
+message BatchAddMerchantExchangeRatesRep {
+  repeated AddMerchantExchangeRatesRep items = 2;
+}
+
+message GetMerchantExchangeRatesInfoRep {
+  uint64 merchant_id = 1;
+  int32 trade_type = 2;
+
+}
+
+message GetMerchantExchangeRatesInfoResp {
+  uint64 id = 1;
+  uint64 merchant_id = 2;
+  int32 trade_type = 3;
+  string currency = 4;
+  string target_currency = 5;
+  uint64 rate = 6;
+}
+
+message MerchantExchangeRatesOperateResp {
+  int64 code = 1;
+  string msg = 2;
+}
+message GetMerchantExchangeRatesListResp {
+  int64  total = 1;
+  repeated GetMerchantExchangeRatesInfoResp list = 2;
+}
+
+
+message CanCreateWithdrawOrderReq {
+  string appid = 1;
+  int64  merchant_id = 2;
+  int64 transaction_amount = 3;
+  string currency = 4;
+  int64  bank_id = 5;
+}
+
+message CanCreateWithdrawOrderResp {
+  MerchantInfo merchant_info = 1;
+  TxRateAndFee tx_rate_and_fee = 2;
+  MerchantBankInfo merchant_bank = 3;
+  ResultInfo result = 4;
+}
+
+message UpdateMerchantSignKeyRequest {
+  int64 id = 1;
+  int32 sign_type = 2;
+  string public_key = 3;
+  string private_key = 4;
+}
+
+message GetMerchantBalanceListReq {
+  repeated  int64 merchant_ids = 1;
+}
+
+message MerchantBalanceListResp {
+  repeated MerchantBalanceInfo list = 1;
+}
+
+service Merchant {
+  // get merchant detail info
+  rpc CreateMerchantInfo(CreateMerchantInfoReq) returns (CreateMerchantInfoResp);
+  // modify merchant detail info
+  rpc ModifyMerchantInfo(ModifyMerchantInfoReq) returns (ModifyMerchantInfoResp);
+  // get merchant list info
+  rpc GetMerchantListInfo(GetMerchantListInfoReq) returns (GetMerchantListInfoResp);
+  // delete merchant detail info
+  rpc DeleteMerchantInfo(DeleteMerchantInfoReq) returns (DeleteMerchantInfoResp);
+  // get merchant detail info
+  rpc GetMerchantDetailInfo(GetMerchantDetailInfoReq) returns (GetMerchantDetailInfoResp);
+  // choose bank by weight which you create payin/payout/settle order
+  rpc ChooseBankInfoByWeight(ChooseBankInfoByWeightReq) returns (ChooseBankInfoByWeightResp);
+  //change merchant balance
+  rpc ChangeBalance(ChangeBalanceReq) returns (ChangeBalanceResp);
+  //get merchant bank list
+  rpc GetBankList(GetBankListByMerchantIdAndPaymentReq) returns (GetBankListByMerchantIdAndPaymentResp);
+  //get merchant balance info
+  rpc GetMerchantBalanceInfo(GetMerchantBalanceInfoReq) returns (GetMerchantBalanceInfoResp);
+  //merchant
+  rpc UpdateMerchant(UpdateMerchantRequest) returns (UpdateMerchantResponse);
+  // validate create payout order v2
+  rpc CanCreateOrderV2(CanCreateOrderV2Req) returns (CanCreateOrderV2Resp);
+  // sync merchant daily tx amount count
+  rpc SyncMerchantDailyTxAmount(SyncMerchantDailyTxAmountCountRep) returns (ResultInfo);
+  // get merchant bank rate and fee
+  rpc GetMerchantBankRateAndFee(GetMerchantBankRateAndFeeRep) returns (TxRateAndFee);
+
+  rpc AddMerchantExchangeRates(BatchAddMerchantExchangeRatesRep) returns (MerchantExchangeRatesOperateResp);
+  rpc GetMerchantExchangeRates(GetMerchantExchangeRatesInfoRep) returns (GetMerchantExchangeRatesListResp);
+
+  rpc CanCreateWithdrawOrder(CanCreateWithdrawOrderReq) returns (CanCreateWithdrawOrderResp);
+
+  rpc UpdateMerchantSignKey(UpdateMerchantSignKeyRequest) returns (UpdateMerchantResponse);
+
+  rpc GetMerchantBalanceList(GetMerchantBalanceListReq) returns (MerchantBalanceListResp);
+
+}

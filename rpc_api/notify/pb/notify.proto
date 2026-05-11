@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/notify/pb";
+
+package pb;
+
+// merchant notify req
+message MerchantNotifyReq {
+  // order msg
+  string msg = 4;
+  // 1:success，2:failed required
+  int32  status = 5;
+  // payment type required, 1:payin, 2:payout, 3:settlement
+  int32  payment_type = 7;
+  // notify url required
+  string notify_url = 8;
+  string currency = 9;
+  string transaction_utr = 10;
+  int64 merchant_id = 11;
+  string merchant_appid = 12;
+
+
+
+  // Merchant Transaction ID (商户交易ID)
+  string merchant_txn_id = 16;
+
+  // Platform Transaction ID (平台方ID)
+  string txn_id = 17;
+
+  // Requested Amount (请求金额)
+  int64 request_amount = 18;
+
+  // Actual Transaction Amount (实际交易金额)
+  int64 pay_amount = 19;
+
+  // Fee Amount (费率)
+  int64 fee_amount = 20;
+
+  // Bank Transaction ID (银行交易ID)
+  string bank_txn_id = 21;
+
+  // Pay Type (支付类型)
+  int64 pay_type = 22;
+
+  // Request Time (请求时间)
+  string request_time = 23;
+
+  // Transaction Time (交易时间)
+  string pay_time = 24;
+
+  // Passthrough Parameter (透传参数)
+  string extra_data = 25;
+
+  // Specific/Optional Fields
+  // Account Type (账户类型)
+  string account_type = 27;
+
+  // Bank Name (银行名称) - Optional
+  string bank_name = 28;
+
+  // Bank Code (银行编码) - Optional
+  string bank_code = 29;
+
+  // Account Holder Name (户主名字) - Optional
+  string holder_name = 30;
+
+  // Account Holder Account (户主账户) - Optional
+  string holder_account = 31;
+
+  // Account Holder Phone (户主手机) - Optional
+  string holder_phone = 32;
+
+  // Account Holder Email (户主邮箱) - Optional
+  string holder_email = 33;
+
+  // Account Holder Token (户主通证) - Optional
+  string holder_token = 34;
+
+}
+
+message MerchantNotifyResp {
+  string msg = 1;
+}
+
+service Notify {
+  // order status notify merchant
+  rpc MerchantNotify(MerchantNotifyReq) returns (MerchantNotifyResp);
+}

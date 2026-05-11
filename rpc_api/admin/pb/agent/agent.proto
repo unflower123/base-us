@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "base/rpc_api/admin/pb/agent";
+
+message CreateUserRequest {
+  string username = 1;
+  string account = 2;
+  string password = 3;
+  string remark = 5;
+  int64 status = 7;
+  string google_secret_key = 8;
+  string merchant_ids = 9;
+  string bank_ids = 10;
+  uint64 creator_id = 11;
+  string creator_name = 12;
+  uint64 updater_id = 13;
+  string updater_name = 14;
+  uint64 id = 15;
+}
+
+message CreateUserReply {
+  int64 id = 1;
+  string username = 2;
+}
+
+message GetUserInfoRequest {
+  int64 id = 1;
+  string account = 2;
+}
+
+message GetUserInfoReply {
+  UserInfoItem user_info = 1;
+}
+
+message UserInfoItem {
+  int64 id = 1;
+  string username = 2;
+  string account = 3;
+  string password = 4;
+  string remark = 5;
+  int64 status = 6;
+  string create_time = 7;
+  string update_time = 8;
+  string google_secret_key = 9;
+  string merchant_ids = 10;
+  string bank_ids = 11;
+  repeated  merchantItem merchant_list = 12;
+  repeated  bankItem bank_list = 13;
+}
+
+message merchantItem {
+  uint64 id = 1;
+  string name = 2;
+}
+
+message bankItem {
+  uint64 id = 1;
+  string name = 2;
+}
+
+message GetUserListRequest {
+  int64 id = 1;
+  string username = 2;
+  string account = 3;
+  int64 page = 4;
+  int64 size = 5;
+  int64 status = 6;
+}
+
+message GetUserListReply {
+  repeated UserInfoItem list = 1;
+  int64 total = 2;
+}
+
+message DeleteUserRequest {
+  int64 id = 1;
+  uint64 deleter_id = 2;
+  string deleter_name = 3;
+}
+
+message DeleteUserReply {
+  bool result = 1;
+}
+
+// --------------------- agent service
+service AgentService {
+  rpc CreateUser (CreateUserRequest) returns (CreateUserReply);
+  rpc DeleteUser (DeleteUserRequest) returns (DeleteUserReply);
+  rpc UserList (GetUserListRequest) returns (GetUserListReply);
+  rpc GetUserDetail (GetUserInfoRequest) returns (GetUserInfoReply);
+}
+
+
+

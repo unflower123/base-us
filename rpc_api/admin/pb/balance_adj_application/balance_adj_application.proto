@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/balance_adj_application";
+
+package pb;
+
+message ApplyChangeBalanceRep {
+  uint64 merchant_id = 1;
+  int32 trade_type = 2;
+  int32 trade_command = 3;
+  uint64 amount = 4;
+  string attachment =5;
+  string remarks =6;
+  string currency =7;
+  uint64 apply_id = 8;
+  int32 adjust_type = 9;
+}
+
+message ApplyChangeBalanceResp {
+  uint64 id = 1;
+}
+
+message AuditChangeBalanceRep {
+  uint64 id = 1;
+  uint64 merchant_id = 2;
+  int32 status = 3;
+  string attachment =4;
+  string remarks = 5;
+  uint64 audit_id = 6;
+}
+
+message AuditChangeBalanceResp {
+
+}
+
+message GetChangeBalanceInfoRep {
+  uint64 id = 1;
+  uint64 merchant_id = 2;
+}
+
+message GetChangeBalanceInfoResp {
+  uint64 merchant_id = 1;
+  int32 trade_type = 2;
+  int32 trade_command = 3;
+  uint64 amount = 4;
+  string apply_attachment =5;
+  string apply_remarks =6;
+  string audit_attachment =7;
+  string audit_remarks =8;
+  int32  status = 9;
+  string merchant_name = 10;
+  uint64 apply_admin_id = 11;
+  string apply_admin_name = 12;
+  uint64 audit_admin_id = 13;
+  string audit_admin_name = 14;
+  string create_time = 15;
+  string audit_time = 16;
+  string currency = 17;
+  uint64 id = 18;
+  string order_no = 19;
+  int32 adjust_type = 20;
+}
+
+message GetChangeBalanceListRep {
+  uint64 merchant_id = 1;
+  string merchant_name = 2;
+  string currency = 3;
+  int32  status = 4;
+
+}
+
+message GetChangeBalanceListResp{
+  int64  total = 1;
+  repeated GetChangeBalanceInfoResp list = 2;
+}
+
+message GetManualFreezeBalanceRep {
+  uint64 merchant_id = 1;
+}
+
+message GetManualFreezeBalanceResp {
+  uint64 merchant_id = 1;
+  string currency = 2;
+  uint64 amount = 3;
+}
+
+service BalanceAdjApplication {
+  rpc ApplyChangeBalance(ApplyChangeBalanceRep) returns (ApplyChangeBalanceResp);
+  rpc AuditChangeBalance(AuditChangeBalanceRep) returns (AuditChangeBalanceResp);
+  rpc GetChangeBalanceInfo(GetChangeBalanceInfoRep) returns (GetChangeBalanceInfoResp);
+  rpc GetChangeBalanceList(GetChangeBalanceListRep) returns (GetChangeBalanceListResp);
+  rpc GetManualFreezeBalance(GetManualFreezeBalanceRep) returns (GetManualFreezeBalanceResp);
+
+}

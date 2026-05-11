@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/data_consum";
+
+package pb;
+
+message DataConsumReq {
+
+  string order_no = 1;
+  int64 merchant_id = 2;
+  int64 bank_id = 3;
+  // 请求金额
+  int64 request_amount = 4;
+  // 支付金额
+  int64 payment_amount = 5;
+  // 手续费
+  int64 cost_amount = 6;
+  // 数据类型 1-5: payin、 6-10: payout、11-15: 提款、16-20: 充值
+  int64 data_type = 7;
+  // 数据状态 1:成功、2:失败、3:处理中、4:退款
+  int32 data_status = 8;
+  // 数据的创建时间，按币种所在的时区
+  string create_time = 9;
+  // 数据的结束时间，也包含成功或者失败时间，按币种所在的时区
+  string end_time = 10;
+  // 币种
+  string currency = 11;
+
+}
+
+message StreamResp {
+  string greet = 1;
+}
+
+//service StreamGreeter {
+//  rpc greet(StreamReq) returns (StreamResp);
+//}

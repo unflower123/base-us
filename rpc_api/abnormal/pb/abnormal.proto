@@ -1,0 +1,72 @@
+// goctl rpc protoc abnormal_order.proto --go_out=. --go-grpc_out=. --zrpc_out=.
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+message AbnormalOrderModel {
+  int64 create_time = 1;
+  int64 update_time = 2;
+  uint64 id = 3;
+  string merchant_appid = 4;
+  string merchant_order_no = 5;
+  uint64 order_type = 6;
+  string order_no = 7;
+  uint64 order_id = 8;
+  uint64 bank_id = 9;
+  string bank_order_no = 10;
+  string bank_name = 11;
+  uint64 bank_account_type = 12;
+  uint64 request_amount = 13;
+  uint64 paid_amount = 14;
+  uint64 rate = 15;
+  uint64 bank_status = 16;
+  string payment_voucher = 17;
+  uint64 pay_status = 18;
+  int64 pay_time = 19;
+  uint64 notify_status = 20;
+  int64 notify_time = 21;
+  string withdrawal_account_name = 22;
+  string withdrawal_account = 23;
+  string withdrawal_bank = 24;
+  string withdrawal_phone = 25;
+  string withdrawal_bank_identifier = 26;
+  string device_info = 27;
+  string ip_addr = 28;
+  uint64 fixed_fee = 29;
+}
+
+message CreateAbnormalOrderRequest {
+  AbnormalOrderModel model = 1;
+}
+
+message CreateAbnormalOrderResponse {
+  uint64 id = 1;
+}
+
+message AbnormalOrderRecordListQuery {
+  string order_no = 1;
+  string merchant_appid = 2;
+  string bank_name = 3;
+  uint64 order_status = 4;
+  uint64 time_type = 5;
+  string start_time = 6;
+  string end_time = 7;
+  uint64 order_type = 8;
+  uint64 max_amt = 9;
+  uint64 min_amt = 10;
+  int64 offset = 11;
+  int64 limit = 12;
+  uint64 bank_account_type = 13;
+}
+
+message AbnormalOrderRecordListResponse {
+  int64 total = 1;
+  repeated AbnormalOrderModel list = 2;
+}
+
+service Abnormal {
+  rpc Create(CreateAbnormalOrderRequest) returns (CreateAbnormalOrderResponse);
+  rpc GetList(AbnormalOrderRecordListQuery) returns (AbnormalOrderRecordListResponse);
+}

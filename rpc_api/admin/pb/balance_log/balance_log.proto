@@ -1,0 +1,174 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/balance_log";
+
+package pb;
+
+message BalanceLogListQuery {
+  uint64 offset = 1;
+  uint64 limit = 2;
+  uint64 merchant_id = 3;
+  string merchant_name = 4;
+  string bank_order_no = 5;
+  string merchant_order_no = 6;
+  string system_order_no = 7;
+  uint64 trade_type = 8;
+  uint64 trade_command = 9;
+  uint64 time_type = 10;
+  string start_time = 11;
+  string end_time = 12;
+  string currency = 13;
+  uint64 amount_type = 14;
+}
+
+// get BalanceLog  info response
+message BalanceLogInfoResponse {
+  uint64    id = 1;
+  string    currency = 2;
+  uint64    merchant_id = 3;
+  string    merchant_name = 4;
+  string    system_order_no = 5;
+  string    bank_order_no = 6;
+  string    merchant_order_no = 7;
+  int64     trade_type = 8;
+  int64     trade_command = 9;
+  int64     before_balance = 10;
+  int64     before_unsettle_balance = 11;
+  int64     before_freeze_balance = 12;
+  int64     amount = 13;
+  int64     after_balance = 14;
+  int64     after_unsettle_balance = 15;
+  int64     after_freeze_balance = 16;
+  string     create_time = 17;
+  string     trade_time = 18;
+  string    remark = 19;
+  string    desc = 20;
+  string    attach_url = 21;
+  int64     amount_type = 22;
+}
+
+// get BalanceLog list info response
+message BalanceLogListResponse {
+  int64  total = 1;
+  repeated BalanceLogInfoResponse list = 2;
+}
+
+message BalanceFreezeLogListQuery {
+  uint64 offset = 1;
+  uint64 limit = 2;
+  uint64 merchant_id = 3;
+  string merchant_name = 4;
+  string bank_order_no = 5;
+  string merchant_order_no = 6;
+  string system_order_no = 7;
+  uint64 trade_command = 8;
+  uint64 status = 9;
+  uint64 time_type = 10;
+  string start_time = 11;
+  string end_time = 12;
+  string currency = 13;
+}
+
+// get BalanceFreezeLog  info response
+message BalanceFreezeLogInfoResponse {
+  uint64    id = 1;
+  string    currency = 2;
+  uint64    merchant_id = 3;
+  string    merchant_name = 4;
+  string    system_order_no = 5;
+  string    bank_order_no = 6;
+  string    merchant_order_no = 7;
+  int64     trade_command = 8;
+  int64     status = 9;
+  int64     before_balance = 10;
+  int64     before_freeze_balance = 11;
+  int64     amount = 12;
+  int64     after_balance = 14;
+  int64     after_freeze_balance = 15;
+  string     create_time = 16;
+  string     trade_time = 17;
+  string    remark = 18;
+  string    desc = 19;
+  string    attach_url = 20;
+}
+
+// get BalanceFreezeLog list info response
+message BalanceFreezeLogListResponse {
+  int64  total = 1;
+  repeated BalanceFreezeLogInfoResponse list = 2;
+}
+
+message BalanceSettlementLogListQuery {
+  uint64 offset = 1;
+  uint64 limit = 2;
+  uint64 merchant_id = 3;
+  string merchant_name = 4;
+  string bank_order_no = 5;
+  string merchant_order_no = 6;
+  string system_order_no = 7;
+  uint64 trade_command = 8;
+  uint64 time_type = 9;
+  string start_time = 10;
+  string end_time = 11;
+  string currency = 12;
+  string release_time = 13;
+  int64 trade_type = 14;
+}
+
+message BalanceSettlementLogResponse {
+  uint64    id = 1;
+  string    currency = 2;
+  uint64    merchant_id = 3;
+  string    merchant_name = 4;
+  string    system_order_no = 5;
+  string    bank_order_no = 6;
+  string    merchant_order_no = 7;
+  int64     trade_command = 8;
+  int64     before_balance = 9;
+  int64     before_unsettle_balance = 10;
+  int64     amount = 11;
+  int64     after_balance = 12;
+  int64     after_unsettle_balance = 13;
+  string     create_time = 14;
+  string     trade_time = 15;
+  string    bank_name =16;
+  int64     before_withdraw_balance = 17;
+  int64     after_withdraw_balance = 18;
+  string    release_time = 19;
+  int64     trade_type = 20;
+}
+
+// get BalanceFreezeLog list info response
+message BalanceSettlementLogListResponse {
+  int64  total = 1;
+  repeated BalanceSettlementLogResponse list = 2;
+}
+
+message GetMerchantBalanceLogSummaryItem {
+  double   request_balance = 1;
+  double   all_balance = 2;
+  double   all_fee = 3;
+  int64    order_sum = 4;
+  int64    fee_sum = 5;
+}
+
+message GetMerchantBalanceLogSummaryResponse {
+  GetMerchantBalanceLogSummaryItem inItem = 1;
+  GetMerchantBalanceLogSummaryItem outItem= 2;
+}
+
+message GetMerchantBalanceFreezeLogSummaryResponse {
+  double    freeze_balance = 1;
+  double    unfreeze_balance = 2;
+  int64     freeze_sum = 3;
+  int64     unfreeze_sum = 4;
+}
+
+service BalanceLog {
+  rpc GetBalanceLogListQuery(BalanceLogListQuery) returns (BalanceLogListResponse);
+  rpc GetBalanceFreezeLogListQuery(BalanceFreezeLogListQuery) returns (BalanceFreezeLogListResponse);
+  rpc GetBalanceSettlementLogListQuery(BalanceSettlementLogListQuery) returns (BalanceSettlementLogListResponse);
+  rpc GetMerchantBalanceLogSummary(BalanceLogListQuery) returns (GetMerchantBalanceLogSummaryResponse);
+  rpc GetMerchantBalanceFreezeLogSummary(BalanceFreezeLogListQuery) returns (GetMerchantBalanceFreezeLogSummaryResponse);
+
+}

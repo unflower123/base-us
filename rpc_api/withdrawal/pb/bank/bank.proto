@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/withdrawal/pb/bank";
+
+package pb;
+
+message GetBankInfoReq {
+  int64 page = 1;
+  int64 size = 2;
+}
+
+message GetBankInfoResp {
+  int64 total = 1;
+  repeated BankInfo list = 2;
+}
+
+message BankInfo {
+  int64  id = 1;
+  string bank_account = 2;
+  string bank_name = 3;
+  string bank_identifier = 4;
+  string bank_mobile_phone = 5;
+  int32  bank_status = 6;
+  string currency = 7;
+  string remark = 8;
+  int64  create_time = 9;
+  string  bank_account_name = 10;
+  string  bank_email = 11;
+  string  bank_token = 12;
+}
+
+message OperateResp {
+  string msg = 1;
+}
+
+message GetGetBankDetailReq {
+  int64 id = 1;
+}
+
+message GetGetBankDetailResp {
+  BankInfo  info = 1;
+}
+
+// ------------------------------------
+// Rpc Func
+// ------------------------------------
+
+service WithdrawalBank {
+  // create withdrawal bank info
+  rpc CreateBankInfo(BankInfo) returns (OperateResp);
+  // modify withdrawal bank info
+  rpc ModifyBankInfo(BankInfo) returns (OperateResp);
+  // delete withdrawal bank info
+  rpc DeleteBankInfo(BankInfo) returns (OperateResp);
+  // modify withdrawal bank status
+  rpc ModifyBankStatus(BankInfo) returns (OperateResp);
+  // get withdrawal bank info
+  rpc GetBankList(GetBankInfoReq) returns (GetBankInfoResp);
+  // get withdrawal bank detail
+  rpc GetBankDetail(GetGetBankDetailReq) returns (GetGetBankDetailResp);
+
+}

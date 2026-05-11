@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/tg_cmd_log";
+
+package pb;
+
+
+
+
+
+message TgCmdLogInfo {
+
+  int64 id = 1; // 自增主键ID
+
+  string order_no = 2; // 系统订单号
+  string merchant_order_no = 3; // 商户订单号
+  string channel_order_no = 4; // 渠道订单号
+
+  int64 request_amount = 5; // 请求金额（最小货币单位）
+  int64 transaction_amount = 6; // 实际交易成功的金额（最小货币单位）
+
+  int64 merchant_id = 7; // 商户ID
+  string merchant_name = 8; // 商户名称
+  int64 channel_id = 9; // 渠道ID
+  string channel_name = 10; // 渠道名称
+  int32 order_type = 11; // 订单类型（例如：1-in, 2-out）
+
+  string utr = 12; // 交易流水号/UTR/UPI编号
+  int32 order_status = 13; // 订单最终状态
+  int32 process_status = 14; // 机器人侧的处理进度状态（1: 完成, 2: 挂起, 3: 待处理）
+  string currency = 15; // 交易币种
+
+  string image_url = 16; // 用户提交的图片文件地址
+  string image_hash = 17; // 图片内容的哈希值
+
+  int32 query_count = 18; // 查询渠道API的次数
+  string query_time = 19; // 记录创建时间 (通常非空)
+  string create_time = 20; // 记录创建时间 (通常非空)
+  string update_time = 21; // 记录更新时间
+}
+
+
+message GetTgCmdLogListReq{
+  string order_no = 2; // 系统订单号
+  string merchant_order_no = 3; // 商户订单号
+  string channel_order_no = 4; // 渠道订单号
+  int64 merchant_id = 7; // 商户ID
+  string merchant_name = 8; // 商户名称
+  int64 channel_id = 9; // 渠道ID
+  string channel_name = 10; // 渠道名称
+  string utr = 12; // 交易流水号/UTR/UPI编号
+  int32 time_type = 13;
+  string start_time = 14;
+  string end_time = 15;
+  int32 process_status = 16;
+  int64 page = 17;
+  int64 size = 18;
+  int32 order_status = 19;
+}
+
+
+message GetTgCmdLogListResp {
+  repeated TgCmdLogInfo list = 1;
+  int64 total = 2;
+}
+message UpdateProcessStatusReq {
+  TgCmdLogInfo info = 1;
+}
+
+message UpdateProcessStatusResp {
+}
+
+message SendReplyTgMsgReq {
+  int64 id = 1;
+  int64  merchant_id = 2;
+  string reply_msg = 3;
+  int32 reply_msg_mode = 4;
+  int64 channel_id = 5;
+  string order_no = 6;
+}
+
+message SendReplyTgMsgResp {
+
+}
+
+
+message AutoReplyTgMsgReq {
+  int64  merchant_id = 2;
+  int64 channel_id = 5;
+  string order_no = 6;
+  int64 order_status = 7;
+  string create_time = 8;
+  int64 pay_amount = 9;
+  string notify_time = 10;
+  int64 notify_status = 11;
+
+}
+
+service TgCmdLog {
+  rpc GetTgCmdLogList(GetTgCmdLogListReq) returns (GetTgCmdLogListResp);
+  rpc UpdateProcessStatus(UpdateProcessStatusReq) returns (UpdateProcessStatusResp);
+  rpc SendReplyTgMsg(SendReplyTgMsgReq) returns (SendReplyTgMsgResp);
+  rpc SendChannelTgMsg(SendReplyTgMsgReq) returns (SendReplyTgMsgResp);
+  rpc AutoReplyTgMsg(AutoReplyTgMsgReq) returns (SendReplyTgMsgResp);
+}

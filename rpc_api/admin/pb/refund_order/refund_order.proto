@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/refund_order";
+
+package pb;
+
+message RefundOrderModel {
+  string create_time = 1;
+  string update_time = 2;
+  uint64 id = 3;
+  string merchant_appid = 4;
+  uint64 merchant_id = 5;
+  string merchant_name = 6;
+  uint64 bank_id = 7;
+  string bank_name = 8;
+  string bank_order_no = 9;
+  string merchant_order_no = 10;
+  string order_no = 11;
+  int64 trade_type = 12;
+  int64 undertake = 13;
+  int64 refund_type = 14;
+  string currency = 15;
+  int64 order_amount = 16;
+  int64 settle_amount = 17;
+  uint64 rate = 18;
+  uint64 fixed_fee = 19;
+  uint64 fee = 20;
+  string utr = 21;
+  string remark = 22;
+  uint64 launch_user_id = 23;
+  string order_create_time = 24;
+  uint64 refund_amount = 27;
+}
+
+message AddRefundOrderParam {
+  string merchant_appid = 4;
+  uint64 merchant_id = 5;
+  uint64 bank_id = 7;
+  string bank_order_no = 9;
+  string merchant_order_no = 10;
+  string order_no = 11;
+  int64 trade_type = 12;
+  int64 undertake = 13;
+  int64 refund_type = 14;
+  string currency = 15;
+  int64 order_amount = 16;
+  int64 settle_amount = 17;
+  uint64 rate = 18;
+  uint64 fixed_fee = 19;
+  uint64 fee = 20;
+  string utr = 21;
+  string remark = 22;
+  uint64 launch_user_id = 23;
+  int64 bank_account = 24;
+  string order_create_time = 25;
+}
+
+message AddRefundOrderResponse {
+
+}
+
+message QueryRefundOrderListParam {
+  int64 offset = 1;
+  int64 limit = 2;
+  uint64 merchant_id = 5;
+  string merchant_name = 6;
+  uint64 bank_id = 7;
+  string bank_name = 8;
+  string bank_order_no = 9;
+  string merchant_order_no = 10;
+  string order_no = 11;
+  int64 undertake = 13;
+  string currency = 15;
+  int64 refund_type = 14;
+  int64 trade_type = 12;
+  string utr = 21;
+  repeated uint64 bank_ids = 22;
+  repeated uint64 merchant_ids = 23;
+  int64 time_type = 24;
+  string start_time = 25;
+  string end_time = 26;
+}
+message QueryRefundOrderListResponse {
+  int64 total = 1;
+  repeated RefundOrderModel list = 2;
+}
+
+message QueryRefundOrderSummaryData {
+   summary payin_refund_summary = 1;
+   summary payin_complaint_summary = 2;
+   summary payout_refund_summary = 3;
+   summary payout_complaint_summary = 4;
+}
+
+message summary {
+  int64 refund_amount = 1;
+  int64 order_count = 2;
+  int64 fee = 3;
+}
+
+service RefundOrder {
+  rpc QueryRefundOrderList(QueryRefundOrderListParam) returns (QueryRefundOrderListResponse);
+  rpc QueryRefundOrderSummary(QueryRefundOrderListParam) returns (QueryRefundOrderSummaryData);
+  rpc AddRefundOrder(AddRefundOrderParam) returns (AddRefundOrderResponse);
+}

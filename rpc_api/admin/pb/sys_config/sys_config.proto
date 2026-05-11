@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/sys_config";
+
+package pb;
+
+
+message GetSysCofnigReq {
+
+}
+
+message GetSysCofnigResp {
+
+  repeated SysConfitInfo list = 1;
+}
+
+
+message SysConfitInfo {
+  string config_key = 1;
+  string config_value = 2;
+  string desc = 3;
+}
+
+message SaveSysCofnigReq {
+  repeated SysConfitInfo list = 1;
+}
+
+message SaveSysCofnigResp {
+
+}
+
+service SysConfig {
+  rpc GetSysConfig(GetSysCofnigReq) returns (GetSysCofnigResp);
+  rpc SaveSysConfig(SaveSysCofnigReq) returns (SaveSysCofnigResp);
+
+}

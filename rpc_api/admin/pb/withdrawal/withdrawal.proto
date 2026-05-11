@@ -1,0 +1,269 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/withdrawal";
+
+package pb;
+
+
+message GetWithdrawalOrderListReq {
+  int64 page = 1;
+  int64 size = 2;
+  string start_time = 3;
+  string end_time = 4;
+  int32 order_status = 5;
+  int64 merchant_id = 6;
+  int32 notify_status = 7;
+  int32 time_type = 8;
+  string system_order_no = 9;
+  int32 process_flow = 10;
+  string target_currency = 11;
+  string channel_order_no = 12;
+  string withdraw_bank_account_no = 13;
+  string withdraw_bank_account_name = 14;
+  string withdraw_bank_name = 15;
+  string withdraw_phone_number = 16;
+  string payout_bank_account = 17;
+  string merchant_name = 18;
+  string withdraw_type = 19;
+  string payout_bank_name = 20;
+}
+
+
+
+message GetWithdrawalOrderListResp {
+  repeated WithdrawalOrderInfo order_list = 1;
+  int64 total = 2;
+}
+
+message WithdrawalOrderInfo {
+
+  int64 id = 1;
+  int64 merchant_id = 2;
+  string merchant_name = 3;
+  string system_order_no = 4;
+  string withdraw_type = 5;
+  int32 order_status = 6;
+  int32 process_flow = 7;
+  int64 payout_bank_id = 8;
+  string payout_bank_name = 9;
+  int64 withdraw_account_id = 10;
+  string withdraw_account_name = 11;
+  string withdraw_currency = 12;
+  string withdraw_bank_name = 13;
+  string withdraw_bank_account_no = 14;
+  string withdraw_bank_account_name = 15;
+  string withdraw_phone_number = 16;
+  string withdraw_email = 17;
+  string withdraw_token = 18;
+  string target_currency = 19;
+  int64 withdraw_amount = 20;
+  int64 target_currency_exchange_rate = 21;
+  int64 withdraw_currency_exchange_rate = 22;
+  int64 withdraw_fee_rate = 23;
+  int64 withdraw_fee = 24;
+  int64 actual_withdraw_amount = 25;
+  string withdraw_remark = 26;
+  string channel_order_no = 27;
+  string channel_transaction_voucher = 28;
+  string channel_completion_time = 29;
+  string channel_callback_time = 30;
+  string channel_description = 31;
+  string channel_status = 32;
+  int32 notify_status = 33;
+  string notify_url = 34;
+  string notify_time = 35;
+  string finish_time = 36;
+  string create_time = 37;
+  string update_time = 38;
+  string payout_bank_account = 39;
+  string merchant_app_id = 40;
+  string channel_transaction_appenidx = 41;
+  int32 transfer_type = 42;
+  int64 withdraw_rate = 43;
+  string withdraw_bank_code = 44;
+}
+
+message WithdrawalOrderAuditReq{
+
+  string system_order_no = 1;
+  int32 process_flow = 2;
+  string audit_remark = 3;
+  int32 order_status = 4;
+  string currency = 5;
+  string appendix = 6;
+
+
+}
+
+message WithdrawalOrderAuditResp{
+  // TODO
+}
+
+message WithdrawalOrderCallbackReq{
+  // system order no required, request bank in system order no
+  string system_order_no = 1;
+  // bank order no required, bank order no required
+  string bank_order_no = 2;
+  // transaction amount required, acoumt point unit
+  double  transaction_amount = 3;
+  // time format Milliseconds required
+  string  bank_time = 4;
+  // bank callback msg info
+  string bank_msg = 5;
+  // 1:success、2:failed、3:processing required, bank return processing result status
+  int64  bank_status = 6;
+  // transaction currency type
+  string currency = 7;
+  // transaction  remark info
+  string remark = 8;
+  // bank callback code
+  string bank_code = 9;
+  // bank callback utr
+  string bank_utr = 10;
+
+  // 银行原始响应
+  string bank_callback = 11;
+}
+
+message WithdrawalOrderCallbackResp{
+  // 1:success，2/0:failed
+  int64  code = 1;
+  // response message
+  string msg = 2;
+}
+
+message WithdrawalCreateOrderReq {
+  WithdrawalOrderInfo order_info = 1;
+
+
+}
+
+message WithdrawalOperationResp {
+  string msg = 1;
+}
+
+message GetWithdrawalOrderDetailReq {
+  string system_order_no = 1;
+  int64 merchant_id = 2;
+}
+
+message GetWithdrawalOrderDetailResp {
+  WithdrawalOrderInfo order_info = 1;
+}
+
+message WithdrawalNotifySuccessReq {
+  // TODO
+}
+
+message GetOrderAuditInfoReq {
+  string system_order_no = 1;
+}
+
+message GetOrderAuditInfoResp {
+  repeated AuditInfo audit_info = 1;
+}
+
+message AuditInfo {
+  int64 id = 1;
+  string order_no = 2;
+  int64 user_id = 3;
+  string user_name = 4;
+  int32 audit_status = 5;
+  string audit_remark = 6;
+  int64 role_id = 7;
+  string create_time = 8;
+  string update_time = 9;
+  string appendix = 10;
+  string private_remark = 11;
+}
+
+message WithdrawalSummary {
+  string order_count = 1;
+  string order_amount = 2;
+  string order_fee= 3;
+  string order_rate = 4;
+}
+
+message GetWithdrawalSummaryResp {
+  WithdrawalSummary SuccessInfo  = 1;
+  WithdrawalSummary PendingInfo  = 2;
+  WithdrawalSummary FailedInfo   = 3;
+  WithdrawalSummary RejectInfo   = 4;
+}
+
+
+message PlatformWithdrawalAuditReq{
+
+  string system_order_no = 1;
+  int32 process_flow = 2;
+  string audit_remark = 3;
+  int32 order_status = 4;
+  string currency = 5;
+  string appendix = 6;
+  string channel_order_no = 7;
+  string payout_bank_account = 8;
+  string channel_transaction_voucher = 9;
+  int64 target_currency_exchange_rate = 10;
+  int64 withdraw_currency_exchange_rate = 11;
+  int64 withdraw_fee_rate = 12;
+  int64 withdraw_fee = 13;
+  int64 actual_withdraw_amount = 14;
+  string withdraw_type = 15;
+  int32 transfer_type = 16;
+  string channel_transaction_appenidx = 17;
+  string private_remark = 18;
+  int64 payout_bank_id = 19;
+  string payout_bank_name = 20;
+  repeated string payout_bank_iplist = 21;
+  int64 withdraw_rate = 22;
+  int64 merchant_id = 23;
+  int64 withdraw_amount = 24;
+
+}
+
+
+message QueryWithdrawalOrderLogReq {
+  string order_no = 1;
+  string bank_order_no = 2;
+}
+
+message QueryWithdrawalOrderLogResp {
+  repeated WithdrawalOrderLogInfo data = 1;
+}
+
+message WithdrawalOrderLogInfo {
+  string order_no = 1;
+  string bank_order_no = 2;
+  string request_data = 3;
+  string callback_data = 4;
+  string data_time = 5;
+  string notify_request = 6;
+  string notify_response = 7;
+}
+
+// ------------------------------------ Rpc Func
+
+service Withdrawal {
+  // merchant create Withdrawal order info
+  rpc CreateOrderInfo(WithdrawalCreateOrderReq) returns (WithdrawalOperationResp);
+  // get Withdrawal order list
+  rpc GetOrderList(GetWithdrawalOrderListReq) returns (GetWithdrawalOrderListResp);
+  // Withdrawal order audit
+  rpc OrderAudit(WithdrawalOrderAuditReq) returns (WithdrawalOperationResp);
+  // Withdrawal order callback
+  rpc OrderCallback(WithdrawalOrderCallbackReq) returns (WithdrawalOrderCallbackResp);
+  // merchant Withdrawal order audit
+  //  rpc OrderAuditMerchant(OrderAuditMerchantReq) returns (OrderAuditMerchantResp);
+  // get Withdrawal order detail info
+  rpc GetOrderDetailInfo(GetWithdrawalOrderDetailReq) returns (GetWithdrawalOrderDetailResp);
+
+  // notify merchant success
+  rpc NotifySuccess(WithdrawalNotifySuccessReq) returns (GetWithdrawalOrderListResp);
+
+  rpc GetOrderAuditInfo(GetOrderAuditInfoReq) returns (GetOrderAuditInfoResp);
+  rpc OrderPlatformAudit(PlatformWithdrawalAuditReq) returns (WithdrawalOperationResp);
+
+  rpc GetOrderSummaryInfo(GetWithdrawalOrderListReq) returns (GetWithdrawalSummaryResp);
+
+  rpc QueryOrderLog(QueryWithdrawalOrderLogReq) returns (QueryWithdrawalOrderLogResp);
+}

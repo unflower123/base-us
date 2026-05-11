@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/merchant_group";
+
+package pb;
+
+message CreateMerchantGroupReq{
+  string group_name =2;
+  string currency =3;
+  repeated int64 add_merchant_ids =4;
+}
+
+
+message UpdateMerchantGroupReq{
+  int64  id = 1;
+  string group_name =2;
+  string currency =3;
+  repeated int64 add_merchant_ids =4;
+  repeated int64 del_merchant_ids =5;
+}
+
+message MerchantGroupCommResp {
+
+}
+
+message MerchantGroupInfo {
+  int64  id = 1;
+  string group_name =2;
+  string currency =3;
+  string  total_balance =4;
+  string  available_balance =5;
+  string  unsettled_balance =6;
+  string  freeze_balance =7;
+  string create_time =8;
+  int64  merchant_id =9;
+  string merchant_name =10;
+  int64 merchant_total =11;
+}
+
+message GetMerchantGroupReq {
+  int64 id = 1;
+  string group_name = 2;
+  int64 page = 3;
+  int64 size = 4;
+}
+
+message GetMerchantGroupResp {
+  repeated MerchantGroupInfo list = 1;
+  int64 total = 2;
+}
+
+
+message SendMerchantMsgReq {
+  string msg = 1;
+  repeated int64 merchant_ids = 2;
+  repeated int64 group_ids = 3;
+}
+service MerchantGroup {
+  rpc GetMerchantGroupList(GetMerchantGroupReq) returns (GetMerchantGroupResp);
+  rpc CreateMerchantGroup(CreateMerchantGroupReq) returns (MerchantGroupCommResp);
+  rpc UpdateeMerchantGroup(UpdateMerchantGroupReq) returns (MerchantGroupCommResp);
+  rpc DeleteMerchantGroup(MerchantGroupInfo) returns (MerchantGroupCommResp);
+  rpc GetGroupMerchant(GetMerchantGroupReq) returns (GetMerchantGroupResp);
+  rpc SendMerchantMsg(SendMerchantMsgReq) returns (MerchantGroupCommResp);
+}

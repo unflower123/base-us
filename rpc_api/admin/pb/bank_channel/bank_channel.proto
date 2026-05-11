@@ -1,0 +1,177 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/bank_channel";
+
+package pb;
+
+message GetMerchantBankInfoQuery {
+  uint64 id = 1;
+}
+
+message MerchantBankInfoResponse {
+  uint64    id = 1;
+  uint64    merchant_id = 2;
+  string    merchant_name = 3;
+  uint64    bank_id = 4;
+  string    bank_name = 5;
+  int64     bank_status = 6;
+  string    currency = 7;
+  int64     type = 8;
+  int64     status = 9;
+}
+
+message GetMerchantBankListQuery {
+  uint64 offset = 1;
+  uint64 limit = 2;
+  uint64 merchant_id = 3;
+  string merchant_name = 4;
+  uint64 bank_id = 5;
+  string bank_name = 6;
+  string currency = 7;
+  int64 status = 8;
+  int64 type = 9;
+}
+
+message GetMerchantBankListResponse {
+  int64    total = 1;
+  repeated MerchantBankInfoResponse list = 2;
+}
+
+message UpdateMerchantBankRequest {
+  uint64 id = 1;
+  int64 status = 2;
+}
+
+message BatchUpdateMerchantBankStatusRequest {
+  repeated  uint64 ids = 1;
+  int64 status = 2;
+}
+
+message BatchUpdateMerchantBankRequest {
+  repeated  UpdateMerchantBankRequest items = 1;
+}
+
+message OperateMerchantBankResponse {
+  int64 code = 1;
+  string msg = 2;
+}
+
+message GetMerchantBankListByUploadQuery {
+  repeated  MerchantBankUploadRequest items = 1;
+}
+
+message MerchantBankUploadRequest {
+  uint64 merchant_id = 1;
+  uint64 bank_id = 2;
+  int64 type = 3;
+}
+
+
+//merchant channel
+message GetMerchantChannelInfoQuery {
+  uint64 id = 1;
+}
+
+message MerchantChannelInfoResponse {
+  uint64    id = 1;
+  uint64    merchant_id = 2;
+  string    merchant_name = 3;
+  string    channel_group_id = 4;
+  string    channel_group_name = 5;
+  string    currency = 7;
+  int64     type = 8;
+  uint64    st_min_amt = 9;
+  uint64    st_max_amt = 10;
+  uint64    daily_max_tx_count = 11;
+  int64     workload = 12;
+  int32     control_flag = 13;
+}
+
+message GetMerchantChannelListQuery {
+  uint64 offset = 1;
+  uint64 limit = 2;
+  uint64 merchant_id = 3;
+  string merchant_name = 4;
+  string channel_group_id = 5;
+  string channel_group_name = 6;
+  string currency = 7;
+  int64 type = 8;
+}
+
+message GetMerchantChannelListResponse {
+  int64    total = 1;
+  repeated MerchantChannelInfoResponse list = 2;
+}
+
+message UpdateMerchantChannelRequest {
+  uint64 id = 1;
+  optional uint64 st_min_amt = 2;
+  optional uint64 st_max_amt = 3;
+  optional uint64 daily_max_tx_count = 4;
+  optional int64  workload = 5;
+}
+
+message BatchUpdateMerchantChannelRequest {
+  repeated  UpdateMerchantChannelRequest items = 1;
+}
+
+message OperateMerchantChannelResponse {
+  int64 code = 1;
+  string msg = 2;
+}
+
+message GetMerchantChannelListByUploadQuery {
+  repeated  MerchantChannelUploadRequest items = 1;
+}
+
+message MerchantChannelUploadRequest {
+  uint64 merchant_id = 1;
+  string channel_group_id = 2;
+  int64 type = 3;
+}
+
+message GetMerchantChannelBankListQuery {
+  uint64 merchant_id = 1;
+  string channel_group_id = 2;
+  int64 type = 3;
+}
+
+message MerchantChannelBankInfoResponse {
+  uint64    id = 1;
+  uint64    bank_id = 2;
+  string    bank_name = 3;
+  int32     status = 4;
+  uint64    st_min_amt = 5;
+  uint64    st_max_amt = 6;
+}
+
+message GetMerchantChannelBankListResponse {
+  int64    total = 1;
+  repeated MerchantChannelBankInfoResponse list = 2;
+}
+
+
+message BatchDeleteMerchantBankRequest {
+  repeated  uint64 ids = 1;
+}
+
+service BankChannel {
+  //merchant bank
+  rpc GetMerchantBankInfo(GetMerchantBankInfoQuery) returns (MerchantBankInfoResponse);
+  rpc GetMerchantBankList(GetMerchantBankListQuery) returns (GetMerchantBankListResponse);
+  rpc UpdateMerchantBank(UpdateMerchantBankRequest) returns (OperateMerchantBankResponse);
+  rpc BatchUpdateMerchantBankStatus(BatchUpdateMerchantBankStatusRequest) returns (OperateMerchantBankResponse);
+  rpc BatchUpdateMerchantBank(BatchUpdateMerchantBankRequest) returns (OperateMerchantBankResponse);
+  rpc GetMerchantBankListByUpload(GetMerchantBankListByUploadQuery) returns (GetMerchantBankListResponse);
+
+  //merchant channel
+  rpc GetMerchantChannelInfo(GetMerchantChannelInfoQuery) returns (MerchantChannelInfoResponse);
+  rpc GetMerchantChannelList(GetMerchantChannelListQuery) returns (GetMerchantChannelListResponse);
+  rpc UpdateMerchantChannel(UpdateMerchantChannelRequest) returns (OperateMerchantChannelResponse);
+  rpc BatchUpdateMerchantChannel(BatchUpdateMerchantChannelRequest) returns (OperateMerchantChannelResponse);
+  rpc GetMerchantChannelListByUpload(GetMerchantChannelListByUploadQuery) returns (GetMerchantChannelListResponse);
+
+  rpc GetMerchantChannelBankList(GetMerchantChannelBankListQuery) returns (GetMerchantChannelBankListResponse);
+  rpc BatchDeleteMerchantBank(BatchDeleteMerchantBankRequest) returns (OperateMerchantBankResponse);
+
+}

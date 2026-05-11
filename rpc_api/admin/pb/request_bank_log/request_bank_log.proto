@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/request_bank_log";
+
+package pb;
+
+message RequestBankLogInfo {
+  int64 id = 1; // 自增主键ID
+  string order_no = 2; // 系统订单号
+  int64 merchant_id = 3; // 商户ID
+  string merchant_name = 4; // 商户名称
+  int64 bank_id = 5; // 商户ID
+  string bank_name = 6; // 商户名称
+  int32 type = 7;
+  int32 status = 8;
+  string request_data = 10;
+  string callback_data = 11;
+  string create_time = 12; // 记录创建时间 (通常非空)
+  string update_time = 13; // 记录更新时间
+}
+
+
+message GetRequestBankLogListReq{
+  int64 merchant_id = 1; // 商户ID
+  string order_no = 2; // 系统订单号
+  string bank_name = 4;
+  uint64  bank_id = 5;
+  int32 time_type = 6;
+  string start_time = 7;
+  string end_time = 8;
+  int64 page = 9;
+  int64 size = 10;
+  repeated string order_nos  = 11;
+}
+
+
+message GetRequestBankLogListResp {
+  repeated RequestBankLogInfo list = 1;
+  int64 total = 2;
+}
+
+
+service RequestBankLog {
+  rpc GetRequestBankLogList(GetRequestBankLogListReq) returns (GetRequestBankLogListResp);
+}

@@ -1,0 +1,233 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/summary";
+
+package pb;
+
+//bank
+message BankSummaryReq{
+  int64 page = 1;
+  int64 size = 2;
+  string start_time = 3;
+  string end_time = 4;
+  string currency = 5;
+  int64 bank_id = 6;
+  string bank_name = 7;
+  int64 query_type = 8;
+}
+
+message BankSummaryResp{
+  int64 total = 1;
+  repeated SummaryBankInfo list = 2;
+}
+
+message SummaryBankInfo{
+  string date = 1;
+  int64 bank_id = 2;
+  string bank_name = 3;
+  string currency = 4;
+  int64 balance = 5;
+  int64 available_balance = 6;
+  int64 unsettled_balance = 7;
+  int64 payin_order_num = 8;
+  int64 payin_order_success_num = 9;
+  int64 payin_order_amount = 10;
+  int64 payin_success_amount = 11;
+  int64 payout_order_num = 12;
+  int64 payout_order_success_num = 13;
+  int64 payout_order_amount = 14;
+  int64 payout_success_amount = 15;
+  int64 deposite_success_amount = 16;
+  int64 withdrawal_success_amount = 17;
+}
+
+//merchant
+message MerchantSummaryReq{
+  int64 page = 1;
+  int64 size = 2;
+  string start_time = 3;
+  string end_time = 4;
+  string currency = 5;
+  int64 merchant_id = 6;
+  string merchant_name = 7;
+  int64 query_type = 8;
+}
+
+message MerchantSummaryResp{
+  int64 total = 1;
+  repeated SummaryMerchantInfo list = 2;
+}
+
+message SummaryMerchantInfo{
+  string date = 1;
+  int64 merchant_id = 2;
+  string merchant_name = 3;
+  string currency = 4;
+  int64 balance = 5;
+  int64 available_balance = 6;
+  int64 unsettled_balance = 7;
+  int64 frozen_balance = 8;
+  int64 payin_order_num = 9;
+  int64 payin_order_success_num = 10;
+  int64 payin_order_amount = 11;
+  int64 payin_success_amount = 12;
+  int64 payout_order_num = 13;
+  int64 payout_order_success_num = 14;
+  int64 payout_order_amount = 15;
+  int64 payout_success_amount = 16;
+  int64 deposite_success_amount = 17;
+  int64 withdrawal_success_amount = 18;
+}
+
+// =============== monitor data
+
+message MonitorStatsReq{
+  int64 page = 1;
+  int64 size = 2;
+  int64 bank_id = 3;
+  string bank_name = 4;
+  string currency = 5;
+  int64 merchant_id = 6;
+  string merchant_name = 7;
+}
+
+message MonitorStatsResp{
+  int64 total = 1;
+  repeated MonitorStatsInfo list = 2;
+}
+
+message MonitorStatsInfo{
+  int64 merchant_id = 1;
+  string merchant_name = 2;
+  string currency = 3;
+
+  // Payin Stats
+  int64 payin5min_total_count = 4;
+  int64 payin5min_success_count = 5;
+  int64 payin30min_total_count = 6;
+  int64 payin30min_success_count = 7;
+  int64 payin60min_total_count = 8;
+  int64 payin60min_success_count = 9;
+
+  // Payout Stats
+  int64 payout5min_total_count = 10;
+  int64 payout5min_success_count = 11;
+  int64 payout30min_total_count = 12;
+  int64 payout30min_success_count = 13;
+  int64 payout60min_total_count = 14;
+  int64 payout60min_success_count = 15;
+
+  string create_time = 16;
+  string update_time = 17;
+
+  // Add bank_id and bank_name
+  int64 bank_id = 18;
+  string bank_name = 19;
+  int64 id = 20;
+}
+
+message MonitorDetailStatsReq {
+  int64 page = 1;
+  int64 size = 2;
+  int64 bank_id = 3;
+  string bank_name = 4;
+  string currency = 5;
+  int64 merchant_id = 6;
+  string merchant_name = 7;
+  string start_time = 8;
+  string end_time = 9;
+  int32 time_type = 10; // 数据时间类型，1:1分钟，2:5分钟，3:30分钟，4:60分钟，5:1天
+}
+
+message MonitorDetailOverviewResp {
+  MonitorDetailOverviewInfo overview_total_count = 1;
+  MonitorDetailOverviewInfo success_total_count = 2;
+  MonitorDetailOverviewInfo failed_total_count = 3;
+  MonitorDetailOverviewInfo payin_success_rate = 4;
+  MonitorDetailOverviewInfo payout_success_rate = 5;
+}
+
+message MonitorDetailOverviewInfo {
+  int64 total_count = 1;
+  int64 success_count = 2;
+  int64 failed_count = 3;
+  double stats_rate = 4;
+  repeated OverviewCurveInfo overview_curve_list = 5;
+}
+
+message OverviewCurveInfo {
+  int64 total_count = 2;
+  int64 success_count = 3;
+  int64 failed_count = 4;
+  double stats_rate = 5;
+  string start_time = 6;
+  string end_time = 7;
+}
+
+message MonitorDetailCurveResp {
+  repeated DetailCurveInfo detail_curve_list = 1;
+}
+
+message DetailCurveInfo {
+  int64 total_count = 1;
+  int64 success_count = 2;
+  int64 failed_count = 3;
+  double success_rate = 4;
+  double success_average = 5;
+  string start_time = 6;
+  string end_time = 7;
+
+}
+
+message MonitorDetailListResp {
+  repeated MonitorDetailList detail_list = 1;
+  int64 total_count = 2;
+}
+
+message MonitorDetailList {
+  string start_time = 1;     // 开始时间
+  string end_time = 2;       // 结束时间
+  int64 bank_id = 3;         // 银行ID
+  string bank_name = 4;      // 银行名称
+  int64 merchant_id = 5;     // 商户ID
+  string merchant_name = 6;  // 商户名称
+  string currency = 7;       // 币种
+
+  int64 total_request_count = 8;     // 总请求订单数
+  string total_request_amount = 9;   // 总请求金额
+  int64 total_success_count = 10;    // 总成功订单数
+  string total_success_amount = 11;  // 总成功金额
+  int64 total_failed_count = 12;     // 总失败订单数
+  string total_failed_amount = 13;   // 总失败金额
+
+  int64 payin_request_count = 14;    // Payin请求订单数
+  string payin_request_amount = 15;  // Payin请求金额
+  int64 payin_success_count = 16;    // Payin成功订单数
+  string payin_success_amount = 17;  // Payin成功金额
+  int64 payin_failed_count = 18;     // Payin失败订单数
+  string payin_failed_amount = 19;   // Payin失败金额
+
+  int64 payout_request_count = 20;   // Payout请求订单数
+  string payout_request_amount = 21; // Payout请求金额
+  int64 payout_success_count = 22;   // Payout成功订单数
+  string payout_success_amount = 23; // Payout成功金额
+  int64 payout_failed_count = 24;    // Payout失败订单数
+  string payout_failed_amount = 25;  // Payout失败金额
+}
+
+// ------------------------------------ Rpc Func
+
+service Summary {
+  rpc BankSummary(BankSummaryReq) returns (BankSummaryResp);
+  rpc MerchantSummary(MerchantSummaryReq) returns (MerchantSummaryResp);
+
+  rpc MonitorBankStats(MonitorStatsReq) returns (MonitorStatsResp);
+  rpc MonitorBankDetailOverview(MonitorDetailStatsReq) returns (MonitorDetailOverviewResp);
+  rpc MonitorBankDetailCurve(MonitorDetailStatsReq) returns (MonitorDetailCurveResp);
+  rpc MonitorBankDetailList(MonitorDetailStatsReq) returns (MonitorDetailListResp);
+
+  rpc MonitorMerchantStats(MonitorStatsReq) returns (MonitorStatsResp);
+  rpc MonitorMerchantDetailOverview(MonitorDetailStatsReq) returns (MonitorDetailOverviewResp);
+  rpc MonitorMerchantDetailCurve(MonitorDetailStatsReq) returns (MonitorDetailCurveResp);
+  rpc MonitorMerchantDetailList(MonitorDetailStatsReq) returns (MonitorDetailListResp);
+}

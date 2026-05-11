@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/bank_data";
+
+package pb;
+
+// create bank info request
+message BankDataInfoReq {
+  string date = 1 ;
+  string value_date = 2 ;
+  string chq_no = 3 ;
+  string narration = 4 ;
+  string cod = 5 ;
+  uint32 debit = 6 ;
+  uint32 credit = 7 ;
+  uint32 balance = 8 ;
+}
+
+message BankDataRateItem {
+  string date = 1 ;
+  string value_date = 2 ;
+  string chq_no = 3 ;
+  string narration = 4 ;
+  string cod = 5 ;
+  uint32 debit = 6 ;
+  uint32 credit = 7 ;
+  uint32 balance = 8 ;
+}
+
+message GetBankStatisticsListRep {
+  uint64 offset = 1;
+  uint64 limit = 2;
+  string bank_name = 3;
+  uint64  bank_id = 4;
+  string currency = 5;
+  string start_time = 6;
+  string end_time = 7;
+  int32 pay_type = 8;
+}
+
+message GetBankStatisticsListResp {
+  int64  total = 1;
+  repeated BankStatisticsItem list = 2;
+}
+
+message BankStatisticsItem {
+  uint64 bank_id = 1 ;
+  string bank_name = 2 ;
+  int32 status = 3 ;
+  string currency = 4 ;
+  string balance = 5;
+  string withdraw_balance = 6;
+  string unsettle_balance = 7;
+  string freeze_balance = 8;
+  string update_time = 9;
+  int64 request_count = 10;
+  int64 pay_count = 11;
+  string pay_amount = 12;
+  string success_rate = 13;
+  int32 pay_type = 14;
+}
+
+message GetBankBalanceDetailRep {
+  uint64 offset = 1;
+  uint64 limit = 2;
+  int64  merchant_id = 4;
+  string merchant_name = 5;
+  string start_time = 6;
+  string end_time = 7;
+  int32 pay_type = 8;
+  int64 bank_id = 9;
+  string Currency = 14;
+}
+
+message GetBankBalanceDetailResp {
+
+  int64  total = 1;
+  repeated BankBalanceDetailInfo list = 2;
+}
+
+message BankBalanceDetailInfo {
+  int64 merchant_id = 1;
+  string merchant_name = 2;
+  string merchant_total_balance = 3;
+  string merchant_avaiable_balance = 4;
+  string merchant_unsettled_balance = 5;
+  string merchant_frozen_balance = 6;
+  int32 pay_type = 7;
+  int64 request_count = 8;
+  int64 pay_count = 9;
+  string pay_amount = 10;
+  string success_rate = 11;
+  string mercahnt_appid = 12;
+  int64 bank_id = 13;
+
+}
+
+message GetBankBalanceDetailSummaryResp {
+  int64 pay_count = 1;
+  string pay_amount = 2;
+  string success_rate = 3;
+  int64 request_count = 4;
+}
+
+// ==================== func
+service BankData {
+  rpc GetBankList(BankDataInfoReq) returns (BankDataRateItem);
+  rpc GetBankStatisticsList(GetBankStatisticsListRep) returns (GetBankStatisticsListResp);
+  rpc GetBankBalanceDetail(GetBankBalanceDetailRep) returns (GetBankBalanceDetailResp);
+  rpc GetBankBalanceDetailSummary(GetBankBalanceDetailRep) returns (GetBankBalanceDetailSummaryResp);
+
+
+}

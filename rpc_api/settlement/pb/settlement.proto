@@ -1,0 +1,194 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/settlement/pb";
+
+package pb;
+
+// get settlement order list req
+message GetOrderListReq {
+  int64  page                 = 1;
+  int64  size                 = 2;
+  string system_order_no      = 3;
+  int32  process_status       = 4;  // 1:通过、2:驳回、3:未审核
+  int32  time_type            = 5;  // 1:创建时间、4:完成时间
+  string start_time           = 6;
+  string end_time             = 7;
+  int32  scarch_type          = 8;  // 1：获取商家待审核，2：获取商家所有订单、3：获取平台待审核订单
+  int32  submit_bank_status   = 9;  // 1:已提交银行、3:未提交银行
+  string merchant_order_no    = 10; // 商户订单号
+  string bank_order_no        = 11; // 银行订单号
+  string deposit_bank_account = 12; // 提款银行账号
+  int32  notify_status        = 13; // 通知状态
+  string settlement_currency  = 14; // 结算币种
+  int32  order_status         = 15; // 订单状态
+}
+
+// get settlement order list resp
+message GetOrderListResp {
+  int64       total = 1;
+  repeated OrderInfo list  = 2;
+}
+
+// settlement order info
+message OrderInfo {
+  int64  id                        = 1;
+  string system_order_no           = 2;  // System Order No
+  int64  merchant_id               = 3;  // Merchant ID
+  string merchant_name             = 4;  // Merchant Name
+  string merchant_order_no         = 5;  // Merchant Order No
+  string deposit_bank_account      = 6;  // Deposit Bank Account
+  string deposit_bank_name         = 7;  // Deposit Bank Name
+  string deposit_bank_identifier   = 8;  // Deposit Bank Identifier
+  string deposit_account_name      = 9;  // Deposit Account Name
+  string deposit_bank_mobile_phone = 10; // Deposit Bank Mobile Phone
+  string deposit_currency          = 11; // Deposit Currency
+  string withdraw_bank_account     = 12; // Withdraw Bank Account
+  string withdraw_bank_name        = 13; // Withdraw Bank Name
+  string withdraw_bank_identifier  = 14; // Withdraw Bank Identifier
+  string withdraw_account_name     = 15; // Withdraw Account Name
+  string withdraw_bank_mobile_phone = 16; // Withdraw Bank Mobile Phone
+  string withdraw_currency         = 17; // Withdraw Currency
+  string bank_order_no             = 18; // Bank Order No
+  string bank_transaction_voucher  = 19; // Bank Transaction Voucher
+  string platform_transaction_voucher = 20; // Platform Transaction Voucher
+  string settlement_currency       = 21; // Settlement Currency
+  int64  settlement_amount         = 22; // Settlement Amount
+  int64  settlement_fee_rate       = 23; // Settlement Fee Rate
+  int64  settlement_fee            = 24; // Settlement Fee (Settlement Amount * (Settlement Fee Rate / 10000) / 100 / 100)
+  int32  order_status              = 25; // Order Status (1: Completed (Bank Callback Success), 2: Failed (Bank Callback Failure), 3: Processing, Default: Processing)
+  int32  transaction_status        = 26; // Transaction Status (1: Created Settlement, Merchant Pending Review (Level 2), 5: Merchant Review Passed (Level 2), 10: Merchant Review Rejected (Level 2), 15: Platform Reviewing, 20: Platform Level 1 Review Passed, 25: Platform Level 1 Review Rejected, 30: Platform Level 2 Reviewing, 35: Platform Level 2 Review Passed, 40: Platform Level 2 Review Rejected, 45: Submitted to Bank (After Platform Level 2 Review Passed), 50: Bank Processing Completed (Success/Failure), Default: 1)
+  int32  process_node              = 27; // Process Node (1: Merchant Level 2 Review, 2: Platform Level 1 Review, 3: Platform Level 2 Review, 4: Submitted to Bank)
+  int32  process_status            = 28; // Process Status (1: Passed, 2: Rejected, 3: Unreviewed, 4: Submitted to Bank, Default: Unreviewed)
+  int64  bank_callback_time        = 30; // Bank Callback Time (Unix Timestamp in seconds)
+  int64  bank_success_time         = 31; // Bank Success Time (Withdrawal Time) (Unix Timestamp in seconds)
+  int64  payment_time              = 32; // Payment Time (Platform Initiating Transfer to Bank Time) (Unix Timestamp in seconds)
+  int32  notification_merchant_status = 33; // Notification Merchant Status (1: Notification Success, 3: Unnotified, Default: Unnotified)
+  int64  notification_merchant_time  = 34; // Notification Merchant Time (Unix Timestamp in seconds)
+  string notification_url          = 35; // Notification URL
+  string order_remark              = 36; // Order Remark
+  int64  create_time               = 37; // order create time
+  int64  finish_time               = 38; // order finish time
+}
+
+// settlement order audit req
+message OrderAuditReq {
+
+}
+
+
+
+// settlement order audit resp
+message OrderAuditResp {
+  string msg = 1;
+}
+
+// settlement order callback req
+message OrderCallbackReq {
+  // system order no required, request bank in system order no
+  string system_order_no  = 1;
+  // bank order no required, bank order no required
+  string bank_order_no    = 2;
+  // transaction amount required, acoumt point unit
+  int64  transaction_amount = 3;
+  // time format Milliseconds required
+  int64  bank_time          = 4;
+  // bank callback msg info
+  string bank_msg         = 5;
+  // 1:success、2:failed、3:processing required, bank return processing result status
+  int64  bank_status      = 6;
+  // transaction currency type
+  string currency         = 7;
+  // transaction  remark info
+  string remark           = 8;
+  // bank callback code
+  string bank_code        = 9;
+  // bank callback utr
+  string bank_utr = 10;
+}
+
+// settlement order callback resp
+message OrderCallbackResp {
+  // 1:success，2/0:failed
+  int64  code = 1;
+  // response message
+  string msg  = 2;
+}
+
+// create settlement order info req
+message CreateOrderInfoReq {
+  int64  SettlementAmount    = 1;
+  string SettlementCurrency  = 2;
+  string SettlementOrderRemark = 3;
+  string DepositBankName     = 4;
+  string DepositBankIdentifier = 5;
+  string DepositBankAccount  = 6;
+  string DepositAccountName  = 7;
+  string DepositBankMobilePhone = 8;
+}
+
+// operation order info common resp
+message OperationResp {
+  string msg = 1;
+}
+
+// settlement merchant order audit req
+message OrderAuditMerchantReq {
+  int32  audit_status    = 1;
+  string audit_remark    = 2;
+  string system_order_no = 3;
+}
+
+// settlement merchant order audit resp
+message OrderAuditMerchantResp {
+  string msg = 1;
+}
+
+// get settlement order detail info req
+message GetOrderDetailInfoReq {
+  string system_order_no = 1;
+  int32  platform_type   = 2; // 1: platform, 2: merchant
+}
+
+message GetOrderDetailInfoResp {
+  OrderInfo           order_info      = 1;
+  repeated OrderAuditUser audit_user_list = 2;
+}
+
+message OrderAuditUser {
+  int64  id              = 1;
+  string system_order_no = 2; // System Order No
+  int64  user_id         = 3; // User ID
+  string user_name       = 4; // User Name
+  int64  audit_time      = 5; // Audit Time (Unix Timestamp in seconds)
+  int32  audit_status    = 6; // Audit Status, 1: Passed, 2: Rejected
+  string audit_remark    = 7; // Audit Remark
+  int64  role_id         = 8; // Role ID
+  int32  process_node    = 9; // Process Node, 1: First Level Application, 2: Second Level Audit, 3: Platform First Level Audit, 4: Platform Second Level Audit
+}
+
+message SettlementNotifySuccessReq {
+  string SystemOrderNo = 1;
+  string Msg = 2;
+}
+
+// ------------------------------------
+// Rpc Func
+// ------------------------------------
+
+service settlement {
+  // get settlement order list
+  rpc GetOrderList(GetOrderListReq) returns (GetOrderListResp);
+  // settlement order audit
+  rpc OrderAudit(OrderAuditReq) returns (OrderAuditResp);
+  // settlement order callback
+  rpc OrderCallback(OrderCallbackReq) returns (OrderCallbackResp);
+  // merchant create settlement order info
+  rpc CreateOrderInfo(CreateOrderInfoReq) returns (OperationResp);
+  // merchant settlement order audit
+  rpc OrderAuditMerchant(OrderAuditMerchantReq) returns (OrderAuditMerchantResp);
+  // get settlement order detail info
+  rpc GetOrderDetailInfo(GetOrderDetailInfoReq) returns (GetOrderDetailInfoResp);
+
+  // notify merchant success
+  rpc NotifySuccess(SettlementNotifySuccessReq) returns (OperationResp);
+}

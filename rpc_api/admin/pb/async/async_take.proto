@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/async_take";
+
+package pb;
+
+message   AsyncTakeModel  {
+  uint64  create_user_id = 1;
+  string  create_user_name = 2;
+  string  create_time = 3;
+  int64   status = 4;
+  bytes  payload = 5;
+  string  hosted_url = 6;
+  string  result = 7;
+  int64   take_type = 8;
+  string  response_payload = 9;
+  uint64 id = 10;
+  string start_time = 11;
+  string end_time = 12;
+  string update_time = 13;
+  int64 size = 14;
+  int64 total_count = 15;
+}
+
+message AddTakeParam {
+  bytes   payload = 1;
+  int64   take_type = 2;
+  uint64  id = 3;
+  string  response_payload = 4;
+  uint64  merchant_id = 5;
+  string  currency = 6;
+  uint64  create_user_id = 7;
+  string  create_user_name = 8;
+}
+
+message Response {}
+
+message QueryAsyncTakeListParam {
+  uint64 create_user_id = 1;
+  string create_user_name = 2;
+  int64 status = 4;
+  string result = 5;
+  int64 take_type = 6;
+  uint64 offset = 11;
+  uint64 limit = 12;
+  string start_time = 13;
+  string end_time = 14;
+  uint64 merchant_id = 15;
+}
+
+message QueryAsyncTakeListResponse {
+  int64 total = 1;
+  repeated AsyncTakeModel list = 2;
+}
+
+service AsyncTake {
+  rpc AddTake(AddTakeParam) returns (Response);
+  rpc QueryAsyncTakeList(QueryAsyncTakeListParam) returns (QueryAsyncTakeListResponse);
+}

@@ -1,0 +1,254 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/statistics";
+
+package pb;
+
+
+message GetStatisticsReq {
+  int64 page = 1;
+  int64 size = 2;
+  int64 merchant_id = 3;
+  string merchant_name = 4;
+  string start_time = 5;
+  string end_time = 6;
+  string bank_name = 7;
+  string bank_identifier = 8;
+  // day month week random
+  string load_mode = 9;
+  string data_token = 10;
+  string currency = 11;
+  int32 order_type = 12;
+  int64 bank_id = 13;
+}
+
+// get statistics merchant list resp
+message GetStatisticsMerchantListResp {
+  int64 total = 1;
+  string  data_token = 2;
+  repeated StatisticsMerchantInfo list = 3;
+}
+
+message StatisticsMerchantInfo {
+  int64 id = 1;
+  string merchant_name = 2;
+  int64 merchant_id = 3;
+  int64 success_total_count = 4;
+  int64 order_total_count = 5;
+  int64 order_total_amount = 6;
+  int64 success_total_amount = 7;
+  double success_rate = 8;
+
+  int64 processing_order_total_count = 9;
+  int64 processing_order_total_amount = 10;
+  int64 failed_order_total_count = 11;
+  int64 failed_order_total_amount = 12;
+
+  int64 refunded_order_count = 13;
+  int64 refunded_order_total_amount = 14;
+  double refunded_order_rate = 15;
+
+  int64 unsettled_amount = 16;
+  int64 frozen_amount = 17;
+  string data_date = 18; // unix timestamp
+  string currency = 19;
+  int32 week = 20;
+  double failed_rate = 21;
+}
+
+// get statistics merchant trade type list resp
+message GetStatisticsMerchantTradeTypeListResp {
+  int64 total = 1;
+  repeated StatisticsMerchantTradeTypeInfo list = 2;
+  string  data_token = 3;
+}
+
+message StatisticsMerchantTradeTypeInfo {
+  int64 id = 1;
+  string merchant_name = 2;
+  int64 merchant_id = 3;
+  string currency = 4;
+  int32 transaction_instruction_type = 5;
+
+  int64 order_total_count = 6;
+  int64 order_total_amount = 7;
+  int64 success_total_count = 8;
+  int64 success_total_amount = 9;
+  double success_rate = 10;
+
+  int64 processing_order_total_count = 11;
+  int64 processing_order_total_amount = 12;
+  int64 failed_order_total_count = 13;
+  int64 failed_order_total_amount = 14;
+
+  int64 refunded_order_count = 15;
+  int64 refunded_order_total_amount = 16;
+  double refunded_order_rate = 17;
+
+  int64 unsettled_amount = 18;
+  int64 frozen_amount = 19;
+
+  int32 order_type = 20;
+  string data_date = 21; // unix timestamp
+  int32 week = 22;
+  double failed_rate = 23;
+}
+
+// get statistics bank list resp
+message GetStatisticsBankListResp {
+  int64 total = 1;
+  repeated StatisticsBankInfo list = 2;
+  string  data_token = 3;
+}
+
+message StatisticsBankInfo {
+  int64 id = 1;
+  int64 bank_id = 2;
+  string bank_name = 3;
+  string bank_identifier = 4;
+  string currency = 5;
+
+  int64 order_total_amount = 6;
+  int64 order_total_count = 7;
+  int64 success_total_count = 8;
+  int64 success_total_amount = 9;
+  double success_rate = 10;
+
+  int64 processing_order_total_count = 11;
+  int64 processing_order_total_amount = 12;
+  int64 failed_order_total_count = 13;
+  int64 failed_order_total_amount = 14;
+  int64 refunded_order_count = 15;
+  int64 refunded_order_total_amount = 16;
+  double refunded_order_rate = 17;
+
+  int64 bank_order_total_amount = 18;
+  int64 bank_order_total_count = 19;
+  int64 bank_success_total_count = 20;
+  int64 bank_success_total_amount = 21;
+  double bank_success_rate = 22;
+
+  int64 bank_processing_order_total_count = 23;
+  int64 bank_processing_order_total_amount = 24;
+  int64 bank_failed_order_total_count = 25;
+  int64 bank_failed_order_total_amount = 26;
+  int64 bank_refunded_order_count = 27;
+  int64 bank_refunded_order_total_amount = 28;
+  double bank_refunded_order_rate = 29;
+
+
+  int32 order_type = 30;
+  string data_date = 31; // unix timestamp
+
+  int64 bank_unknown_order_count = 32;
+  int64 bank_unknown_order_amount = 33;
+
+  int32 week = 34;
+  double failed_rate = 35;
+  double bank_failed_rate = 36;
+}
+
+// get statistics bank trade type list resp
+message GetStatisticsBankTradeTypeListResp {
+  int64 total = 1;
+  repeated StatisticsBankTradeTypeInfo list = 2;
+  string  data_token = 3;
+}
+
+message StatisticsBankTradeTypeInfo {
+  int64 id = 1;
+  int64 bank_id = 2;
+  string bank_name = 3;
+  string bank_identifier = 4;
+  string currency = 5;
+  int32 transaction_instruction_type = 6;
+
+  int64 order_total_amount = 7;
+  int64 order_total_count = 8;
+  int64 success_total_count = 9;
+  int64 success_total_amount = 10;
+  double success_rate = 11;
+
+  int64 processing_order_total_count = 12;
+  int64 processing_order_total_amount = 13;
+  int64 failed_order_total_count = 14;
+  int64 failed_order_total_amount = 15;
+  int64 refunded_order_count = 16;
+  int64 refunded_order_total_amount = 17;
+  double refunded_order_rate = 18;
+
+  int64 bank_order_total_amount = 19;
+  int64 bank_order_total_count = 20;
+  int64 bank_success_total_count = 21;
+  int64 bank_success_total_amount = 22;
+  double bank_success_rate = 23;
+
+  int64 bank_processing_order_total_count = 24;
+  int64 bank_processing_order_total_amount = 25;
+  int64 bank_failed_order_total_count = 26;
+  int64 bank_failed_order_total_amount = 27;
+  int64 bank_refunded_order_count = 28;
+  int64 bank_refunded_order_total_amount = 29;
+  double bank_refunded_order_rate = 30;
+
+  int32 order_type = 31;
+  string data_date = 32; // unix timestamp
+
+  int64 bank_unknown_order_count = 33;
+  int64 bank_unknown_order_amount = 34;
+  int32 week = 35;
+  double failed_rate = 36;
+  double bank_failed_rate = 37;
+}
+
+// get statistics trade type list resp
+message GetStatisticsTradeTypeListResp {
+  int64 total = 1;
+  repeated StatisticsTradeTypeInfo list = 2;
+  string  data_token = 3;
+}
+
+message StatisticsTradeTypeInfo {
+  int64 id = 1;
+  int32 transaction_instruction_type = 2;
+  string currency = 3;
+
+  int64 order_total_count = 4;
+  int64 order_total_amount = 5;
+
+  int64 success_total_count = 6;
+  int64 success_total_amount = 7;
+  double success_rate = 8;
+
+  int64 processing_order_total_count = 9;
+  int64 processing_order_total_amount = 10;
+
+  int64 failed_order_total_count = 11;
+  int64 failed_order_total_amount = 12;
+
+  int64 refunded_order_count = 13;
+  int64 refunded_order_total_amount = 14;
+  double refunded_order_rate = 15;
+
+  int64 unsettled_amount = 16;
+  int64 frozen_amount = 17;
+
+  int32 order_type = 18;
+  string data_date = 19; // unix timestamp
+
+  int32 week = 20;
+  double failed_rate = 21;
+}
+
+service Statistics {
+  // get statistics merchant list info
+  rpc GetStatisticsMerchantList(GetStatisticsReq) returns (GetStatisticsMerchantListResp);
+
+  rpc GetStatisticsMerchantTradeTypeList(GetStatisticsReq) returns (GetStatisticsMerchantTradeTypeListResp);
+
+  rpc GetStatisticsBankList(GetStatisticsReq) returns (GetStatisticsBankListResp);
+
+  rpc GetStatisticsBankTradeTypeList(GetStatisticsReq) returns (GetStatisticsBankTradeTypeListResp);
+
+  rpc GetStatisticsTradeTypeList(GetStatisticsReq) returns (GetStatisticsTradeTypeListResp);
+}

@@ -1,0 +1,210 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/bank";
+
+package pb;
+
+// create bank info request
+message CreateBankInfoReq {
+  uint64 id = 1;
+  string name = 2;
+  int64 status = 3;
+  string currency_type = 4 ;
+  uint64 concurrency = 5 ;
+  string remark = 6;
+  string bank_mark = 7;
+  string logo = 8;
+  string payment_gateway_url = 9;
+  string call_back_notify_url = 10;
+  string cash_register_url = 11;
+  repeated BankTradeRateItem bank_trade_rate_items = 12;
+}
+
+message BankTradeRateItem {
+  uint64 id = 1;
+  int64 status = 2;
+  int64 trade_rate_type = 3 ;
+  int64 cycle = 4;
+  int64 cycle_val = 5;
+  uint64 st_min_amt = 6;
+  uint64 st_max_amt = 7;
+  int64 rate_gradient_type = 8;
+  uint64 amt_gt_val = 9;
+  uint64 amt_lt_val = 10;
+  uint64 amt_gt_rate = 11;
+  uint64 amt_gt_fixed_fee = 12;
+  uint64 amt_lt_rate = 13;
+  uint64 amt_lt_fixed_fee = 14;
+  uint64 rate = 15;
+  uint64 fixed_fee = 16;
+  uint64 single_rate = 17;
+  uint64 single_fixed_fee = 18;
+  uint64 daily_max_count = 19;
+  uint64 daily_max_amt = 20;
+  uint64 monthly_max_count = 21;
+  uint64 monthly_max_amt = 22;
+  uint64 yearly_max_count = 23;
+  uint64 yearly_max_amt = 24;
+  repeated string cron_time_list = 25;
+  int64 cron_type = 26;
+  uint64 lock_days = 27;
+  string lock_cron_time = 28;
+}
+
+// create bank info response
+message CreateBankInfoResp {
+  uint64 id = 1;
+}
+
+// modify bank info request
+message ModifyBankInfoReq {
+  // Bank ID
+  int64 id = 1;
+
+}
+
+// modify bank info response
+message ModifyBankInfoResp {
+  // Bank ID
+  int64 id = 1;
+
+}
+
+// modify bank status request
+message ModifyBankStatusReq {
+  // Bank ID
+  int64 id = 1;
+  // New bank status
+  string status = 2;
+}
+
+// modify bank status response
+message ModifyBankStatusResp {
+  // Bank ID
+  int64 id = 1;
+}
+
+// modify bank cash register request
+message ModifyCashRegisterReq {
+  // Bank ID
+  int64 id = 1;
+}
+
+// modify bank cash register response
+message ModifyCashRegisterResp {
+  // Bank ID
+  int64 id = 1;
+}
+
+// delete bank info request
+message DeleteBankInfoReq {
+  // Bank ID
+  int64 id = 1;
+}
+
+// delete bank info response
+message DeleteBankInfoResp {
+  // Bank ID
+  int64 id = 1;
+  // Confirmation message
+  string message = 2;
+}
+
+// get bank list info request
+message GetBankListInfoReq {
+  int64 page = 1;
+  int64 size = 2;
+  string name = 3;
+  // Optional filter for bank status
+  int64 status = 4;
+  uint64 id = 5;
+}
+
+// get bank list info response
+message GetBankListInfoResp {
+  int64  total = 1;
+  repeated GetBankInfoResp list = 2;
+}
+
+message GetBankInfoResp {
+  uint64 id = 1;
+  string name = 2;
+  string currency = 3;
+  repeated BankTradeRateInfoData list = 20;
+}
+
+// get bank detail info request
+message GetBankDetailInfoReq {
+  int64 id = 1; // bank id
+}
+
+message BankTradeRateInfoData {
+  uint64 id = 1;
+  int64 trade_rate_type = 2;
+  repeated string cron_time_list = 3;
+  uint64 cron_type = 4;
+  uint64 lock_days = 5;
+  string lock_cron_time = 6;
+  uint64 st_min_amt = 8;
+  uint64 st_max_amt = 9;
+  int64 cycles = 20;
+}
+
+// get bank detail info response
+message GetBankDetailInfoResp {
+  int64 id = 1;
+  string name = 2;
+  int64 status = 3;
+  string currency_type = 5;
+  uint64 concurrency = 6;
+  string remark = 7;
+  string cash_register_url = 8;
+  int32 cron_type = 9;
+  string call_back_notify_url = 10;
+  repeated string ip_list = 11;
+}
+
+message GetBankTradeRateInfoParam {
+  uint64 bank_id = 1;
+  int64 trade_rate_type = 2;
+}
+
+message GetBankListResp {
+  int64  total = 1;
+  repeated BankInfo list = 2;
+}
+
+message BankInfo {
+  int64 id = 1;
+  string name = 2;
+  string status = 3;
+  string currency_type = 4;
+  uint64 concurrency = 6;
+  string remark = 7;
+  string bank_mark = 8;
+  string logo = 9;
+  string payment_gateway_url = 10;
+  string call_back_notify_url = 11;
+  string cash_register_url = 12;
+ }
+
+
+service Bank {
+  // create bank info
+  rpc CreateBankInfo (CreateBankInfoReq) returns (CreateBankInfoResp);
+  // modify bank info
+  rpc ModifyBankInfo (ModifyBankInfoReq) returns (ModifyBankInfoResp);
+  // modify bank status
+  rpc ModifyBankStatus (ModifyBankStatusReq) returns (ModifyBankStatusResp);
+  // modify bank cash register
+  rpc ModifyCashRegister (ModifyCashRegisterReq) returns (ModifyCashRegisterResp);
+  // delete bank info
+  rpc DeleteBankInfo (DeleteBankInfoReq) returns (DeleteBankInfoResp);
+  // get bank list info
+  rpc GetBankListInfo (GetBankListInfoReq) returns (GetBankListInfoResp);
+  // get bank detail info
+  rpc GetBankDetailInfo (GetBankDetailInfoReq) returns (GetBankDetailInfoResp);
+  // get bank list new
+  rpc GetBankList(GetBankListInfoReq) returns (GetBankListResp);
+  rpc GetBankTradeRateInfo (GetBankTradeRateInfoParam) returns (BankTradeRateInfoData);
+}

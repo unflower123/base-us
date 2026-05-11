@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/operation_log";
+
+package pb;
+
+message OperationLogModel  {
+  uint64 id = 1;
+  string create_time = 2;
+  uint64 creator_id = 3;
+  string creator_name = 4;
+  string operation_desc = 5;
+  uint64 merchant_id = 6;
+  string request_param = 7;
+  string response_data = 8;
+  string ip_address = 9;
+  string url = 10;
+  string method = 11;
+  string exec_time = 12;
+  string currency = 13;
+}
+
+message AddOperationLogParam {
+  string operation_desc = 5;
+  uint64 merchant_id = 6;
+  string request_param = 7;
+  string response_data = 8;
+  string ip_address = 9;
+  string url = 10;
+  string method = 11;
+  double exec_time = 12;
+}
+
+message AddOperationLogResponse {}
+
+message QueryOperationLogListParam {
+  string create_user_name = 2;
+  string method = 4;
+  string url = 5;
+  uint64 offset = 11;
+  uint64 limit = 12;
+  string start_time = 13;
+  string end_time = 14;
+  uint64 merchant_id = 15;
+  string request_param = 16;
+}
+
+message QueryOperationLogListResponse {
+  int64 total = 1;
+  repeated OperationLogModel list = 2;
+}
+
+service OperationLog {
+  rpc AddOperationLog(AddOperationLogParam) returns (AddOperationLogResponse);
+  rpc QueryOperationLogList(QueryOperationLogListParam) returns (QueryOperationLogListResponse);
+}

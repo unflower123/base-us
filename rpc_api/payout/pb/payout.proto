@@ -1,0 +1,811 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/payout/pb";
+
+package pb;
+
+message CreatePayoutOrderReq {
+  string appid = 1;
+  int64 transaction_amount = 2;
+  string merchant_order_no = 3;
+  string device = 4;
+  string withdraw_name = 5;
+  string withdraw_bank_name = 6;
+  string withdraw_bank_code = 11;
+  string withdraw_mobile = 7;
+  string withdraw_bank_logo = 8;
+  string withdraw_account = 9;
+  string notify_url = 10;
+  string currency = 12;
+  string withdraw_account_type = 13;
+  string withdraw_email = 14;
+  string withdraw_token = 15;
+  string extra_data = 16;
+}
+
+
+message CreatePayoutOrderResp {
+  string system_order_no = 1;
+  int32 code = 2;
+  string msg = 3;
+  int64 fee_amount = 4;
+  string request_time = 5;
+  int64 status = 6;
+
+}
+
+message CallbackPayoutOrderReq {
+  // system order no required, request bank in system order no
+  string system_order_no = 1;
+  // bank order no required, bank order no required
+  string bank_order_no = 2;
+  // transaction amount required, acoumt point unit
+  double transaction_amount = 3;
+  // time format Milliseconds required
+  string  bank_time = 4;
+  // bank callback msg info
+  string bank_msg = 5;
+  // 1:success、2:failed、3:processing required, bank return processing result status
+  int64  bank_status = 6;
+  // transaction currency type
+  string currency = 7;
+  // transaction  remark info
+  string remark = 8;
+  // bank callback code
+  string bank_code = 9;
+  // bank callback utr
+  string bank_utr = 10;
+  // 银行原始响应
+  string bank_callback = 11;
+}
+message CallbackPayoutOrderResp {
+  // 1:success，2/0:failed
+  int64 code = 1;
+  // response message
+  string msg = 2;
+}
+
+message GetPayoutOrderListReq {
+  int64  merchant_id = 1;
+  string merchant_order_no = 2;
+  //  string order_no = 3;
+  string system_no = 4;
+  string withdraw_account = 5;
+  string withdraw_name = 6;
+  string withdraw_bank_name = 7;
+  string withdraw_mobile = 8;
+  string withdraw_bank_code = 9;
+  string device_ip = 10;
+  int64  type = 11;
+  string min_amount = 12;
+  string max_amount = 13;
+  int32  time_type = 14;
+  string start_time = 15;
+  string end_time = 16;
+  int64  bank_status = 17;
+  string bank_name = 18;
+  uint64 status = 19;
+  string bank_order_no = 20;
+  int64  page = 21;
+  int64  size = 22;
+  string create_time = 23;
+  repeated string bank_order_nos = 24;
+  string currency = 25;
+  int64  bank_id = 26;
+  string bank_utr = 27;
+  string transaction_utr = 28;
+  string withdraw_email = 29;
+  string withdraw_token = 30;
+  string withdraw_account_type = 31;
+  int32 trade_rate_type = 32;
+  int32 amount_type = 33;
+  int32 notify_status = 34;
+  string merchant_name = 35;
+  repeated string order_nos = 36;
+  repeated string merchant_order_nos = 37;
+  int32 release_count = 38;
+  int32 compliance_status = 39;
+  repeated uint64 merchant_ids = 40;
+  repeated uint64 bank_ids = 41;
+}
+
+message GetPayoutOrderListResp {
+  int64 total = 1;
+  repeated PayoutOrderInfo list = 2;
+}
+
+message PayoutOrderInfo {
+  string create_time = 1;
+  uint64 id = 2;
+  int64 merchant_id = 3;
+  string system_order_no = 4;
+  string merchant_order_no = 5;
+  string bank_order_no = 7;
+  string bank_name = 8;
+  int64 transaction_amount = 9;
+  int64 bank_amount = 10;
+  int64 merchant_cost = 11;
+  int64 bank_cost = 14;
+  int64 bank_status = 15;
+  int64 bank_id = 16;
+  string bank_certificate = 17;
+  int64  merchant_notify_status = 19;
+  string withdraw_account = 20;
+  string withdraw_name = 21;
+  string withdraw_bank_name = 22;
+  string withdraw_mobile = 23;
+  string success_time = 25;
+  string merchant_notify_time = 26;
+  string device = 27;
+  string ip = 28;
+  int64  status = 29;
+  string status_name = 30;
+  string merchant_notify_url = 31;
+  string currency = 32;
+  int64 trade_rate_type = 33;
+  int64 rate = 34;
+  int64 fee = 35;
+  string update_time = 36;
+  string bank_utr = 37;
+  string bank_callback_time = 38;
+  string bank_pay_time = 39;
+  int64 actual_amount = 40;
+  string merchant_cost_str = 41;
+  string merchant_appid = 42;
+  string transaction_utr = 43;
+  string withdraw_bank_code = 44;
+  string withdraw_email = 45;
+  string withdraw_token = 46;
+  string withdraw_account_type = 47;
+  string extra_data = 48;
+  repeated string bank_svr_ips = 49;
+  string merchant_name = 50;
+  repeated int64 bank_ids = 51;
+  string dispatch_time = 52;
+  int32 compliance_status = 53;
+}
+
+
+message GetPayoutOrderInfoReq {
+  string appid = 1;
+  string merchant_order_no = 2;
+}
+message GetPayoutOrderInfoResp {
+  string appid = 1;
+  uint64 merchant_amount = 2;
+  string merchant_order_no = 3;
+  string device = 4;
+  string withdraw_name = 5;
+  string withdraw_bank_name = 6;
+  string withdraw_mobile = 7;
+  string withdraw_bank_logo = 8;
+  string order_no = 9;
+  int64 status = 10;
+  //string ip = 9;
+}
+
+message PayoutNotifySuccessReq {
+  string SystemOrderNo = 1;
+  string Msg = 2;
+}
+
+message PayoutNotifySuccessResp {
+  string Msg = 1;
+}
+
+message PayoutOrderListCumulativeSummaryResponse {
+  PayoutSummary SuccessInfo = 1;
+  PayoutSummary PendingInfo = 2;
+  PayoutSummary FreezeInfo = 3;
+  PayoutSummary FailedInfo = 4;
+  PayoutSummary RefundedInfo = 5;
+}
+message PayoutSummary {
+  string TxCount = 1;
+  string ReqAmt = 2;
+  string Rate = 3;
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// get payout order staticstics data start
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// get payout order staticstics data req
+message GetPayoutOrderStatisticsDataReq {
+  int64 page = 1;
+  int64 size = 2;
+  string start_time = 3;
+  string end_time = 4;
+  string currency = 5;
+}
+
+// get payout order staticstics data resp
+message GetPayoutOrderStatisticsDataResp {
+  string data_time = 1;
+  int64 total = 2;
+  // merchant count
+  map<string, PayoutOrderStatisticsInfo> merchant_count = 3;
+  // merchant trade type count, merchantid+currency+trad_type
+  map<string, PayoutOrderStatisticsInfo> merchant_trade_type_count = 4;
+  // bank info count, bankid+currency
+  map<string, PayoutOrderStatisticsInfo> bank_info_count = 5;
+  // bank trade type count, bankid+currency+trad_type
+  map<string, PayoutOrderStatisticsInfo> bank_trade_type_count = 6;
+  // trade type count, currency+trad_type
+  map<string, PayoutOrderStatisticsInfo> trade_type_count = 7;
+}
+
+
+message PayoutOrderStatisticsInfo {
+  int64 merchant_id = 1;
+  string merchant_name = 2;
+  int64 order_total_count = 3;
+  int64 order_total_amount = 4;
+  int64 success_total_count = 5;
+  int64 success_total_amount = 6;
+  int64 processing_order_total_count = 7;
+  int64 processing_order_total_amount = 8;
+  int64 failed_order_total_count = 9;
+  int64 failed_order_total_amount = 10;
+  int64 refunded_order_count = 11;
+  int64 refunded_order_total_amount = 12;
+  int64 frozen_amount = 13;
+  int64 unsettled_amount = 14;
+  string currency = 15;
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// get payout order staticstics data end
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+message BatchUpdateRefundPayoutOrderParam {
+  repeated payoutRefundObj refunds = 1;
+  repeated payoutRefundObj complains = 2;
+}
+
+message payoutRefundObj {
+  uint64 id = 1;
+  int64 undertake = 2;
+  string remark = 3;
+  uint64 launch_user_id = 4;
+}
+
+
+message BatchUpdatePayoutOrderResponse {
+  int64 code = 1;
+  string msg = 2;
+}
+
+message QueryOrderInfoReq {
+  string system_order_no = 1;
+  string merchant_appid = 2;
+  string merchant_order_no = 3;
+}
+
+message QueryOrderInfoResp {
+  int32 code = 1;
+  string msg = 2;
+  PayoutOrderInfo order_info = 3;
+}
+
+message QueryMerchantBalanceReq {
+  string merchant_appid = 1;
+}
+
+message QueryMerchantBalanceResp {
+  int32 code = 1;
+  string msg = 2;
+  MerchantBalance balance_info = 3;
+}
+
+message MerchantBalance {
+  string currency = 1;
+  int64 total_balance = 2;
+  int64 withdraw_balance = 3;
+  int64 unsettle_balance = 4;
+  int64 freeze_balance = 5;
+
+}
+message QueryPayoutOrderLogReq {
+  string order_no = 1;
+  string bank_order_no = 2;
+}
+
+message QueryPayoutOrderLogResp {
+  repeated PayoutOrderLogInfo data = 1;
+}
+
+message PayoutOrderLogInfo {
+  string order_no = 1;
+  string bank_order_no = 2;
+  string request_data = 3;
+  string callback_data = 4;
+  string data_time = 5;
+  string notify_request = 6;
+  string notify_response = 7;
+}
+
+message ManualPayoutOrderReq {
+  repeated string order_nos = 1;
+  int64 bank_id = 2;
+  string bank_name = 3;
+  string bank_account = 4;
+  repeated string bank_ips = 5;
+  string currency = 6;
+  int64 con_time = 7; // 并发时间
+  int64 con_number = 8; // 并发数
+  string operator_user = 9;// 操作用户
+}
+
+message ManualPayoutOrderResp {
+  string Msg = 1;
+}
+
+message DispatchOrderReq {
+  repeated int64 merchant_ids = 1;
+  int64 bank_id = 2;
+  int64 order_num = 3;
+  int64 order_amount = 4;
+  int64 order_amount_min = 5;
+  int64 order_amount_max = 6;
+  int64 search_bank_id = 7;
+  string search_start_time = 8;
+  string search_end_time = 9;
+  string withdraw_bank_code = 10;
+  string withdraw_token = 11;
+  int32 compliance_status = 12;
+}
+
+message DispatchOrderResp {
+  int64 merchant_sum = 1;
+  int64 bank_id = 2;
+  string bank_name = 3;
+  int64 order_num = 4;
+  int64 order_amount = 5;
+  int64 account_num = 6;
+  int64 same_account_num = 7;
+  int64 interval_1 = 8;
+  int64 interval_2 = 9;
+  int64 interval_3 = 10;
+  int64 interval_4 = 11;
+  repeated string all_orders = 12;
+  repeated DispatchOrderItem same_account_order_list = 13;
+  repeated DispatchOrderItem interval_3_list = 14;
+  repeated DispatchOrderItem interval_4_list = 15;
+  repeated MerchantItem merchant_list = 16;
+
+}
+
+message DispatchOrderItem {
+  int64 merchant_id = 1;
+  string merchant_name = 2;
+  string system_order_no = 3;
+  string merchant_order_no = 4;
+  int64 amount = 5;
+  string withdraw_account = 6;
+  string withdraw_name = 7;
+  string withdraw_bank = 8;
+  string create_time = 9;
+}
+
+message MerchantItem {
+  int64 merchant_id = 1;
+  string merchant_name = 2;
+}
+
+
+message ResetReleaseCountReq {
+  string order_no = 1;
+  repeated  string order_nos = 2;
+}
+
+message GetMerchantByOrderReq {
+  int64 bank_id = 1;
+  string start_time = 2;
+  string end_time = 3;
+  string withdraw_bank_code = 4;
+  string withdraw_token = 5;
+  int32 compliance_status = 6;
+}
+
+message MerchantByOrderItem {
+  int64 merchant_id = 1;
+  string merchant_name = 2;
+  int64 order_num = 3;
+  int64 order_amount = 4;
+  int64 interval_1 = 5;
+  int64 interval_2 = 6;
+  int64 interval_3 = 7;
+  int64 interval_4 = 8;
+}
+
+message GetMerchantByOrderResp {
+  repeated MerchantByOrderItem list = 1;
+}
+
+
+message GetPayoutDispatchTaskReq {
+  int64 id = 1;
+  string task_id = 2;
+  int64 channel_id = 3;
+  string channel_name = 4;
+  string operator_user = 5;
+  int32 task_status = 6;
+  int32 time_type = 7;
+  string start_time = 8;
+  string end_time = 9;
+  int64 page = 10;
+  int64 size = 11;
+}
+
+message GetPayoutDispatchTaskResp {
+  repeated PayoutDispatchTaskInfo list = 1;
+  int64 total = 2;
+}
+
+message PayoutDispatchTaskInfo {
+  // 主键 (Primary Key)
+  int64 id = 1; // 记录 ID
+
+  // 任务核心信息 (Task Core Information)
+  string task_id = 2;              // 任务 ID
+  string task_date = 3;            // 任务所属日期 (String 类型)
+  int32 task_sequence = 4;         // 任务序列号
+
+  int64 channel_id = 5;           // 渠道 ID
+  string channel_name = 6;         // 渠道名称
+  string operator_user = 7;        // 操作用户
+  string currency = 8;             // 币种
+  int32 channel_concurrency = 9;   // 渠道并发数
+
+  // 订单和进度 (Order and Progress)
+  int32 requested_count = 10;       // 请求订单数
+  int32 actual_count = 11;          // 实际完成订单数
+  int32 duplicate_count = 12;       // 重复请求次数
+
+  int32 task_progress = 13;         // 任务进度
+
+  // 状态和时间 (Status and Time)
+  int32 task_status = 14;           // 任务完成状态 (int32 类型，例如 2处理中，1已完成) ⚠️ 已修改
+  int64 estimated_finish_time = 15; // 预计完成时间，单位秒 (Unix 时间戳)
+
+  // 数据记录 (Data Payload)
+  string requested_data = 16;       // 原始请求数据
+  string actual_data = 17;          // 实际处理结果数据
+  string duplicate_data = 18;       // 重复请求时提交的数据
+  string duplicate_task_id = 19;    // 重复请求数据对应的任务id
+
+  // 时间戳 (Timestamps)
+  string finish_time = 20;         // 任务实际完成时间 (String 类型)
+  string create_time = 21;        // 任务创建时间 (String 类型)
+  string update_time = 22;        // 任务更新时间 (String 类型)
+
+  int32 failed_count = 23;       // 失败次数
+  string failed_data = 24;       // 失败的数据
+}
+
+message GetRiskControlRuleReq {
+}
+
+message GetRiskControlRuleResp {
+  repeated RiskControlRuleInfo list = 1;
+}
+
+message RiskControlRuleInfo {
+  int32 time_days = 1;
+  repeated RiskControlRule list = 2;
+}
+
+message UpdateRiskControlRuleReq {
+  repeated RiskControlRuleInfo list = 1;
+}
+message UpdateRiskControlRuleResp {
+  string msg = 1;
+}
+
+message RiskControlRule {
+  int64 id = 1;                     // 主键ID (BIGSERIAL)
+  string rule_id = 2;               // 规则的业务唯一标识 (UNIQUE)
+
+  int64 min_amount = 3;             // 金额区间起始值 (最小货币单位)
+  int64 max_amount = 4;             // 金额区间结束值 (最小货币单位)
+  int32 limit_count = 5;            // 该金额区间允许的最大操作次数 (int -> int32)
+
+  string rule_type = 6;             // 规则的应用类型 (e.g., USER_DAILY_TXN)
+  int32 time_days = 7;              // 限流时间窗口长度 (天数: 1, 3, 7)
+
+  int64 merchant_id = 8;            // 商户id字段
+  string risk_account = 9;          // 风控账号
+  string rule_desc = 10;            // 规则描述
+  int32 is_active = 11;             // 规则启用状态 (1: 启用, 2: 禁用)
+  string currency = 12;             // 币种
+
+  string create_time = 13; // 创建时间
+  string update_time = 14; // 更新时间
+}
+
+message GetPayoutAccountSummaryReq {
+  string withdraw_account = 2; // 账号ID (提现或交易账号)
+  string rule_id = 3;          // 命中的风控规则ID
+  int32 time_days = 4;         // 限流时间窗口长度 (天数: 1, 7)
+  int64 page = 5;
+  int64 size = 6;
+}
+
+
+message GetPayoutAccountSummaryResp {
+  int64 total = 1;
+  repeated PayoutAccountSummaryInfo list = 2;
+
+}
+
+message PayoutAccountSummaryInfo {
+  int64 id = 1; // 主键ID
+
+  string withdraw_account = 2; // 账号ID (提现或交易账号)
+  string rule_id = 3;          // 命中的风控规则ID
+  int32 time_days = 4;         // 限流时间窗口长度 (天数: 1, 7)
+  string stat_date = 5;        // 统计的日期 (格式: YYYY-MM-DD)
+
+  int32 total_count = 6;  // 当日累计尝试下单总数
+  int32 limit_count = 7;  // 当日累计被限流的数量
+  int64 total_amount = 8; // 当日累计下单金额 (尝试下单总金额)
+  int64 limit_amount = 9; // 当日累计被限流的金额
+  string currency = 10;   // 币种
+
+  int32 start_limit_count = 11; // 解限重算起点。管理员操作时的 total_count 快照
+  string last_clear_time = 12;  // 最近一次管理员解除限制操作的时间 (格式: ISO 8601 字符串)
+  string data_date = 13;        // 数据日期time_days不为1的时候记
+
+  string create_time = 14; // 记录创建时间 (格式: ISO 8601 字符串)
+  string update_time = 15; // 记录更新时间 (格式: ISO 8601 字符串)
+
+}
+
+// ==================== 出金提交（商户接口）====================
+message PayoutSubmitRequest {
+  string merchant_id = 1;       // 商户ID
+  string merchant_txn_id = 2;   // 商户订单ID
+  string payment_code = 3;      // 支付类型
+  float amount = 4;             // 金额（精确到小数点后2位）
+  int64 timestamp = 5;          // 请求时间戳（精确到毫秒）
+  string currency = 6;          // 货币类型
+  string notify_url = 7;        // 通知URL
+  string account_type = 8;      // 账户类型
+  string bank_name = 9;         // 银行名称（可选）
+  string bank_code = 10;        // 银行编码（可选）
+  string first_name = 11;       // 户主名字
+  string last_name = 12;        // 户主姓氏（可选）
+  string birthday = 13;         // 户主生日（可选）
+  string account = 14;          // 户主银行账户
+  string account_expire = 15;   // 收款账户的有效期
+  string phone = 16;            // 户主手机
+  string email = 17;            // 户主邮箱
+  string country = 18;          // 国家代码
+  string state = 19;            // 州（可选）
+  string city = 20;             // 城市（可选）
+  string zip_code = 21;         // 邮编（可选）
+  string address1 = 22;         // 地址行1（可选）
+  string address2 = 23;         // 地址行2（可选）
+  string address3 = 24;         // 地址行3（可选）
+  string sign = 25;             // 签名数据
+}
+
+message PayoutSubmitResponse {
+  string opt_status = 1;        // 操作状态 (SUCCESS，FAILED)
+  string message = 2;           // 操作信息
+  string merchant_txn_id = 3;   // 交易ID
+  float amount = 4;             // 交易金额
+  string txn_id = 5;            // 交易ID
+  string txn_status = 6;        // 交易状态 (SUCCESS，PENDING，FAILED，REFUND)
+  float fee_amount = 7;         // 手续费
+  string request_time = 8;      // 请求时间
+  string sign = 9;              // 签名
+}
+
+// ==================== 查询出金状态 ====================
+message PayoutStatusRequest {
+  string merchant_id = 1;       // 商户ID
+  string merchant_txn_id = 2;   // 商户交易ID
+  string sign = 3;              // 签名
+}
+
+message PayoutStatusResponse {
+  string opt_status = 1;        // 操作状态 (SUCCESS，FAILED)
+  string txn_status = 2;        // 交易状态 (SUCCESS，PENDING，FAILED，REFUND)
+  string message = 3;           // 响应消息
+  PayoutStatusData data = 4;    // 数据
+  string sign = 5;              // 签名
+}
+
+message PayoutStatusData {
+  string txn_status = 1;        // 交易状态
+  string resp_desc = 2;         // 请求描述
+  string merchant_id = 3;       // 商户ID
+  string merchant_txn_id = 4;   // 商户交易ID
+  string txn_id = 5;            // 平台交易ID
+  float request_amount = 6;     // 请求金额
+  float pay_amount = 7;         // 交易金额
+  string bank_txn_id = 8;       // 银行交易ID
+  string account_type = 9;      // 账户类型
+  string bank_name = 10;        // 银行名称
+  string bank_code = 11;        // 银行编码
+  string first_name = 12;       // 名字
+  string last_name = 13;        // 姓氏
+  string birthday = 14;         // 出生日期
+  string account = 15;          // 账户号
+  string account_expire = 16;   // 收款账户的有效期
+  string phone = 17;            // 手机号码
+  string email = 18;            // 邮箱
+  string country = 19;          // 国家代码
+  string request_time = 20;     // 请求时间
+  string pay_time = 21;         // 支付时间
+  string notify_time = 22;      // 通知时间
+}
+
+// ==================== 查询出金余额 ====================
+message PayoutBalanceRequest {
+  string merchant_id = 1;       // 商户ID
+  string timestamp = 2;         // 请求时间戳
+  string sign = 3;              // 签名
+}
+
+message PayoutBalanceResponse {
+  string opt_status = 1;        // 操作状态 (SUCCESS，FAILED)
+  string message = 2;           // 响应消息
+  float all_balance = 3;        // 总金额
+  float usable_balance = 4;     // 可用金额
+  float blocked_balance = 5;    // 锁定金额
+  float unsettled_balance = 6;   // 未结算金额
+}
+
+// ==================== 退款提交（商户接口）====================
+message RefundSubmitRequest {
+  string merchant_id = 1;       // 商户ID
+  string merchant_txn_id = 2;   // 商户订单ID
+  string payment_code = 3;      // 支付类型
+  string currency = 4;          // 国家代码
+  float amount = 5;             // 金额（精确到小数点后2位）
+  int64 timestamp = 6;          // 请求时间戳（精确到毫秒）
+  string reason = 7;            // 请求原因
+  string notify_url = 8;        // 通知接口
+  string sign = 9;              // 签名
+}
+
+message RefundSubmitResponse {
+  string opt_status = 1;        // 操作状态 (SUCCESS，FAILED)
+  string message = 2;           // 操作信息
+  string merchant_txn_id = 3;   // 商户交易ID
+  string txn_id = 4;            // 平台交易ID
+  string refund_txn_id = 5;     // 退款交易ID
+  float refund_amount = 6;      // 退款金额
+  float remaining_amount = 7;   // 可退款金额
+  string refund_status = 8;     // 退款状态 (SUCCESS，PENDING，FAILED，REFUND)
+  string sign = 9;              // 签名
+}
+
+// ==================== 查询退款状态 ====================
+message RefundStatusRequest {
+  string merchant_id = 1;       // 商户ID
+  string merchant_txn_id = 2;   // 商户交易ID
+  string sign = 3;              // 签名
+}
+
+message RefundStatusResponse {
+  string opt_status = 1;        // 操作状态 (SUCCESS，FAILED)
+  string txn_status = 2;        // 交易状态 (SUCCESS，PENDING，FAILED，REFUND)
+  string message = 3;           // 响应消息
+  RefundStatusData data = 4;    // 数据
+  string sign = 5;              // 签名
+}
+
+message RefundStatusData {
+  string merchant_txn_id = 1;   // 商户交易ID
+  string txn_id = 2;            // 平台交易ID
+  string refund_txn_id = 3;     // 退款申请ID
+  float refund_amount = 4;      // 退款金额
+  float remaining_amount = 5;   // 可退款金额
+  string refund_status = 6;     // 退款状态
+  string refund_msg = 7;        // 退款消息，如果失败会告知失败消息
+}
+
+
+message GetPayoutAlarmOrderReq {
+
+  // 1. 过滤条件
+  string withdraw_account = 1;   // 提款账号
+  int64 merchant_id = 2;         // 商户ID
+  string order_no = 3;           // 订单号
+  string merchant_order_no = 4;  // 商户订单号
+  int32 alert_rule_type = 5;     // 告警类型
+  string operator_user = 6;      // 操作用户
+
+  // 2. 分页信息
+  int64 page = 7;                // 当前页码 (用于分页查询)
+  int64 size = 8;                // 每页大小 (用于分页查询)
+
+}
+
+message GetPayoutAlarmOrderResp{
+  repeated PayoutAlarmOrderInfo list = 1;
+  int64 total = 2;
+}
+
+message PayoutAlarmOrderInfo {
+  // 1. 基础字段和主键
+  int64 id = 1; // 主键ID
+
+  // 2. 业务维度字段
+  string withdraw_account = 2;   // 提款账号
+  int64 merchant_id = 3;         // 商户ID
+  string order_no = 4;           // 订单号 (唯一)
+  string merchant_order_no = 5;  // 商户订单号 (唯一)
+  int64 amount = 6;              // 提款金额 (最小单位)
+  string currency = 7;           // 币种
+
+  // 3. 告警信息
+  int32 alert_rule_type = 8;     // 告警类型
+  string alert_rule_id = 9;      // 告警规则ID
+  int32 alert_status = 10;       // 告警状态 1:解除，2:不处理 ,3:告警中
+  string alert_reason = 11;      // 告警原因或详细描述
+
+  // 4. 操作和时间字段
+  string operator_user = 12;                                  // 操作用户
+  string operation_time = 13;              // 最近一次处理或操作告警的时间
+  string create_time = 14;                 // 告警记录创建时间
+  string update_time = 15;                 // 记录更新时间
+}
+
+message PayoutAlarmOrderReleaseReq {
+
+}
+message PayoutAlarmOrderReleaseResp {
+}
+
+// ------------------------------------
+// Rpc Func
+// ------------------------------------
+
+service Payout {
+  // create payout order
+  rpc Create(CreatePayoutOrderReq) returns (CreatePayoutOrderResp);
+  // get payout order list
+  rpc GetList(GetPayoutOrderListReq) returns (GetPayoutOrderListResp);
+  // payuot order callback
+  rpc Callback(CallbackPayoutOrderReq) returns (CallbackPayoutOrderResp);
+  //get order info detail
+  rpc GetMerchantOrderInfo(GetPayoutOrderInfoReq) returns (GetPayoutOrderInfoResp);
+  // notify merchant success
+  rpc NotifySuccess(PayoutNotifySuccessReq) returns (PayoutNotifySuccessResp);
+  rpc GetPayoutOrderListCumulativeSummary(GetPayoutOrderListReq) returns (PayoutOrderListCumulativeSummaryResponse);
+  rpc BatchUpdateRefundPayoutOrder(BatchUpdateRefundPayoutOrderParam) returns (BatchUpdatePayoutOrderResponse);
+  rpc GetPayoutOrderStatisticsData(GetPayoutOrderStatisticsDataReq) returns (GetPayoutOrderStatisticsDataResp);
+  // query payout order info
+  rpc QueryOrderInfo(QueryOrderInfoReq) returns (QueryOrderInfoResp);
+
+  rpc QueryMerchantBalance(QueryMerchantBalanceReq) returns (QueryMerchantBalanceResp);
+  rpc QueryOrderLog(QueryPayoutOrderLogReq) returns (QueryPayoutOrderLogResp);
+  rpc ManualPayoutOrder(ManualPayoutOrderReq) returns (ManualPayoutOrderResp);
+  rpc DispatchOrder(DispatchOrderReq) returns (DispatchOrderResp);
+  rpc ResetReleaseCount(ResetReleaseCountReq) returns (ManualPayoutOrderResp);
+  rpc GetMerchantByOrder(GetMerchantByOrderReq) returns (GetMerchantByOrderResp);
+  rpc GetPayoutDispatchTask(GetPayoutDispatchTaskReq) returns (GetPayoutDispatchTaskResp);
+
+  // risk control
+  rpc GetRiskControlRule(GetRiskControlRuleReq) returns (GetRiskControlRuleResp);
+  rpc UpdateRiskControlRule(UpdateRiskControlRuleReq) returns (UpdateRiskControlRuleResp);
+
+  rpc GetPayoutAccountSummary(GetPayoutAccountSummaryReq) returns (GetPayoutAccountSummaryResp);
+
+  rpc GetPayoutAlarmOrder(GetPayoutAlarmOrderReq) returns (GetPayoutAlarmOrderResp);
+  rpc PayoutAlarmOrderRelease(PayoutAlarmOrderReleaseReq) returns (PayoutAlarmOrderReleaseResp);
+
+  // 出金提交 - 对应 /payment/payout/submit
+  rpc SubmitPayout(PayoutSubmitRequest) returns (PayoutSubmitResponse);
+  // 查询出金状态 - 对应 /payment/payout/status
+  rpc GetPayoutStatus(PayoutStatusRequest) returns (PayoutStatusResponse);
+  // 查询出金余额 - 对应 /payment/payout/balance
+  rpc GetPayoutBalance(PayoutBalanceRequest) returns (PayoutBalanceResponse);
+}
+
+

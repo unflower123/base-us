@@ -1,0 +1,192 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/deposit_order";
+
+package pb;
+
+message DepositOrderModel {
+  string create_time = 1;
+  int64 create_unix = 2;
+  string update_time = 3;
+  uint64 id = 4;
+  string merchant_appid = 5;
+  uint64 merchant_id = 6;
+  string merchant_name = 7;
+  string order_no = 8;
+  string remittance_name = 9;
+  string remittance_account = 10;
+  string remittance_username = 11;
+  string remittance_phone = 12;
+  string collection_account = 13;
+  string collection_name = 14;
+  string collection_username = 15;
+  string collection_phone = 16;
+  string currency = 17;
+  string target_currency = 18;
+  int64 transfer_amount = 19;
+  string transfer_order_no = 20;
+  int64 exchange_rate = 21;
+  int64 actual_amount = 23;
+  string utr = 25;
+  string remark = 26;
+  int64 order_status = 27;
+  int64 deposit_type = 28;
+  string audit_time = 29;
+  int64 transfer_status = 30;
+  string notify_time = 31;
+  string complete_time = 32;
+  int64 adjust_amount = 33;
+  string reversal_time = 34;
+  int64 adjust_exchange_rate = 35;
+  string admin_remark = 36;
+  string attachment = 37;
+}
+
+message QueryDepositOrderParam {
+  uint64 id = 4;
+  string merchant_app_id = 5;
+  uint64 merchant_id = 6;
+  string utr = 7;
+  string order_no = 8;
+  string remittance_account = 10;
+  int64 transfer_status = 11;
+  string currency = 12;
+  string collection_account = 13;
+  int64 transaction_amount = 14;
+  int64 actual_amount = 15;
+  string collection_username = 16;
+  string transfer_order_no = 20;
+  string target_currency = 21;
+  int64 deposit_type = 22;
+  string merchant_name = 23;
+  string remittance_name = 24;
+  string collection_name = 25;
+  int64 order_status = 27;
+  string start_time = 28;
+  string end_time = 29;
+  int64 time_type = 30;
+  int64 offset = 31;
+  int64 limit = 32;
+}
+
+message QueryDepositOrderListResponse {
+  int64 total = 1;
+  repeated DepositOrderModel list = 2;
+}
+
+message AddOrUpdateResponse {
+  uint64 id = 4;
+}
+
+message AddDepositOrderParam {
+  string remittance_name = 9;
+  string remittance_account = 10;
+  string remittance_username = 11;
+  string remittance_phone = 12;
+  string collection_account = 13;
+  string collection_name = 14;
+  string collection_username = 15;
+  string collection_phone = 16;
+  string target_currency = 18;
+  int64 transfer_amount = 19;
+  string transfer_order_no = 20;
+  int64 exchange_rate = 21;
+  int64 actual_amount = 23;
+  string utr = 25;
+  string remark = 26;
+  int64 order_status = 27;
+  int64 deposit_type = 28;
+  int64 transfer_status = 29;
+  string attachment = 30;
+}
+
+message AuditParam {
+  uint64 audit_status = 1;
+  string audit_remark = 2;
+  uint64 id = 3;
+  string attachment = 4;
+  int64 rate = 5;
+  int64 actual_amount = 6;
+  int64 adjust_amount = 7;
+  int64 adjust_exchange_rate = 8;
+  string admin_remark = 9;
+  string hash_attachment = 10;
+  string utr = 11;
+}
+
+message MerchantAuditParam {
+  uint64 audit_status = 1;
+  string audit_remark = 2;
+  uint64 id = 3;
+  string attachment = 4;
+  string remittance_name = 9;
+  string remittance_account = 10;
+  string remittance_username = 11;
+  string remittance_phone = 12;
+  string collection_account = 13;
+  string collection_name = 14;
+  string collection_username = 15;
+  string collection_phone = 16;
+  string transfer_order_no = 20;
+  string utr = 25;
+  string remark = 26;
+  string hash_attachment = 27;
+}
+
+message GetDepositOrderAuditProcessNodeListQuery {
+  uint64 merchant_id = 1;
+  uint64 deposit_order_id = 2;
+}
+
+message GetAuditProcessNodeListResponse {
+  repeated GetOrderAuditProcessNodeData list = 1;
+}
+
+message GetOrderAuditProcessNodeData {
+  uint64 id = 1;
+  uint64 audit_status = 3;
+  string audit_remark = 4;
+  uint64 deposit_order_id = 5;
+  string audit_time = 6;
+  string attachment = 7;
+  uint64 process_node = 8;
+  string user_name = 10;
+  string create_time = 11;
+}
+message UpdateDepositOrderRateParam {
+  uint64 id = 1;
+  int64 rate = 2;
+  int64 actual_amount = 3;
+  string remittance_account = 4;
+  string collection_account = 5;
+  string transfer_order_no = 6;
+  string utr = 7;
+  string admin_remark = 8;
+  string attachment = 9;
+}
+
+message DepositOrderReversalParam {
+  uint64 id = 1;
+}
+
+message DepositOrderSummaryResponse {
+  string success_volume = 1;
+  string success_amt = 2;
+  string pending_volume = 3;
+  string pending_amt = 4;
+  string failure_volume = 5;
+  string failure_amt = 6;
+  string reversal_volume = 7;
+  string reversal_amt = 8;
+}
+
+service DepositOrder {
+  rpc AddDepositOrder(AddDepositOrderParam) returns (AddOrUpdateResponse);
+  rpc QueryDepositOrderList(QueryDepositOrderParam) returns (QueryDepositOrderListResponse);
+  rpc MerchantAudit(MerchantAuditParam) returns (AddOrUpdateResponse);
+  rpc AdminAudit(AuditParam) returns (AddOrUpdateResponse);
+  rpc GetOrderAuditProcessNodeList(GetDepositOrderAuditProcessNodeListQuery) returns (GetAuditProcessNodeListResponse);
+  rpc UpdateDepositOrderRate(UpdateDepositOrderRateParam) returns (AddOrUpdateResponse);
+  rpc DepositOrderReversal(DepositOrderReversalParam) returns (AddOrUpdateResponse);
+  rpc DepositOrderSummary(QueryDepositOrderParam) returns (DepositOrderSummaryResponse);
+}

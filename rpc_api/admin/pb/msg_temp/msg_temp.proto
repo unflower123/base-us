@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/msg_temp";
+
+package pb;
+
+message GetMsgTempReq {
+  int64 id = 1;
+  string template_name = 2;
+  int64 page = 3;
+  int64 size = 4;
+}
+
+message GetMsgTempResp {
+  repeated MessageTemplateInfo list = 1;
+  int64 total = 2;
+}
+
+message MessageTemplateInfo {
+  int64 id = 1;
+  string template_name = 2;
+  string template_content = 3;
+  string create_time = 4;
+  string update_time = 5;
+}
+
+message MessageTemplateCommResp {
+
+}
+
+service MsgTemp {
+  rpc CreateMessageTemplate(MessageTemplateInfo) returns (MessageTemplateCommResp);
+  rpc UpdateMessageTemplate(MessageTemplateInfo) returns (MessageTemplateCommResp);
+  rpc DeleteMessageTemplate(MessageTemplateInfo) returns (MessageTemplateCommResp);
+  rpc GetMessageTemplate(GetMsgTempReq) returns (GetMsgTempResp);
+}

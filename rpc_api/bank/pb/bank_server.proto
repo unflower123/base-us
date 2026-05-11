@@ -1,0 +1,135 @@
+syntax = "proto3";
+
+option go_package = "./;bank";
+
+package protobuf;
+
+service bank {
+  rpc PayinCallBank(PayinRequest) returns (PayinResponse) {}
+  rpc PayinCheckOrder(CheckOrderRequest) returns (CheckOrderResponse) {}
+  rpc PayoutCallBank(PayoutRequest) returns (PayoutResponse) {}
+  rpc PayoutCheckOrder(CheckOrderRequest) returns (CheckOrderResponse) {}
+  rpc CheckBalance(CheckBalanceReq) returns (CheckBalanceResp) {}
+}
+//message CallbackPayoutOrderReq {
+//  // system order no required, request bank in system order no
+//  string system_order_no = 1;
+//  // bank order no required, bank order no required
+//  string bank_order_no = 2;
+//  // transaction amount required, acoumt point unit
+//  float  transaction_amount = 3;
+//  // time format Milliseconds required
+//  int64  bank_time = 4;
+//  // bank callback msg info
+//  string bank_msg = 5;
+//  // 1:success、2:failed、3:processing required, bank return processing result status
+//  int64  bank_status = 6;
+//  // transaction currency type
+//  string currency = 7;
+//  // transaction  remark info
+//  string remark = 8;
+//  // bank callback code
+//  string bank_code = 9;
+//  // bank callback utr
+//  string bank_utr = 10;
+//
+//}
+message PayinRequest {
+  string out_trade_no = 1;
+  double amount = 2;
+  string response_data = 3;
+  string busi_code = 4;
+  string bankID = 5;
+  string bankName = 6;
+  string payment_type = 7;
+  double min_amt = 8;
+  double max_amt = 9;
+  string extra_data = 10;
+}
+//message CallbackPayoutOrderResp {
+//  // 1:success，2/0:failed
+//  int64 code = 1;
+//  // response message
+//  string msg = 2;
+//}
+message PayoutRequest {
+  double amount = 1;
+  string in_card_no = 2;
+  string in_bank_code = 3;
+  string order_id = 4;
+  string in_account_phone = 5;
+  string in_card_name = 6;
+  string in_bank_name = 7;
+  string bankID = 8;
+  string bankName = 9;
+  string holderToken = 10;
+  string extra_data = 11;
+}
+message PayoutResponse{
+  int32 code = 1;
+  string msg = 2;
+  PayoutResponseData data = 3;
+  string bank_response = 4;  // 银行原始响应
+}
+message PayoutResponseData{
+  string bank_order_no = 1;
+  string order_no = 2;
+  string bank_utr = 3;
+}
+message PayinResponse {
+  string response_data = 1;  // JSON格式的原始响应
+  Response resp = 2;         // 结构化响应
+  string bank_response = 3;  // 银行原始响应
+}
+message Response {
+  int32 code = 1;
+  string msg = 2;
+  ResponseData data = 3;
+}
+
+message ResponseData {
+  string url = 1;
+  string order_id = 2;
+  double money = 3;
+  string upi = 4;
+}
+message CheckOrderRequest{
+  string order_id = 1;
+  string date = 2;
+  string bankID = 3;
+  string bank_name = 4;
+  string bank_order_no = 5;
+}
+message CheckOrderResponse{
+  // system order no required, request bank in system order no
+  string system_order_no = 1;
+  // bank order no required, bank order no required
+  string bank_order_no = 2;
+  // transaction amount required, acoumt point unit
+  double transaction_amount = 3;
+  // time format Milliseconds required
+  string bank_time = 4;
+  // bank callback msg info
+  string bank_msg = 5;
+  // 1:success、2:failed、3:processing required, bank return processing result status
+  int64 bank_status = 6;
+  // transaction currency type
+  string currency = 7;
+  // transaction  remark info
+  string remark = 8;
+  // bank callback code
+  string bank_code = 9;
+  // bank callback utr
+  string bank_utr = 10;
+}
+
+message CheckBalanceReq{
+  string bankID=1;
+}
+
+message CheckBalanceResp{
+  double total_balance = 1;
+  double usable_balance = 2;
+  double unsettle_balance = 3;
+  double freeze_balance = 4;
+}

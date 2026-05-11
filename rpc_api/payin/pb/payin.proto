@@ -1,0 +1,569 @@
+// goctl rpc protoc payin_order.proto --go_out=. --go-grpc_out=. --zrpc_out=.
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+message PayinOrderModel {
+  string     create_time = 1;
+  string     update_time = 2;
+  uint64    id = 3;
+  string    merchant_appid = 4;
+  string    merchant_order_no = 5;
+  string    order_no = 6;
+  string    bank_order_no = 7;
+  string    bank_name = 8;
+  uint64    bank_account = 9;
+  uint64    request_amount = 10;
+  uint64    paid_amount = 11;
+  uint64    rate = 12;
+  uint64    bank_status = 13;
+  string    payment_voucher = 14;
+  uint64    notify_status = 15;
+  string     pay_time = 16;
+  string     notify_time = 17;
+  string    device_info = 18;
+  string    ip_addr = 19;
+  uint64    bank_id = 20;
+  string    currency = 21;
+  uint64    pay_status = 22;
+  uint64    fixed_fee = 23;
+  uint64    order_status = 24;
+  uint64    fee = 25;
+  string    notify_url = 26;
+  uint64    is_release = 27;
+  uint64    create_type = 30;
+  uint64    merchant_id = 31;
+  string     release_time = 32;
+  string    remark = 33;
+  string     callback_time = 34;
+  uint64   release_type = 35;
+  string   merchant_name = 36;
+  string   merchant_client_id = 37;
+  string   merchant_client_name = 38;
+  string   merchant_client_phone = 39;
+  string   merchant_client_email = 40;
+  string   merchant_client_ip = 41;
+  string   merchant_request_bank_name = 42;
+  string   merchant_request_bank_code = 43;
+  string   merchant_request_extra_data = 44;
+  repeated string bank_svr_ips = 45;
+  string audit_name = 46;
+  int64 bank_submit_status = 47;
+  string bank_submit_time = 48;
+  repeated RetryBankInfo retry_bank_info_list = 49;
+  string upi_id = 50;
+  string payment_code = 51;
+  int32 enable_secure = 52;
+  string website = 53;
+  string auth_return_url = 54;
+  string sign = 55;
+  string txn_id = 56;
+  string pay_info = 57;
+  string pay_url = 58;
+  int32 notify_status_detail = 59;
+}
+
+// 银行卡信息
+message CardInfo {
+  string card_number = 1;      // 卡号
+  string expiry_month = 2;     // 过期月份
+  string expiry_year = 3;      // 过期年份
+  string security_code = 4;    // 安全码
+}
+
+// 产品信息
+message ProductInfo {
+  string product_name = 1;      // 产品名字
+  float product_price = 2;      // 产品价格
+  int32 product_quantity = 3;   // 产品数量
+  string product_sku = 4;       // 产品SKU
+  string product_code = 5;      // 产品编码
+}
+
+// 账单信息
+message BillingInfo {
+  string first_name = 1;    // 名字
+  string last_name = 2;     // 姓
+  string email = 3;         // 邮箱
+  string phone = 4;         // 电话号码
+  string address1 = 5;      // 地址行1
+  string address2 = 6;      // 地址行2 (可选)
+  string address3 = 7;      // 地址行3 (可选)
+  string city = 8;          // 城市
+  string state = 9;         // 州
+  string zip_code = 10;     // 邮件编码
+  string country = 11;      // 国家代码
+}
+
+// 配送信息
+message ShippingInfo {
+  string first_name = 1;    // 名字
+  string last_name = 2;     // 姓
+  string email = 3;         // 邮箱
+  string phone = 4;         // 电话号码
+  string address1 = 5;      // 地址行1
+  string address2 = 6;      // 地址行2 (可选)
+  string address3 = 7;      // 地址行3 (可选)
+  string city = 8;          // 城市
+  string state = 9;         // 州
+  string zip_code = 10;     // 邮件编码
+  string country = 11;      // 国家代码
+}
+
+// 设备信息
+message DeviceInfo {
+  string language = 1;              // 语言
+  string client_ip = 2;            // 客户端IP
+  string os = 3;                   // 客户端操作系统
+  string browser = 4;              // 浏览器类型
+  string timezone = 5;             // 时区
+  string screen_resolution = 6;    // 屏幕分辨率
+  string card_input = 7;           // 卡号输入方式 (typed: 手动输入, pasted: 复制粘贴)
+  string cookie = 8;               // Cookie 值
+}
+
+message RetryBankInfo {
+  uint64 bank_id = 1;
+  string name = 2;
+  repeated string ips = 3;
+  int64 rate = 4;
+  int64 rate_fee = 5;
+}
+
+message PayinOrderRecordQuery {
+  string order_no = 1;
+  string merchant_order_no = 2;
+  string merchant_appid = 3;
+  bool with_cache = 4;
+}
+
+message PayinOrderRecordResponse {
+  int32 code = 1;
+  string msg = 2;
+  PayinOrderModel order_info = 3;
+}
+
+
+message CallBackParam {
+  // system order no required, request bank in system order no
+  string system_order_no = 1;
+  // bank order no required, bank order no required
+  string bank_order_no = 2;
+  // transaction amount required, acoumt point unit
+  double transaction_amount = 3;
+  // time format Milliseconds required
+  string bank_time = 4;
+  // bank callback msg info
+  string bank_msg = 5;
+  // 1:success、2:failed、3:processing required, bank return processing result status
+  int64 bank_status = 6;
+  // transaction currency type
+  string currency = 7;
+  // transaction  remark info
+  string remark = 8;
+  // bank callback code
+  string bank_code = 9;
+  // bank callback utr
+  string bank_utr = 10;
+  // 银行原始响应
+  string bank_callback = 11;
+}
+
+message CallBackResponse {
+  // 1:success，2/0:failed
+  int64 code = 1;
+  // response message
+  string msg = 2;
+}
+
+message PayinOrderRecordListQuery {
+  string order_no = 1;
+  string merchant_appid = 2;
+  uint64 bank_status = 3;
+  string bank_name = 4;
+  uint64 payin_order_type = 5;
+  uint64 order_status = 6;
+  uint64 notify_status = 7;
+  uint64 time_type = 8;
+  string start_time = 9;
+  string end_time = 10;
+  uint64 offset = 11;
+  uint64 limit = 12;
+  string merchant_order_no = 13;
+  string bank_order_no = 14;
+  uint64 amt_type = 15;
+  uint64 max_amt = 16;
+  uint64 min_amt = 17;
+  uint64 pay_status = 18;
+  uint64 merchant_id = 19;
+  uint64 create_type = 20;
+  repeated string bank_order_nos = 21;
+  uint64 id = 22;
+  string currency = 23;
+  uint64 bank_id = 24;
+  string bank_utr = 25;
+  uint64 is_release = 26;
+  string merchant_name = 27;
+  repeated uint64 merchant_ids = 28;
+  repeated string order_nos = 29;
+  repeated string merchant_order_nos = 30;
+  repeated uint64 bank_ids = 31;
+  string upi_id = 32;
+  string merchant_client_id = 33;
+}
+
+message PayinOrderListCumulativeSummaryResponse {
+  string SuccessReqAmt = 1;
+  string SuccessPaidAmt = 2;
+  string Rate = 3;
+  string InitiateTxCount = 4;
+  string SuccessTxCount = 5;
+  string ConversionRate = 6;
+}
+
+message PayinOrderListSameDaySummaryResponse {
+  string SuccessReqAmt = 1;
+  string SuccessPaidAmt = 2;
+  string Rate = 3;
+  string InitiateTxCount = 4;
+  string SuccessTxCount = 5;
+  string ConversionRate = 6;
+}
+
+message PayinOrderRecordListResponse {
+  int64 total = 1;
+  repeated PayinOrderModel list = 2;
+}
+
+message GetCashRegisterURLQuery {
+  string merchant_appid = 1;
+  uint64 amount = 2;
+  string merchant_order_no = 3;
+  uint64 pay_type = 4;
+  string notify_url = 5;
+  string currency = 6;
+  string device_info = 7;
+  string ip_addr = 8;
+  string bank_name = 9;
+  string bank_code = 10;
+  string merchant_client_id = 11;
+  string merchant_client_name = 12;
+  string merchant_client_phone = 13;
+  string merchant_client_email = 14;
+  string merchant_client_ip = 15;
+  string model_type = 16;
+  string extra_data = 17;
+}
+
+message GetCashRegisterURLResponse {
+  string cash_register_url = 1;
+  string pre_pay_id = 2;
+  int32 code = 3;
+  string msg = 4;
+  string order_no = 5;
+  string qrcode_url = 7;
+  string holder_name = 8;
+  string holder_account = 9;
+  string holder_token = 10;
+}
+
+message GetPayUrlQuery {
+  string merchant_appid = 1;
+  string pre_pay_id = 2;
+  string busi_code = 3;
+  string response_data = 4;
+}
+
+message GetPayUrlResponse {
+  string pay_url = 1;
+  int32 code = 2;
+  string msg = 3;
+  string response_data = 4;
+}
+
+message AddCompensatePayinOrderParam {
+  string bank_order_no = 1;
+  uint64 bank_account_type = 2;
+  uint64 paid_amount = 3;
+  string payment_voucher = 4;
+  string bank_name = 5;
+  string remark = 6;
+}
+
+message AddCompensatePayinOrderResponse {
+  uint64 id = 1;
+}
+
+message GetNotReleaseListWhitDateListQuery {
+  string start_time = 1;
+  string end_time = 2;
+  uint64 bank_id = 3;
+  uint64 bank_account_type = 4;
+  repeated uint64 ids = 5;
+}
+
+message BatchUpdateReleasePayinOrderParam {
+  repeated uint64 ids = 1;
+  string currency = 2;
+  uint64 bank_id = 3;
+  uint64 bank_account_type = 4;
+}
+
+message BatchUpdateReleasePayinOrderResponse {
+  int64 code = 1;
+  string msg = 2;
+}
+
+message AuditPayinOrderParam {
+  uint64 audit_status = 1;
+  string audit_remark = 2;
+  uint64 payin_order_id = 3;
+  string attachment = 4;
+}
+
+message AuditPayinOrderResponse {
+  uint64 payinOrderID = 1;
+}
+
+message GetManualOrderAuditProcessNodeListQuery {
+  uint64 merchant_id = 1;
+  uint64 PayinOrderID = 2;
+}
+
+message GetManualAuditProcessNodeListResponse {
+  repeated GetManualOrderAuditProcessNodeData list = 1;
+}
+
+message GetManualOrderAuditProcessNodeData {
+  uint64 id = 1;
+  uint64 audit_status = 3;
+  string audit_remark = 4;
+  uint64 payin_order_id = 5;
+  string audit_time = 6;
+  string attachment = 7;
+  uint64 process_node = 8;
+  string user_name = 10;
+}
+
+message PayinNotifySuccessReq {
+  string SystemOrderNo = 1;
+  string Msg = 2;
+}
+
+message PayinNotifySuccessResponse {
+  string msg = 1;
+}
+
+message UpdateManualOrderParam {
+  uint64 payin_order_id = 1;
+  string bank_order_no = 2;
+  uint64 bank_id = 3;
+}
+
+message UpdateManualOrderResponse {
+}
+
+message BatchUpdateRefundPayinOrderParam {
+  repeated refundObj refunds = 1;
+  repeated refundObj complains = 2;
+}
+
+message refundObj {
+  uint64 id = 1;
+  int64 undertake = 2;
+  string remark = 3;
+  uint64 launch_user_id = 4;
+}
+
+message BatchUpdatePayinOrderResponse {
+  int64 code = 1;
+  string msg = 2;
+}
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// get payin order staticstics data start
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// get payin order staticstics data req
+message GetPayinOrderStatisticsDataReq {
+  int64 page = 1;
+  int64 size = 2;
+  string start_time = 3;
+  string end_time = 4;
+  string currency = 5;
+}
+
+// get payin order staticstics data resp
+message GetPayinOrderStatisticsDataResp {
+  string data_time = 1;
+  int64 total = 2;
+  // merchant count
+  map<string, PayinOrderStatisticsInfo> merchant_count = 3;
+  // merchant trade type count, merchantid+currency+trad_type
+  map<string, PayinOrderStatisticsInfo> merchant_trade_type_count = 4;
+  // bank info count, bankid+currency
+  map<string, PayinOrderStatisticsInfo> bank_info_count = 5;
+  // bank trade type count, bankid+currency+trad_type
+  map<string, PayinOrderStatisticsInfo> bank_trade_type_count = 6;
+  // trade type count, currency+trad_type
+  map<string, PayinOrderStatisticsInfo> trade_type_count = 7;
+}
+
+message PayinOrderStatisticsInfo {
+  int64 merchant_id = 1;
+  string merchant_name = 2;
+  int64 order_total_count = 3;
+  int64 order_total_amount = 4;
+  int64 success_total_count = 5;
+  int64 success_total_amount = 6;
+  int64 processing_order_total_count = 7;
+  int64 processing_order_total_amount = 8;
+  int64 failed_order_total_count = 9;
+  int64 failed_order_total_amount = 10;
+  int64 refunded_order_count = 11;
+  int64 refunded_order_total_amount = 12;
+  int64 frozen_amount = 13;
+  int64 unsettled_amount = 14;
+  string currency = 15;
+}
+
+
+message QueryPayinOrderLogReq {
+  string order_no = 1;
+  string bank_order_no = 2;
+}
+
+message QueryPayinOrderLogResp {
+    repeated PayinOrderLogInfo data = 1;
+}
+
+message PayinOrderLogInfo {
+  string order_no = 1;
+  string bank_order_no = 2;
+  string request_data = 3;
+  string callback_data = 4;
+  string data_time = 5;
+  string notify_request = 6;
+  string notify_response = 7;
+  string behavior = 8;
+}
+
+// ==================== 支付提交 ====================
+message PayinSubmitRequest {
+  string merchant_id = 1;           // 商户ID
+  string merchant_txn_id = 2;       // 商户订单ID
+  float amount = 3;                 // 金额（精确到小数点后2位）
+  int64 timestamp = 4;              // 请求时间戳（精确到毫秒）
+  string currency = 5;              // 货币类型
+  string bank_name = 6;             // 银行名称（可选）
+  string bank_code = 7;             // 银行编码（可选）
+  string payment_code = 8;          // 支付编码
+  string user_id = 9;               // 用户在商户端的标识ID
+  int32 enable_secure = 10;         // 3d认证开关，0是不开，1是开
+  string website = 11;              // 商户交易网站
+  string auth_return_url = 12;      // 3D认证完成后的跳转地址
+  string notify_url = 13;           // 支付回调地址
+  CardInfo card_info = 14;          // 卡信息（可选）
+  ProductInfo product_info = 15;    // 产品信息（可选）
+  BillingInfo billing_info = 16;    // 账单信息
+  ShippingInfo shipping_info = 17;  // 配送信息（可选）
+  DeviceInfo device_info = 18;      // 设备信息
+  string sign = 19;                 // 签名数据
+}
+
+message PayinSubmitResponse {
+  string opt_status = 1;        // 操作状态 (SUCCESS，FAILED)
+  string message = 2;           // 操作信息
+  PayinSubmitData data = 3;     // 数据
+  string sign = 4;              // 签名
+}
+
+message PayinSubmitData {
+  string merchant_txn_id = 1;   // 交易ID（商户订单ID）
+  float amount = 2;             // 交易金额
+  string txn_id = 3;            // 平台方交易ID
+  string payment_code = 4;      // 支付编码
+  string pay_info = 5;          // 支付信息 (PAYMENT_SUCCESS，CASHIER_REDIRECT，CARD_3DS_REDIRECT)
+  string pay_url = 6;           // 二维码的URL（可选）
+}
+
+// ==================== 查询支付状态 ====================
+message PayinStatusRequest {
+  string merchant_id = 1;       // 商户ID
+  string merchant_txn_id = 2;   // 商户交易ID
+  string sign = 3;              // 签名数据
+}
+
+message PayinStatusResponse {
+  string opt_status = 1;        // 请求状态 (SUCCESS，FAILED)
+  string txn_status = 2;        // 交易状态 (SUCCESS，PENDING，FAILED，REFUND)
+  string message = 3;           // 响应消息
+  PayinStatusData data = 4;     // 数据
+  string sign = 5;              // 签名
+}
+
+message PayinStatusData {
+  string txn_status = 1;        // 交易状态
+  string resp_desc = 2;         // 请求描述
+  string merchant_id = 3;       // 商户ID
+  string merchant_txn_id = 4;   // 商户交易ID
+  string txn_id = 5;            // 交易ID
+  float request_amount = 6;     // 请求金额
+  float pay_amount = 7;         // 实际交易金额
+  string bank_txn_id = 8;       // 银行交易凭证
+  string payment_code = 9;      // 交易类型
+  string request_time = 10;     // 请求时间
+  string pay_time = 11;         // 交易时间
+  string notify_time = 12;      // 通知时间
+}
+
+// ==================== 查询余额 ====================
+message PayinBalanceRequest {
+  string merchant_id = 1;       // 商户ID
+  string timestamp = 2;         // 请求时间戳
+  string sign = 3;              // 签名
+}
+
+message PayinBalanceResponse {
+  string opt_status = 1;        // 请求状态 (SUCCESS，FAILED)
+  string message = 2;           // 响应消息
+  float all_balance = 3;        // 总金额
+  float usable_balance = 4;     // 可用金额
+  float blocked_balance = 5;    // 锁定金额
+  float unsettled_balance = 6;   // 未结算金额
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// get payin order staticstics data end
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+service Payin {
+  rpc GetCashRegisterUrl(GetCashRegisterURLQuery) returns (GetCashRegisterURLResponse);
+  rpc GetPayUrl(GetPayUrlQuery) returns (GetPayUrlResponse);
+  rpc CallBack(CallBackParam) returns (CallBackResponse);
+  rpc GetList(PayinOrderRecordListQuery) returns (PayinOrderRecordListResponse);
+  rpc GetPayinOrderListCumulativeSummary(PayinOrderRecordListQuery) returns (PayinOrderListCumulativeSummaryResponse);
+  rpc GetPayinOrderListSameDaySummary(PayinOrderRecordListQuery) returns (PayinOrderListSameDaySummaryResponse);
+  rpc AddCompensatePayinOrder(AddCompensatePayinOrderParam) returns (AddCompensatePayinOrderResponse);
+  rpc GetNotReleaseListWhitDate(GetNotReleaseListWhitDateListQuery) returns (PayinOrderRecordListResponse);
+  rpc BatchUpdateReleasePayinOrder(BatchUpdateReleasePayinOrderParam) returns (BatchUpdateReleasePayinOrderResponse);
+  rpc MerchantAuditPayinOrder(AuditPayinOrderParam) returns (AuditPayinOrderResponse);
+  rpc AdminAuditPayinOrder(AuditPayinOrderParam) returns (AuditPayinOrderResponse);
+  rpc GetManualOrderAuditProcessNodeList(GetManualOrderAuditProcessNodeListQuery) returns (GetManualAuditProcessNodeListResponse);
+  rpc NotifySuccess(PayinNotifySuccessReq) returns (PayinNotifySuccessResponse);
+  rpc UpdateManualOrder(UpdateManualOrderParam) returns (UpdateManualOrderResponse);
+  rpc BatchUpdateRefundPayinOrder(BatchUpdateRefundPayinOrderParam) returns (BatchUpdatePayinOrderResponse);
+  rpc GetPayinOrderWithCache(PayinOrderRecordQuery) returns (PayinOrderRecordResponse);
+  // get payin order statistics data
+  rpc GetPayinOrderStatisticsData(GetPayinOrderStatisticsDataReq) returns (GetPayinOrderStatisticsDataResp);
+  rpc QueryOrderLog(QueryPayinOrderLogReq) returns (QueryPayinOrderLogResp);
+
+  // 新增：商户对外接口
+  rpc SubmitPayin(PayinSubmitRequest) returns (PayinSubmitResponse);
+  rpc GetPayinStatus(PayinStatusRequest) returns (PayinStatusResponse);
+  rpc GetPayinBalance(PayinBalanceRequest) returns (PayinBalanceResponse);
+
+}

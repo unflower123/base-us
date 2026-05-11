@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+option go_package = "base/rpc_api/admin/pb/rbac";
+
+package pb;
+
+// create role info request
+message CreateRoleInfoReq {
+  string name = 1;
+  string description = 2;
+  repeated uint64 menu_ids = 3;
+  int64 merchant_id = 4;
+}
+
+// create role info response
+message CreateRoleInfoResp {
+  int64 id = 1;
+  string name = 2;
+}
+
+// Update role info request
+message UpdateRoleInfoReq {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  repeated uint64 menu_ids = 4;
+}
+
+// Update role info response
+message UpdateRoleInfoResp {
+  int64 id = 1;
+  string name = 2;
+}
+
+// get role list info request
+message GetRoleListInfoReq {
+  string name = 1;
+  int64 page = 2;
+  int64 size = 3;
+  int64 type = 4;
+}
+
+// get role list info response
+message GetRoleListInfoResp {
+  int64 total = 1;
+  repeated RoleInfo list = 2;
+}
+
+message CheckRoleUserExistReq{
+  int64 id = 1;
+}
+
+message CheckRoleUserExistResp{
+  bool exist = 1;
+}
+
+// delete role info request
+message DeleteRoleInfoReq {
+  int64 id = 1;
+}
+
+// delete role info response
+message DeleteRoleInfoResp {
+  bool result = 1;
+}
+
+// get role detail info request
+message GetRoleDetailInfoReq {
+  int64 id = 1;
+}
+
+// get role detail info response
+message GetRoleDetailInfoResp {
+  RoleInfo role_info = 1;
+}
+
+message RoleInfo {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  repeated uint64 menu_ids = 4;
+  string create_time = 5;
+}
+
+service Role {
+  rpc CreateRoleInfo(CreateRoleInfoReq) returns (CreateRoleInfoResp);
+  rpc GetRoleDetailInfo(GetRoleDetailInfoReq) returns (GetRoleDetailInfoResp);
+  rpc UpdateRoleInfo(UpdateRoleInfoReq) returns (UpdateRoleInfoResp);
+  rpc GetRoleList(GetRoleListInfoReq) returns (GetRoleListInfoResp);
+  rpc CheckRoleUserExist(CheckRoleUserExistReq) returns (CheckRoleUserExistResp);
+  rpc DeleteRoleInfo(DeleteRoleInfoReq) returns (DeleteRoleInfoResp);
+}
