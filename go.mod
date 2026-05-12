@@ -1,4 +1,4 @@
-module base-us
+module base
 
 go 1.25.0
 
