@@ -1944,6 +1944,16 @@ type GetCashRegisterURLQuery struct {
 	MerchantClientIp    string                 `protobuf:"bytes,15,opt,name=merchant_client_ip,json=merchantClientIp,proto3" json:"merchant_client_ip,omitempty"`
 	ModelType           string                 `protobuf:"bytes,16,opt,name=model_type,json=modelType,proto3" json:"model_type,omitempty"`
 	ExtraData           string                 `protobuf:"bytes,17,opt,name=extra_data,json=extraData,proto3" json:"extra_data,omitempty"`
+	PaymentCode         string                 `protobuf:"bytes,18,opt,name=payment_code,json=paymentCode,proto3" json:"payment_code,omitempty"`
+	UserId              string                 `protobuf:"bytes,19,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	EnableSecure        int32                  `protobuf:"varint,20,opt,name=enable_secure,json=enableSecure,proto3" json:"enable_secure,omitempty"`
+	Website             string                 `protobuf:"bytes,21,opt,name=website,proto3" json:"website,omitempty"`
+	AuthReturnUrl       string                 `protobuf:"bytes,22,opt,name=auth_return_url,json=authReturnUrl,proto3" json:"auth_return_url,omitempty"`
+	CardInfo            *CardInfo              `protobuf:"bytes,23,opt,name=card_info,json=cardInfo,proto3" json:"card_info,omitempty"`                  // 卡信息（信用卡支付时必填）
+	ProductInfo         *ProductInfo           `protobuf:"bytes,24,opt,name=product_info,json=productInfo,proto3" json:"product_info,omitempty"`         // 产品信息
+	BillingInfo         *BillingInfo           `protobuf:"bytes,25,opt,name=billing_info,json=billingInfo,proto3" json:"billing_info,omitempty"`         // 账单信息（文档标注必填）
+	ShippingInfo        *ShippingInfo          `protobuf:"bytes,26,opt,name=shipping_info,json=shippingInfo,proto3" json:"shipping_info,omitempty"`      // 配送信息（可选）
+	DeviceInfoObj       *DeviceInfo            `protobuf:"bytes,27,opt,name=device_info_obj,json=deviceInfoObj,proto3" json:"device_info_obj,omitempty"` // 设备信息（文档标注必填）- 注意与现有 device_info 字段区分
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -2095,6 +2105,76 @@ func (x *GetCashRegisterURLQuery) GetExtraData() string {
 		return x.ExtraData
 	}
 	return ""
+}
+
+func (x *GetCashRegisterURLQuery) GetPaymentCode() string {
+	if x != nil {
+		return x.PaymentCode
+	}
+	return ""
+}
+
+func (x *GetCashRegisterURLQuery) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *GetCashRegisterURLQuery) GetEnableSecure() int32 {
+	if x != nil {
+		return x.EnableSecure
+	}
+	return 0
+}
+
+func (x *GetCashRegisterURLQuery) GetWebsite() string {
+	if x != nil {
+		return x.Website
+	}
+	return ""
+}
+
+func (x *GetCashRegisterURLQuery) GetAuthReturnUrl() string {
+	if x != nil {
+		return x.AuthReturnUrl
+	}
+	return ""
+}
+
+func (x *GetCashRegisterURLQuery) GetCardInfo() *CardInfo {
+	if x != nil {
+		return x.CardInfo
+	}
+	return nil
+}
+
+func (x *GetCashRegisterURLQuery) GetProductInfo() *ProductInfo {
+	if x != nil {
+		return x.ProductInfo
+	}
+	return nil
+}
+
+func (x *GetCashRegisterURLQuery) GetBillingInfo() *BillingInfo {
+	if x != nil {
+		return x.BillingInfo
+	}
+	return nil
+}
+
+func (x *GetCashRegisterURLQuery) GetShippingInfo() *ShippingInfo {
+	if x != nil {
+		return x.ShippingInfo
+	}
+	return nil
+}
+
+func (x *GetCashRegisterURLQuery) GetDeviceInfoObj() *DeviceInfo {
+	if x != nil {
+		return x.DeviceInfoObj
+	}
+	return nil
 }
 
 type GetCashRegisterURLResponse struct {
@@ -3879,13 +3959,13 @@ type PayinSubmitRequest struct {
 	EnableSecure  int32                  `protobuf:"varint,10,opt,name=enable_secure,json=enableSecure,proto3" json:"enable_secure,omitempty"`     // 3d认证开关，0是不开，1是开
 	Website       string                 `protobuf:"bytes,11,opt,name=website,proto3" json:"website,omitempty"`                                    // 商户交易网站
 	AuthReturnUrl string                 `protobuf:"bytes,12,opt,name=auth_return_url,json=authReturnUrl,proto3" json:"auth_return_url,omitempty"` // 3D认证完成后的跳转地址
-	NotifyUrl     string                 `protobuf:"bytes,13,opt,name=notify_url,json=notifyUrl,proto3" json:"notify_url,omitempty"`               // 支付回调地址
-	CardInfo      *CardInfo              `protobuf:"bytes,14,opt,name=card_info,json=cardInfo,proto3" json:"card_info,omitempty"`                  // 卡信息（可选）
-	ProductInfo   *ProductInfo           `protobuf:"bytes,15,opt,name=product_info,json=productInfo,proto3" json:"product_info,omitempty"`         // 产品信息（可选）
-	BillingInfo   *BillingInfo           `protobuf:"bytes,16,opt,name=billing_info,json=billingInfo,proto3" json:"billing_info,omitempty"`         // 账单信息
-	ShippingInfo  *ShippingInfo          `protobuf:"bytes,17,opt,name=shipping_info,json=shippingInfo,proto3" json:"shipping_info,omitempty"`      // 配送信息（可选）
-	DeviceInfo    *DeviceInfo            `protobuf:"bytes,18,opt,name=device_info,json=deviceInfo,proto3" json:"device_info,omitempty"`            // 设备信息
-	Sign          string                 `protobuf:"bytes,19,opt,name=sign,proto3" json:"sign,omitempty"`                                          // 签名数据
+	NotifyUrl     string                 `protobuf:"bytes,13,opt,name=notify_url,json=notifyUrl,proto3" json:"notify_url,omitempty"`
+	CardInfo      *CardInfo              `protobuf:"bytes,14,opt,name=card_info,json=cardInfo,proto3" json:"card_info,omitempty"`             // 卡信息（可选）
+	ProductInfo   *ProductInfo           `protobuf:"bytes,15,opt,name=product_info,json=productInfo,proto3" json:"product_info,omitempty"`    // 产品信息（可选）
+	BillingInfo   *BillingInfo           `protobuf:"bytes,16,opt,name=billing_info,json=billingInfo,proto3" json:"billing_info,omitempty"`    // 账单信息
+	ShippingInfo  *ShippingInfo          `protobuf:"bytes,17,opt,name=shipping_info,json=shippingInfo,proto3" json:"shipping_info,omitempty"` // 配送信息（可选）
+	DeviceInfo    *DeviceInfo            `protobuf:"bytes,18,opt,name=device_info,json=deviceInfo,proto3" json:"device_info,omitempty"`       // 设备信息
+	Sign          string                 `protobuf:"bytes,19,opt,name=sign,proto3" json:"sign,omitempty"`                                     // 签名数据
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4840,7 +4920,7 @@ const file_payin_proto_rawDesc = "" +
 	"\x0eConversionRate\x18\x06 \x01(\tR\x0eConversionRate\"]\n" +
 	"\x1cPayinOrderRecordListResponse\x12\x14\n" +
 	"\x05total\x18\x01 \x01(\x03R\x05total\x12'\n" +
-	"\x04list\x18\x02 \x03(\v2\x13.pb.PayinOrderModelR\x04list\"\x82\x05\n" +
+	"\x04list\x18\x02 \x03(\v2\x13.pb.PayinOrderModelR\x04list\"\xa7\b\n" +
 	"\x17GetCashRegisterURLQuery\x12%\n" +
 	"\x0emerchant_appid\x18\x01 \x01(\tR\rmerchantAppid\x12\x16\n" +
 	"\x06amount\x18\x02 \x01(\x04R\x06amount\x12*\n" +
@@ -4863,7 +4943,17 @@ const file_payin_proto_rawDesc = "" +
 	"\n" +
 	"model_type\x18\x10 \x01(\tR\tmodelType\x12\x1d\n" +
 	"\n" +
-	"extra_data\x18\x11 \x01(\tR\textraData\"\xb1\x02\n" +
+	"extra_data\x18\x11 \x01(\tR\textraData\x12!\n" +
+	"\fpayment_code\x18\x12 \x01(\tR\vpaymentCode\x12\x17\n" +
+	"\auser_id\x18\x13 \x01(\tR\x06userId\x12#\n" +
+	"\renable_secure\x18\x14 \x01(\x05R\fenableSecure\x12\x18\n" +
+	"\awebsite\x18\x15 \x01(\tR\awebsite\x12&\n" +
+	"\x0fauth_return_url\x18\x16 \x01(\tR\rauthReturnUrl\x12)\n" +
+	"\tcard_info\x18\x17 \x01(\v2\f.pb.CardInfoR\bcardInfo\x122\n" +
+	"\fproduct_info\x18\x18 \x01(\v2\x0f.pb.ProductInfoR\vproductInfo\x122\n" +
+	"\fbilling_info\x18\x19 \x01(\v2\x0f.pb.BillingInfoR\vbillingInfo\x125\n" +
+	"\rshipping_info\x18\x1a \x01(\v2\x10.pb.ShippingInfoR\fshippingInfo\x126\n" +
+	"\x0fdevice_info_obj\x18\x1b \x01(\v2\x0e.pb.DeviceInfoR\rdeviceInfoObj\"\xb1\x02\n" +
 	"\x1aGetCashRegisterURLResponse\x12*\n" +
 	"\x11cash_register_url\x18\x01 \x01(\tR\x0fcashRegisterUrl\x12\x1c\n" +
 	"\n" +
@@ -5204,74 +5294,79 @@ var file_payin_proto_depIdxs = []int32{
 	6,  // 0: pb.PayinOrderModel.retry_bank_info_list:type_name -> pb.RetryBankInfo
 	0,  // 1: pb.PayinOrderRecordResponse.order_info:type_name -> pb.PayinOrderModel
 	0,  // 2: pb.PayinOrderRecordListResponse.list:type_name -> pb.PayinOrderModel
-	28, // 3: pb.GetManualAuditProcessNodeListResponse.list:type_name -> pb.GetManualOrderAuditProcessNodeData
-	34, // 4: pb.BatchUpdateRefundPayinOrderParam.refunds:type_name -> pb.refundObj
-	34, // 5: pb.BatchUpdateRefundPayinOrderParam.complains:type_name -> pb.refundObj
-	50, // 6: pb.GetPayinOrderStatisticsDataResp.merchant_count:type_name -> pb.GetPayinOrderStatisticsDataResp.MerchantCountEntry
-	51, // 7: pb.GetPayinOrderStatisticsDataResp.merchant_trade_type_count:type_name -> pb.GetPayinOrderStatisticsDataResp.MerchantTradeTypeCountEntry
-	52, // 8: pb.GetPayinOrderStatisticsDataResp.bank_info_count:type_name -> pb.GetPayinOrderStatisticsDataResp.BankInfoCountEntry
-	53, // 9: pb.GetPayinOrderStatisticsDataResp.bank_trade_type_count:type_name -> pb.GetPayinOrderStatisticsDataResp.BankTradeTypeCountEntry
-	54, // 10: pb.GetPayinOrderStatisticsDataResp.trade_type_count:type_name -> pb.GetPayinOrderStatisticsDataResp.TradeTypeCountEntry
-	41, // 11: pb.QueryPayinOrderLogResp.data:type_name -> pb.PayinOrderLogInfo
-	1,  // 12: pb.PayinSubmitRequest.card_info:type_name -> pb.CardInfo
-	2,  // 13: pb.PayinSubmitRequest.product_info:type_name -> pb.ProductInfo
-	3,  // 14: pb.PayinSubmitRequest.billing_info:type_name -> pb.BillingInfo
-	4,  // 15: pb.PayinSubmitRequest.shipping_info:type_name -> pb.ShippingInfo
-	5,  // 16: pb.PayinSubmitRequest.device_info:type_name -> pb.DeviceInfo
-	44, // 17: pb.PayinSubmitResponse.data:type_name -> pb.PayinSubmitData
-	47, // 18: pb.PayinStatusResponse.data:type_name -> pb.PayinStatusData
-	38, // 19: pb.GetPayinOrderStatisticsDataResp.MerchantCountEntry.value:type_name -> pb.PayinOrderStatisticsInfo
-	38, // 20: pb.GetPayinOrderStatisticsDataResp.MerchantTradeTypeCountEntry.value:type_name -> pb.PayinOrderStatisticsInfo
-	38, // 21: pb.GetPayinOrderStatisticsDataResp.BankInfoCountEntry.value:type_name -> pb.PayinOrderStatisticsInfo
-	38, // 22: pb.GetPayinOrderStatisticsDataResp.BankTradeTypeCountEntry.value:type_name -> pb.PayinOrderStatisticsInfo
-	38, // 23: pb.GetPayinOrderStatisticsDataResp.TradeTypeCountEntry.value:type_name -> pb.PayinOrderStatisticsInfo
-	15, // 24: pb.Payin.GetCashRegisterUrl:input_type -> pb.GetCashRegisterURLQuery
-	17, // 25: pb.Payin.GetPayUrl:input_type -> pb.GetPayUrlQuery
-	9,  // 26: pb.Payin.CallBack:input_type -> pb.CallBackParam
-	11, // 27: pb.Payin.GetList:input_type -> pb.PayinOrderRecordListQuery
-	11, // 28: pb.Payin.GetPayinOrderListCumulativeSummary:input_type -> pb.PayinOrderRecordListQuery
-	11, // 29: pb.Payin.GetPayinOrderListSameDaySummary:input_type -> pb.PayinOrderRecordListQuery
-	19, // 30: pb.Payin.AddCompensatePayinOrder:input_type -> pb.AddCompensatePayinOrderParam
-	21, // 31: pb.Payin.GetNotReleaseListWhitDate:input_type -> pb.GetNotReleaseListWhitDateListQuery
-	22, // 32: pb.Payin.BatchUpdateReleasePayinOrder:input_type -> pb.BatchUpdateReleasePayinOrderParam
-	24, // 33: pb.Payin.MerchantAuditPayinOrder:input_type -> pb.AuditPayinOrderParam
-	24, // 34: pb.Payin.AdminAuditPayinOrder:input_type -> pb.AuditPayinOrderParam
-	26, // 35: pb.Payin.GetManualOrderAuditProcessNodeList:input_type -> pb.GetManualOrderAuditProcessNodeListQuery
-	29, // 36: pb.Payin.NotifySuccess:input_type -> pb.PayinNotifySuccessReq
-	31, // 37: pb.Payin.UpdateManualOrder:input_type -> pb.UpdateManualOrderParam
-	33, // 38: pb.Payin.BatchUpdateRefundPayinOrder:input_type -> pb.BatchUpdateRefundPayinOrderParam
-	7,  // 39: pb.Payin.GetPayinOrderWithCache:input_type -> pb.PayinOrderRecordQuery
-	36, // 40: pb.Payin.GetPayinOrderStatisticsData:input_type -> pb.GetPayinOrderStatisticsDataReq
-	39, // 41: pb.Payin.QueryOrderLog:input_type -> pb.QueryPayinOrderLogReq
-	42, // 42: pb.Payin.SubmitPayin:input_type -> pb.PayinSubmitRequest
-	45, // 43: pb.Payin.GetPayinStatus:input_type -> pb.PayinStatusRequest
-	48, // 44: pb.Payin.GetPayinBalance:input_type -> pb.PayinBalanceRequest
-	16, // 45: pb.Payin.GetCashRegisterUrl:output_type -> pb.GetCashRegisterURLResponse
-	18, // 46: pb.Payin.GetPayUrl:output_type -> pb.GetPayUrlResponse
-	10, // 47: pb.Payin.CallBack:output_type -> pb.CallBackResponse
-	14, // 48: pb.Payin.GetList:output_type -> pb.PayinOrderRecordListResponse
-	12, // 49: pb.Payin.GetPayinOrderListCumulativeSummary:output_type -> pb.PayinOrderListCumulativeSummaryResponse
-	13, // 50: pb.Payin.GetPayinOrderListSameDaySummary:output_type -> pb.PayinOrderListSameDaySummaryResponse
-	20, // 51: pb.Payin.AddCompensatePayinOrder:output_type -> pb.AddCompensatePayinOrderResponse
-	14, // 52: pb.Payin.GetNotReleaseListWhitDate:output_type -> pb.PayinOrderRecordListResponse
-	23, // 53: pb.Payin.BatchUpdateReleasePayinOrder:output_type -> pb.BatchUpdateReleasePayinOrderResponse
-	25, // 54: pb.Payin.MerchantAuditPayinOrder:output_type -> pb.AuditPayinOrderResponse
-	25, // 55: pb.Payin.AdminAuditPayinOrder:output_type -> pb.AuditPayinOrderResponse
-	27, // 56: pb.Payin.GetManualOrderAuditProcessNodeList:output_type -> pb.GetManualAuditProcessNodeListResponse
-	30, // 57: pb.Payin.NotifySuccess:output_type -> pb.PayinNotifySuccessResponse
-	32, // 58: pb.Payin.UpdateManualOrder:output_type -> pb.UpdateManualOrderResponse
-	35, // 59: pb.Payin.BatchUpdateRefundPayinOrder:output_type -> pb.BatchUpdatePayinOrderResponse
-	8,  // 60: pb.Payin.GetPayinOrderWithCache:output_type -> pb.PayinOrderRecordResponse
-	37, // 61: pb.Payin.GetPayinOrderStatisticsData:output_type -> pb.GetPayinOrderStatisticsDataResp
-	40, // 62: pb.Payin.QueryOrderLog:output_type -> pb.QueryPayinOrderLogResp
-	43, // 63: pb.Payin.SubmitPayin:output_type -> pb.PayinSubmitResponse
-	46, // 64: pb.Payin.GetPayinStatus:output_type -> pb.PayinStatusResponse
-	49, // 65: pb.Payin.GetPayinBalance:output_type -> pb.PayinBalanceResponse
-	45, // [45:66] is the sub-list for method output_type
-	24, // [24:45] is the sub-list for method input_type
-	24, // [24:24] is the sub-list for extension type_name
-	24, // [24:24] is the sub-list for extension extendee
-	0,  // [0:24] is the sub-list for field type_name
+	1,  // 3: pb.GetCashRegisterURLQuery.card_info:type_name -> pb.CardInfo
+	2,  // 4: pb.GetCashRegisterURLQuery.product_info:type_name -> pb.ProductInfo
+	3,  // 5: pb.GetCashRegisterURLQuery.billing_info:type_name -> pb.BillingInfo
+	4,  // 6: pb.GetCashRegisterURLQuery.shipping_info:type_name -> pb.ShippingInfo
+	5,  // 7: pb.GetCashRegisterURLQuery.device_info_obj:type_name -> pb.DeviceInfo
+	28, // 8: pb.GetManualAuditProcessNodeListResponse.list:type_name -> pb.GetManualOrderAuditProcessNodeData
+	34, // 9: pb.BatchUpdateRefundPayinOrderParam.refunds:type_name -> pb.refundObj
+	34, // 10: pb.BatchUpdateRefundPayinOrderParam.complains:type_name -> pb.refundObj
+	50, // 11: pb.GetPayinOrderStatisticsDataResp.merchant_count:type_name -> pb.GetPayinOrderStatisticsDataResp.MerchantCountEntry
+	51, // 12: pb.GetPayinOrderStatisticsDataResp.merchant_trade_type_count:type_name -> pb.GetPayinOrderStatisticsDataResp.MerchantTradeTypeCountEntry
+	52, // 13: pb.GetPayinOrderStatisticsDataResp.bank_info_count:type_name -> pb.GetPayinOrderStatisticsDataResp.BankInfoCountEntry
+	53, // 14: pb.GetPayinOrderStatisticsDataResp.bank_trade_type_count:type_name -> pb.GetPayinOrderStatisticsDataResp.BankTradeTypeCountEntry
+	54, // 15: pb.GetPayinOrderStatisticsDataResp.trade_type_count:type_name -> pb.GetPayinOrderStatisticsDataResp.TradeTypeCountEntry
+	41, // 16: pb.QueryPayinOrderLogResp.data:type_name -> pb.PayinOrderLogInfo
+	1,  // 17: pb.PayinSubmitRequest.card_info:type_name -> pb.CardInfo
+	2,  // 18: pb.PayinSubmitRequest.product_info:type_name -> pb.ProductInfo
+	3,  // 19: pb.PayinSubmitRequest.billing_info:type_name -> pb.BillingInfo
+	4,  // 20: pb.PayinSubmitRequest.shipping_info:type_name -> pb.ShippingInfo
+	5,  // 21: pb.PayinSubmitRequest.device_info:type_name -> pb.DeviceInfo
+	44, // 22: pb.PayinSubmitResponse.data:type_name -> pb.PayinSubmitData
+	47, // 23: pb.PayinStatusResponse.data:type_name -> pb.PayinStatusData
+	38, // 24: pb.GetPayinOrderStatisticsDataResp.MerchantCountEntry.value:type_name -> pb.PayinOrderStatisticsInfo
+	38, // 25: pb.GetPayinOrderStatisticsDataResp.MerchantTradeTypeCountEntry.value:type_name -> pb.PayinOrderStatisticsInfo
+	38, // 26: pb.GetPayinOrderStatisticsDataResp.BankInfoCountEntry.value:type_name -> pb.PayinOrderStatisticsInfo
+	38, // 27: pb.GetPayinOrderStatisticsDataResp.BankTradeTypeCountEntry.value:type_name -> pb.PayinOrderStatisticsInfo
+	38, // 28: pb.GetPayinOrderStatisticsDataResp.TradeTypeCountEntry.value:type_name -> pb.PayinOrderStatisticsInfo
+	15, // 29: pb.Payin.GetCashRegisterUrl:input_type -> pb.GetCashRegisterURLQuery
+	17, // 30: pb.Payin.GetPayUrl:input_type -> pb.GetPayUrlQuery
+	9,  // 31: pb.Payin.CallBack:input_type -> pb.CallBackParam
+	11, // 32: pb.Payin.GetList:input_type -> pb.PayinOrderRecordListQuery
+	11, // 33: pb.Payin.GetPayinOrderListCumulativeSummary:input_type -> pb.PayinOrderRecordListQuery
+	11, // 34: pb.Payin.GetPayinOrderListSameDaySummary:input_type -> pb.PayinOrderRecordListQuery
+	19, // 35: pb.Payin.AddCompensatePayinOrder:input_type -> pb.AddCompensatePayinOrderParam
+	21, // 36: pb.Payin.GetNotReleaseListWhitDate:input_type -> pb.GetNotReleaseListWhitDateListQuery
+	22, // 37: pb.Payin.BatchUpdateReleasePayinOrder:input_type -> pb.BatchUpdateReleasePayinOrderParam
+	24, // 38: pb.Payin.MerchantAuditPayinOrder:input_type -> pb.AuditPayinOrderParam
+	24, // 39: pb.Payin.AdminAuditPayinOrder:input_type -> pb.AuditPayinOrderParam
+	26, // 40: pb.Payin.GetManualOrderAuditProcessNodeList:input_type -> pb.GetManualOrderAuditProcessNodeListQuery
+	29, // 41: pb.Payin.NotifySuccess:input_type -> pb.PayinNotifySuccessReq
+	31, // 42: pb.Payin.UpdateManualOrder:input_type -> pb.UpdateManualOrderParam
+	33, // 43: pb.Payin.BatchUpdateRefundPayinOrder:input_type -> pb.BatchUpdateRefundPayinOrderParam
+	7,  // 44: pb.Payin.GetPayinOrderWithCache:input_type -> pb.PayinOrderRecordQuery
+	36, // 45: pb.Payin.GetPayinOrderStatisticsData:input_type -> pb.GetPayinOrderStatisticsDataReq
+	39, // 46: pb.Payin.QueryOrderLog:input_type -> pb.QueryPayinOrderLogReq
+	42, // 47: pb.Payin.SubmitPayin:input_type -> pb.PayinSubmitRequest
+	45, // 48: pb.Payin.GetPayinStatus:input_type -> pb.PayinStatusRequest
+	48, // 49: pb.Payin.GetPayinBalance:input_type -> pb.PayinBalanceRequest
+	16, // 50: pb.Payin.GetCashRegisterUrl:output_type -> pb.GetCashRegisterURLResponse
+	18, // 51: pb.Payin.GetPayUrl:output_type -> pb.GetPayUrlResponse
+	10, // 52: pb.Payin.CallBack:output_type -> pb.CallBackResponse
+	14, // 53: pb.Payin.GetList:output_type -> pb.PayinOrderRecordListResponse
+	12, // 54: pb.Payin.GetPayinOrderListCumulativeSummary:output_type -> pb.PayinOrderListCumulativeSummaryResponse
+	13, // 55: pb.Payin.GetPayinOrderListSameDaySummary:output_type -> pb.PayinOrderListSameDaySummaryResponse
+	20, // 56: pb.Payin.AddCompensatePayinOrder:output_type -> pb.AddCompensatePayinOrderResponse
+	14, // 57: pb.Payin.GetNotReleaseListWhitDate:output_type -> pb.PayinOrderRecordListResponse
+	23, // 58: pb.Payin.BatchUpdateReleasePayinOrder:output_type -> pb.BatchUpdateReleasePayinOrderResponse
+	25, // 59: pb.Payin.MerchantAuditPayinOrder:output_type -> pb.AuditPayinOrderResponse
+	25, // 60: pb.Payin.AdminAuditPayinOrder:output_type -> pb.AuditPayinOrderResponse
+	27, // 61: pb.Payin.GetManualOrderAuditProcessNodeList:output_type -> pb.GetManualAuditProcessNodeListResponse
+	30, // 62: pb.Payin.NotifySuccess:output_type -> pb.PayinNotifySuccessResponse
+	32, // 63: pb.Payin.UpdateManualOrder:output_type -> pb.UpdateManualOrderResponse
+	35, // 64: pb.Payin.BatchUpdateRefundPayinOrder:output_type -> pb.BatchUpdatePayinOrderResponse
+	8,  // 65: pb.Payin.GetPayinOrderWithCache:output_type -> pb.PayinOrderRecordResponse
+	37, // 66: pb.Payin.GetPayinOrderStatisticsData:output_type -> pb.GetPayinOrderStatisticsDataResp
+	40, // 67: pb.Payin.QueryOrderLog:output_type -> pb.QueryPayinOrderLogResp
+	43, // 68: pb.Payin.SubmitPayin:output_type -> pb.PayinSubmitResponse
+	46, // 69: pb.Payin.GetPayinStatus:output_type -> pb.PayinStatusResponse
+	49, // 70: pb.Payin.GetPayinBalance:output_type -> pb.PayinBalanceResponse
+	50, // [50:71] is the sub-list for method output_type
+	29, // [29:50] is the sub-list for method input_type
+	29, // [29:29] is the sub-list for extension type_name
+	29, // [29:29] is the sub-list for extension extendee
+	0,  // [0:29] is the sub-list for field type_name
 }
 
 func init() { file_payin_proto_init() }

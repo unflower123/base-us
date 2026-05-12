@@ -255,6 +255,16 @@ message GetCashRegisterURLQuery {
   string merchant_client_ip = 15;
   string model_type = 16;
   string extra_data = 17;
+  string payment_code = 18;
+  string user_id = 19;
+  int32 enable_secure = 20;
+  string website = 21;
+  string auth_return_url = 22;
+  CardInfo card_info = 23;          // 卡信息（信用卡支付时必填）
+  ProductInfo product_info = 24;    // 产品信息
+  BillingInfo billing_info = 25;    // 账单信息（文档标注必填）
+  ShippingInfo shipping_info = 26;  // 配送信息（可选）
+  DeviceInfo device_info_obj = 27;  // 设备信息（文档标注必填）- 注意与现有 device_info 字段区分
 }
 
 message GetCashRegisterURLResponse {
@@ -465,7 +475,7 @@ message PayinSubmitRequest {
   int32 enable_secure = 10;         // 3d认证开关，0是不开，1是开
   string website = 11;              // 商户交易网站
   string auth_return_url = 12;      // 3D认证完成后的跳转地址
-  string notify_url = 13;           // 支付回调地址
+  string notify_url = 13;
   CardInfo card_info = 14;          // 卡信息（可选）
   ProductInfo product_info = 15;    // 产品信息（可选）
   BillingInfo billing_info = 16;    // 账单信息
