@@ -11,10 +11,10 @@ message GetBankInfoReq {
 
 message GetBankInfosetResp {
   int64 total = 1;
-  repeated BankInfoset list = 2;
+  repeated BankInfo list = 2;
 }
 
-message BankInfoset {
+message BankInfo {
   int64  id = 1;
   string bank_account = 2;
   string bank_name = 3;
@@ -37,13 +37,13 @@ message SettlementOperateResp {
 
 service SettlementBank {
   // create settlement bank info
-  rpc CreateBankInfo(BankInfoset) returns (SettlementOperateResp);
+  rpc CreateBankInfo(BankInfo) returns (SettlementOperateResp);
   // modify settlement bank info
-  rpc ModifyBankInfo(BankInfoset) returns (SettlementOperateResp);
+  rpc ModifyBankInfo(BankInfo) returns (SettlementOperateResp);
   // delete settlement bank info
-  rpc DeleteBankInfo(BankInfoset) returns (SettlementOperateResp);
+  rpc DeleteBankInfo(BankInfo) returns (SettlementOperateResp);
   // modify settlement bank status
-  rpc ModifyBankStatus(BankInfoset) returns (SettlementOperateResp);
+  rpc ModifyBankStatus(BankInfo) returns (SettlementOperateResp);
   // get settlement bank info
   rpc GetBankList(GetBankInfoReq) returns (GetBankInfosetResp);
 
