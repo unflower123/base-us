@@ -26,7 +26,7 @@ message BankInfo {
   int64  create_time = 9;
 }
 
-message SettlementOperateResp {
+message OperateResp {
   string msg = 1;
 }
 
@@ -37,13 +37,13 @@ message SettlementOperateResp {
 
 service SettlementBank {
   // create settlement bank info
-  rpc CreateBankInfo(BankInfo) returns (SettlementOperateResp);
+  rpc CreateBankInfo(BankInfo) returns (OperateResp);
   // modify settlement bank info
-  rpc ModifyBankInfo(BankInfo) returns (SettlementOperateResp);
+  rpc ModifyBankInfo(BankInfo) returns (OperateResp);
   // delete settlement bank info
-  rpc DeleteBankInfo(BankInfo) returns (SettlementOperateResp);
+  rpc DeleteBankInfo(BankInfo) returns (OperateResp);
   // modify settlement bank status
-  rpc ModifyBankStatus(BankInfo) returns (SettlementOperateResp);
+  rpc ModifyBankStatus(BankInfo) returns (OperateResp);
   // get settlement bank info
   rpc GetBankList(GetBankInfoReq) returns (GetBankInfoResp);
 

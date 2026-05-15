@@ -31,13 +31,13 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SettlementBankClient interface {
 	// create settlement bank info
-	CreateBankInfo(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*SettlementOperateResp, error)
+	CreateBankInfo(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*OperateResp, error)
 	// modify settlement bank info
-	ModifyBankInfo(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*SettlementOperateResp, error)
+	ModifyBankInfo(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*OperateResp, error)
 	// delete settlement bank info
-	DeleteBankInfo(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*SettlementOperateResp, error)
+	DeleteBankInfo(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*OperateResp, error)
 	// modify settlement bank status
-	ModifyBankStatus(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*SettlementOperateResp, error)
+	ModifyBankStatus(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*OperateResp, error)
 	// get settlement bank info
 	GetBankList(ctx context.Context, in *GetBankInfoReq, opts ...grpc.CallOption) (*GetBankInfoResp, error)
 }
@@ -50,9 +50,9 @@ func NewSettlementBankClient(cc grpc.ClientConnInterface) SettlementBankClient {
 	return &settlementBankClient{cc}
 }
 
-func (c *settlementBankClient) CreateBankInfo(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*SettlementOperateResp, error) {
+func (c *settlementBankClient) CreateBankInfo(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*OperateResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SettlementOperateResp)
+	out := new(OperateResp)
 	err := c.cc.Invoke(ctx, SettlementBank_CreateBankInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -60,9 +60,9 @@ func (c *settlementBankClient) CreateBankInfo(ctx context.Context, in *BankInfo,
 	return out, nil
 }
 
-func (c *settlementBankClient) ModifyBankInfo(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*SettlementOperateResp, error) {
+func (c *settlementBankClient) ModifyBankInfo(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*OperateResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SettlementOperateResp)
+	out := new(OperateResp)
 	err := c.cc.Invoke(ctx, SettlementBank_ModifyBankInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -70,9 +70,9 @@ func (c *settlementBankClient) ModifyBankInfo(ctx context.Context, in *BankInfo,
 	return out, nil
 }
 
-func (c *settlementBankClient) DeleteBankInfo(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*SettlementOperateResp, error) {
+func (c *settlementBankClient) DeleteBankInfo(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*OperateResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SettlementOperateResp)
+	out := new(OperateResp)
 	err := c.cc.Invoke(ctx, SettlementBank_DeleteBankInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -80,9 +80,9 @@ func (c *settlementBankClient) DeleteBankInfo(ctx context.Context, in *BankInfo,
 	return out, nil
 }
 
-func (c *settlementBankClient) ModifyBankStatus(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*SettlementOperateResp, error) {
+func (c *settlementBankClient) ModifyBankStatus(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*OperateResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SettlementOperateResp)
+	out := new(OperateResp)
 	err := c.cc.Invoke(ctx, SettlementBank_ModifyBankStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -105,13 +105,13 @@ func (c *settlementBankClient) GetBankList(ctx context.Context, in *GetBankInfoR
 // for forward compatibility.
 type SettlementBankServer interface {
 	// create settlement bank info
-	CreateBankInfo(context.Context, *BankInfo) (*SettlementOperateResp, error)
+	CreateBankInfo(context.Context, *BankInfo) (*OperateResp, error)
 	// modify settlement bank info
-	ModifyBankInfo(context.Context, *BankInfo) (*SettlementOperateResp, error)
+	ModifyBankInfo(context.Context, *BankInfo) (*OperateResp, error)
 	// delete settlement bank info
-	DeleteBankInfo(context.Context, *BankInfo) (*SettlementOperateResp, error)
+	DeleteBankInfo(context.Context, *BankInfo) (*OperateResp, error)
 	// modify settlement bank status
-	ModifyBankStatus(context.Context, *BankInfo) (*SettlementOperateResp, error)
+	ModifyBankStatus(context.Context, *BankInfo) (*OperateResp, error)
 	// get settlement bank info
 	GetBankList(context.Context, *GetBankInfoReq) (*GetBankInfoResp, error)
 	mustEmbedUnimplementedSettlementBankServer()
@@ -124,16 +124,16 @@ type SettlementBankServer interface {
 // pointer dereference when methods are called.
 type UnimplementedSettlementBankServer struct{}
 
-func (UnimplementedSettlementBankServer) CreateBankInfo(context.Context, *BankInfo) (*SettlementOperateResp, error) {
+func (UnimplementedSettlementBankServer) CreateBankInfo(context.Context, *BankInfo) (*OperateResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBankInfo not implemented")
 }
-func (UnimplementedSettlementBankServer) ModifyBankInfo(context.Context, *BankInfo) (*SettlementOperateResp, error) {
+func (UnimplementedSettlementBankServer) ModifyBankInfo(context.Context, *BankInfo) (*OperateResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ModifyBankInfo not implemented")
 }
-func (UnimplementedSettlementBankServer) DeleteBankInfo(context.Context, *BankInfo) (*SettlementOperateResp, error) {
+func (UnimplementedSettlementBankServer) DeleteBankInfo(context.Context, *BankInfo) (*OperateResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBankInfo not implemented")
 }
-func (UnimplementedSettlementBankServer) ModifyBankStatus(context.Context, *BankInfo) (*SettlementOperateResp, error) {
+func (UnimplementedSettlementBankServer) ModifyBankStatus(context.Context, *BankInfo) (*OperateResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ModifyBankStatus not implemented")
 }
 func (UnimplementedSettlementBankServer) GetBankList(context.Context, *GetBankInfoReq) (*GetBankInfoResp, error) {
