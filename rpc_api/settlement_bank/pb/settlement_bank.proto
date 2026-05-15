@@ -9,7 +9,7 @@ message GetBankInfoReq {
   int64 size = 2;
 }
 
-message GetBankInfosetResp {
+message GetBankInfoResp {
   int64 total = 1;
   repeated BankInfo list = 2;
 }
@@ -45,6 +45,6 @@ service SettlementBank {
   // modify settlement bank status
   rpc ModifyBankStatus(BankInfo) returns (SettlementOperateResp);
   // get settlement bank info
-  rpc GetBankList(GetBankInfoReq) returns (GetBankInfosetResp);
+  rpc GetBankList(GetBankInfoReq) returns (GetBankInfoResp);
 
 }

@@ -39,7 +39,7 @@ type SettlementBankClient interface {
 	// modify settlement bank status
 	ModifyBankStatus(ctx context.Context, in *BankInfo, opts ...grpc.CallOption) (*SettlementOperateResp, error)
 	// get settlement bank info
-	GetBankList(ctx context.Context, in *GetBankInfoReq, opts ...grpc.CallOption) (*GetBankInfosetResp, error)
+	GetBankList(ctx context.Context, in *GetBankInfoReq, opts ...grpc.CallOption) (*GetBankInfoResp, error)
 }
 
 type settlementBankClient struct {
@@ -90,9 +90,9 @@ func (c *settlementBankClient) ModifyBankStatus(ctx context.Context, in *BankInf
 	return out, nil
 }
 
-func (c *settlementBankClient) GetBankList(ctx context.Context, in *GetBankInfoReq, opts ...grpc.CallOption) (*GetBankInfosetResp, error) {
+func (c *settlementBankClient) GetBankList(ctx context.Context, in *GetBankInfoReq, opts ...grpc.CallOption) (*GetBankInfoResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetBankInfosetResp)
+	out := new(GetBankInfoResp)
 	err := c.cc.Invoke(ctx, SettlementBank_GetBankList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -113,7 +113,7 @@ type SettlementBankServer interface {
 	// modify settlement bank status
 	ModifyBankStatus(context.Context, *BankInfo) (*SettlementOperateResp, error)
 	// get settlement bank info
-	GetBankList(context.Context, *GetBankInfoReq) (*GetBankInfosetResp, error)
+	GetBankList(context.Context, *GetBankInfoReq) (*GetBankInfoResp, error)
 	mustEmbedUnimplementedSettlementBankServer()
 }
 
@@ -136,7 +136,7 @@ func (UnimplementedSettlementBankServer) DeleteBankInfo(context.Context, *BankIn
 func (UnimplementedSettlementBankServer) ModifyBankStatus(context.Context, *BankInfo) (*SettlementOperateResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ModifyBankStatus not implemented")
 }
-func (UnimplementedSettlementBankServer) GetBankList(context.Context, *GetBankInfoReq) (*GetBankInfosetResp, error) {
+func (UnimplementedSettlementBankServer) GetBankList(context.Context, *GetBankInfoReq) (*GetBankInfoResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBankList not implemented")
 }
 func (UnimplementedSettlementBankServer) mustEmbedUnimplementedSettlementBankServer() {}
