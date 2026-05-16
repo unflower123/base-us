@@ -4628,34 +4628,33 @@ func (x *PayoutAccountSummaryInfo) GetUpdateTime() string {
 	return ""
 }
 
-// ==================== 出金提交（商户接口）====================
 type PayoutSubmitRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	MerchantId    string                 `protobuf:"bytes,1,opt,name=merchant_id,json=merchantId,proto3" json:"merchant_id,omitempty"`            // 商户ID
 	MerchantTxnId string                 `protobuf:"bytes,2,opt,name=merchant_txn_id,json=merchantTxnId,proto3" json:"merchant_txn_id,omitempty"` // 商户订单ID
 	PaymentCode   string                 `protobuf:"bytes,3,opt,name=payment_code,json=paymentCode,proto3" json:"payment_code,omitempty"`         // 支付类型
-	Amount        float32                `protobuf:"fixed32,4,opt,name=amount,proto3" json:"amount,omitempty"`                                    // 金额（精确到小数点后2位）
-	Timestamp     int64                  `protobuf:"varint,5,opt,name=timestamp,proto3" json:"timestamp,omitempty"`                               // 请求时间戳（精确到毫秒）
+	Amount        float32                `protobuf:"fixed32,4,opt,name=amount,proto3" json:"amount,omitempty"`                                    // 金额
+	Timestamp     int64                  `protobuf:"varint,5,opt,name=timestamp,proto3" json:"timestamp,omitempty"`                               // 请求时间戳（毫秒）
 	Currency      string                 `protobuf:"bytes,6,opt,name=currency,proto3" json:"currency,omitempty"`                                  // 货币类型
 	NotifyUrl     string                 `protobuf:"bytes,7,opt,name=notify_url,json=notifyUrl,proto3" json:"notify_url,omitempty"`               // 通知URL
 	AccountType   string                 `protobuf:"bytes,8,opt,name=account_type,json=accountType,proto3" json:"account_type,omitempty"`         // 账户类型
-	BankName      string                 `protobuf:"bytes,9,opt,name=bank_name,json=bankName,proto3" json:"bank_name,omitempty"`                  // 银行名称（可选）
-	BankCode      string                 `protobuf:"bytes,10,opt,name=bank_code,json=bankCode,proto3" json:"bank_code,omitempty"`                 // 银行编码（可选）
+	BankName      string                 `protobuf:"bytes,9,opt,name=bank_name,json=bankName,proto3" json:"bank_name,omitempty"`                  // 银行名称
+	BankCode      string                 `protobuf:"bytes,10,opt,name=bank_code,json=bankCode,proto3" json:"bank_code,omitempty"`                 // 银行编码
 	FirstName     string                 `protobuf:"bytes,11,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`              // 户主名字
-	LastName      string                 `protobuf:"bytes,12,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`                 // 户主姓氏（可选）
-	Birthday      string                 `protobuf:"bytes,13,opt,name=birthday,proto3" json:"birthday,omitempty"`                                 // 户主生日（可选）
+	LastName      string                 `protobuf:"bytes,12,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`                 // 户主姓氏
+	Birthday      string                 `protobuf:"bytes,13,opt,name=birthday,proto3" json:"birthday,omitempty"`                                 // 户主生日
 	Account       string                 `protobuf:"bytes,14,opt,name=account,proto3" json:"account,omitempty"`                                   // 户主银行账户
 	AccountExpire string                 `protobuf:"bytes,15,opt,name=account_expire,json=accountExpire,proto3" json:"account_expire,omitempty"`  // 收款账户的有效期
 	Phone         string                 `protobuf:"bytes,16,opt,name=phone,proto3" json:"phone,omitempty"`                                       // 户主手机
 	Email         string                 `protobuf:"bytes,17,opt,name=email,proto3" json:"email,omitempty"`                                       // 户主邮箱
 	Country       string                 `protobuf:"bytes,18,opt,name=country,proto3" json:"country,omitempty"`                                   // 国家代码
-	State         string                 `protobuf:"bytes,19,opt,name=state,proto3" json:"state,omitempty"`                                       // 州（可选）
-	City          string                 `protobuf:"bytes,20,opt,name=city,proto3" json:"city,omitempty"`                                         // 城市（可选）
-	ZipCode       string                 `protobuf:"bytes,21,opt,name=zip_code,json=zipCode,proto3" json:"zip_code,omitempty"`                    // 邮编（可选）
-	Address1      string                 `protobuf:"bytes,22,opt,name=address1,proto3" json:"address1,omitempty"`                                 // 地址行1（可选）
-	Address2      string                 `protobuf:"bytes,23,opt,name=address2,proto3" json:"address2,omitempty"`                                 // 地址行2（可选）
-	Address3      string                 `protobuf:"bytes,24,opt,name=address3,proto3" json:"address3,omitempty"`                                 // 地址行3（可选）
-	Sign          string                 `protobuf:"bytes,25,opt,name=sign,proto3" json:"sign,omitempty"`                                         // 签名数据
+	State         string                 `protobuf:"bytes,19,opt,name=state,proto3" json:"state,omitempty"`                                       // 州
+	City          string                 `protobuf:"bytes,20,opt,name=city,proto3" json:"city,omitempty"`                                         // 城市
+	ZipCode       string                 `protobuf:"bytes,21,opt,name=zip_code,json=zipCode,proto3" json:"zip_code,omitempty"`                    // 邮编
+	Address1      string                 `protobuf:"bytes,22,opt,name=address1,proto3" json:"address1,omitempty"`                                 // 地址行1
+	Address2      string                 `protobuf:"bytes,23,opt,name=address2,proto3" json:"address2,omitempty"`                                 // 地址行2
+	Address3      string                 `protobuf:"bytes,24,opt,name=address3,proto3" json:"address3,omitempty"`                                 // 地址行3
+	Sign          string                 `protobuf:"bytes,25,opt,name=sign,proto3" json:"sign,omitempty"`                                         // 签名
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4872,7 +4871,7 @@ type PayoutSubmitResponse struct {
 	MerchantTxnId string                 `protobuf:"bytes,3,opt,name=merchant_txn_id,json=merchantTxnId,proto3" json:"merchant_txn_id,omitempty"` // 交易ID
 	Amount        float32                `protobuf:"fixed32,4,opt,name=amount,proto3" json:"amount,omitempty"`                                    // 交易金额
 	TxnId         string                 `protobuf:"bytes,5,opt,name=txn_id,json=txnId,proto3" json:"txn_id,omitempty"`                           // 交易ID
-	TxnStatus     string                 `protobuf:"bytes,6,opt,name=txn_status,json=txnStatus,proto3" json:"txn_status,omitempty"`               // 交易状态 (SUCCESS，PENDING，FAILED，REFUND)
+	TxnStatus     string                 `protobuf:"bytes,6,opt,name=txn_status,json=txnStatus,proto3" json:"txn_status,omitempty"`               // 交易状态
 	FeeAmount     float32                `protobuf:"fixed32,7,opt,name=fee_amount,json=feeAmount,proto3" json:"fee_amount,omitempty"`             // 手续费
 	RequestTime   string                 `protobuf:"bytes,8,opt,name=request_time,json=requestTime,proto3" json:"request_time,omitempty"`         // 请求时间
 	Sign          string                 `protobuf:"bytes,9,opt,name=sign,proto3" json:"sign,omitempty"`                                          // 签名
