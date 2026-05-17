@@ -40,7 +40,6 @@ const (
 	Payout_GetPayoutAccountSummary_FullMethodName             = "/pb.Payout/GetPayoutAccountSummary"
 	Payout_GetPayoutAlarmOrder_FullMethodName                 = "/pb.Payout/GetPayoutAlarmOrder"
 	Payout_PayoutAlarmOrderRelease_FullMethodName             = "/pb.Payout/PayoutAlarmOrderRelease"
-	Payout_SubmitPayout_FullMethodName                        = "/pb.Payout/SubmitPayout"
 	Payout_GetPayoutStatus_FullMethodName                     = "/pb.Payout/GetPayoutStatus"
 	Payout_GetPayoutBalance_FullMethodName                    = "/pb.Payout/GetPayoutBalance"
 )
@@ -77,8 +76,6 @@ type PayoutClient interface {
 	GetPayoutAccountSummary(ctx context.Context, in *GetPayoutAccountSummaryReq, opts ...grpc.CallOption) (*GetPayoutAccountSummaryResp, error)
 	GetPayoutAlarmOrder(ctx context.Context, in *GetPayoutAlarmOrderReq, opts ...grpc.CallOption) (*GetPayoutAlarmOrderResp, error)
 	PayoutAlarmOrderRelease(ctx context.Context, in *PayoutAlarmOrderReleaseReq, opts ...grpc.CallOption) (*PayoutAlarmOrderReleaseResp, error)
-	// 出金提交 - 对应 /payment/payout/submit
-	SubmitPayout(ctx context.Context, in *PayoutSubmitRequest, opts ...grpc.CallOption) (*PayoutSubmitResponse, error)
 	// 查询出金状态 - 对应 /payment/payout/status
 	GetPayoutStatus(ctx context.Context, in *PayoutStatusRequest, opts ...grpc.CallOption) (*PayoutStatusResponse, error)
 	// 查询出金余额 - 对应 /payment/payout/balance
@@ -303,16 +300,6 @@ func (c *payoutClient) PayoutAlarmOrderRelease(ctx context.Context, in *PayoutAl
 	return out, nil
 }
 
-func (c *payoutClient) SubmitPayout(ctx context.Context, in *PayoutSubmitRequest, opts ...grpc.CallOption) (*PayoutSubmitResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PayoutSubmitResponse)
-	err := c.cc.Invoke(ctx, Payout_SubmitPayout_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *payoutClient) GetPayoutStatus(ctx context.Context, in *PayoutStatusRequest, opts ...grpc.CallOption) (*PayoutStatusResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PayoutStatusResponse)
@@ -365,8 +352,6 @@ type PayoutServer interface {
 	GetPayoutAccountSummary(context.Context, *GetPayoutAccountSummaryReq) (*GetPayoutAccountSummaryResp, error)
 	GetPayoutAlarmOrder(context.Context, *GetPayoutAlarmOrderReq) (*GetPayoutAlarmOrderResp, error)
 	PayoutAlarmOrderRelease(context.Context, *PayoutAlarmOrderReleaseReq) (*PayoutAlarmOrderReleaseResp, error)
-	// 出金提交 - 对应 /payment/payout/submit
-	SubmitPayout(context.Context, *PayoutSubmitRequest) (*PayoutSubmitResponse, error)
 	// 查询出金状态 - 对应 /payment/payout/status
 	GetPayoutStatus(context.Context, *PayoutStatusRequest) (*PayoutStatusResponse, error)
 	// 查询出金余额 - 对应 /payment/payout/balance
@@ -443,9 +428,6 @@ func (UnimplementedPayoutServer) GetPayoutAlarmOrder(context.Context, *GetPayout
 }
 func (UnimplementedPayoutServer) PayoutAlarmOrderRelease(context.Context, *PayoutAlarmOrderReleaseReq) (*PayoutAlarmOrderReleaseResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PayoutAlarmOrderRelease not implemented")
-}
-func (UnimplementedPayoutServer) SubmitPayout(context.Context, *PayoutSubmitRequest) (*PayoutSubmitResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SubmitPayout not implemented")
 }
 func (UnimplementedPayoutServer) GetPayoutStatus(context.Context, *PayoutStatusRequest) (*PayoutStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPayoutStatus not implemented")
@@ -852,24 +834,6 @@ func _Payout_PayoutAlarmOrderRelease_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Payout_SubmitPayout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PayoutSubmitRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PayoutServer).SubmitPayout(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Payout_SubmitPayout_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PayoutServer).SubmitPayout(ctx, req.(*PayoutSubmitRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Payout_GetPayoutStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PayoutStatusRequest)
 	if err := dec(in); err != nil {
@@ -996,10 +960,6 @@ var Payout_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PayoutAlarmOrderRelease",
 			Handler:    _Payout_PayoutAlarmOrderRelease_Handler,
-		},
-		{
-			MethodName: "SubmitPayout",
-			Handler:    _Payout_SubmitPayout_Handler,
 		},
 		{
 			MethodName: "GetPayoutStatus",

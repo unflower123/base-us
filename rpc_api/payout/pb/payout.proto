@@ -5,33 +5,44 @@ option go_package = "base/rpc_api/payout/pb";
 package pb;
 
 message CreatePayoutOrderReq {
-  string appid = 1;
-  int64 transaction_amount = 2;
-  string merchant_order_no = 3;
-  string device = 4;
-  string withdraw_name = 5;
-  string withdraw_bank_name = 6;
-  string withdraw_bank_code = 11;
-  string withdraw_mobile = 7;
-  string withdraw_bank_logo = 8;
-  string withdraw_account = 9;
-  string notify_url = 10;
-  string currency = 12;
-  string withdraw_account_type = 13;
-  string withdraw_email = 14;
-  string withdraw_token = 15;
-  string extra_data = 16;
+  string merchant_id = 1;       // 商户ID
+  string merchant_txn_id = 2;   // 商户订单ID
+  string payment_code = 3;      // 支付类型
+  float amount = 4;             // 金额
+  int64 timestamp = 5;          // 请求时间戳（毫秒）
+  string currency = 6;          // 货币类型
+  string notify_url = 7;        // 通知URL
+  string account_type = 8;      // 账户类型
+  string bank_name = 9;         // 银行名称
+  string bank_code = 10;        // 银行编码
+  string first_name = 11;       // 户主名字
+  string last_name = 12;        // 户主姓氏
+  string birthday = 13;         // 户主生日
+  string account = 14;          // 户主银行账户
+  string account_expire = 15;   // 收款账户的有效期
+  string phone = 16;            // 户主手机
+  string email = 17;            // 户主邮箱
+  string country = 18;          // 国家代码
+  string state = 19;            // 州
+  string city = 20;             // 城市
+  string zip_code = 21;         // 邮编
+  string address1 = 22;         // 地址行1
+  string address2 = 23;         // 地址行2
+  string address3 = 24;         // 地址行3
+  string sign = 25;             // 签名
 }
 
 
 message CreatePayoutOrderResp {
-  string system_order_no = 1;
-  int32 code = 2;
-  string msg = 3;
-  int64 fee_amount = 4;
-  string request_time = 5;
-  int64 status = 6;
-
+  string opt_status = 1;        // 操作状态 (SUCCESS，FAILED)
+  string message = 2;           // 操作信息
+  string merchant_txn_id = 3;   // 交易ID
+  float amount = 4;             // 交易金额
+  string txn_id = 5;            // 交易ID
+  string txn_status = 6;        // 交易状态 (SUCCESS，PENDING，FAILED，REFUND)
+  float fee_amount = 7;         // 手续费
+  string request_time = 8;      // 请求时间
+  string sign = 9;              // 签名
 }
 
 message CallbackPayoutOrderReq {
@@ -561,47 +572,6 @@ message PayoutAccountSummaryInfo {
   string update_time = 15; // 记录更新时间 (格式: ISO 8601 字符串)
 
 }
-
-message PayoutSubmitRequest {
-  string merchant_id = 1;       // 商户ID
-  string merchant_txn_id = 2;   // 商户订单ID
-  string payment_code = 3;      // 支付类型
-  float amount = 4;             // 金额
-  int64 timestamp = 5;          // 请求时间戳（毫秒）
-  string currency = 6;          // 货币类型
-  string notify_url = 7;        // 通知URL
-  string account_type = 8;      // 账户类型
-  string bank_name = 9;         // 银行名称
-  string bank_code = 10;        // 银行编码
-  string first_name = 11;       // 户主名字
-  string last_name = 12;        // 户主姓氏
-  string birthday = 13;         // 户主生日
-  string account = 14;          // 户主银行账户
-  string account_expire = 15;   // 收款账户的有效期
-  string phone = 16;            // 户主手机
-  string email = 17;            // 户主邮箱
-  string country = 18;          // 国家代码
-  string state = 19;            // 州
-  string city = 20;             // 城市
-  string zip_code = 21;         // 邮编
-  string address1 = 22;         // 地址行1
-  string address2 = 23;         // 地址行2
-  string address3 = 24;         // 地址行3
-  string sign = 25;             // 签名
-}
-
-message PayoutSubmitResponse {
-  string opt_status = 1;        // 操作状态 (SUCCESS，FAILED)
-  string message = 2;           // 操作信息
-  string merchant_txn_id = 3;   // 交易ID
-  float amount = 4;             // 交易金额
-  string txn_id = 5;            // 交易ID
-  string txn_status = 6;        // 交易状态
-  float fee_amount = 7;         // 手续费
-  string request_time = 8;      // 请求时间
-  string sign = 9;              // 签名
-}
-
 // ==================== 查询出金状态 ====================
 message PayoutStatusRequest {
   string merchant_id = 1;       // 商户ID
@@ -799,8 +769,6 @@ service Payout {
   rpc GetPayoutAlarmOrder(GetPayoutAlarmOrderReq) returns (GetPayoutAlarmOrderResp);
   rpc PayoutAlarmOrderRelease(PayoutAlarmOrderReleaseReq) returns (PayoutAlarmOrderReleaseResp);
 
-  // 出金提交 - 对应 /payment/payout/submit
-  rpc SubmitPayout(PayoutSubmitRequest) returns (PayoutSubmitResponse);
   // 查询出金状态 - 对应 /payment/payout/status
   rpc GetPayoutStatus(PayoutStatusRequest) returns (PayoutStatusResponse);
   // 查询出金余额 - 对应 /payment/payout/balance

@@ -22,25 +22,34 @@ const (
 )
 
 type CreatePayoutOrderReq struct {
-	state               protoimpl.MessageState `protogen:"open.v1"`
-	Appid               string                 `protobuf:"bytes,1,opt,name=appid,proto3" json:"appid,omitempty"`
-	TransactionAmount   int64                  `protobuf:"varint,2,opt,name=transaction_amount,json=transactionAmount,proto3" json:"transaction_amount,omitempty"`
-	MerchantOrderNo     string                 `protobuf:"bytes,3,opt,name=merchant_order_no,json=merchantOrderNo,proto3" json:"merchant_order_no,omitempty"`
-	Device              string                 `protobuf:"bytes,4,opt,name=device,proto3" json:"device,omitempty"`
-	WithdrawName        string                 `protobuf:"bytes,5,opt,name=withdraw_name,json=withdrawName,proto3" json:"withdraw_name,omitempty"`
-	WithdrawBankName    string                 `protobuf:"bytes,6,opt,name=withdraw_bank_name,json=withdrawBankName,proto3" json:"withdraw_bank_name,omitempty"`
-	WithdrawBankCode    string                 `protobuf:"bytes,11,opt,name=withdraw_bank_code,json=withdrawBankCode,proto3" json:"withdraw_bank_code,omitempty"`
-	WithdrawMobile      string                 `protobuf:"bytes,7,opt,name=withdraw_mobile,json=withdrawMobile,proto3" json:"withdraw_mobile,omitempty"`
-	WithdrawBankLogo    string                 `protobuf:"bytes,8,opt,name=withdraw_bank_logo,json=withdrawBankLogo,proto3" json:"withdraw_bank_logo,omitempty"`
-	WithdrawAccount     string                 `protobuf:"bytes,9,opt,name=withdraw_account,json=withdrawAccount,proto3" json:"withdraw_account,omitempty"`
-	NotifyUrl           string                 `protobuf:"bytes,10,opt,name=notify_url,json=notifyUrl,proto3" json:"notify_url,omitempty"`
-	Currency            string                 `protobuf:"bytes,12,opt,name=currency,proto3" json:"currency,omitempty"`
-	WithdrawAccountType string                 `protobuf:"bytes,13,opt,name=withdraw_account_type,json=withdrawAccountType,proto3" json:"withdraw_account_type,omitempty"`
-	WithdrawEmail       string                 `protobuf:"bytes,14,opt,name=withdraw_email,json=withdrawEmail,proto3" json:"withdraw_email,omitempty"`
-	WithdrawToken       string                 `protobuf:"bytes,15,opt,name=withdraw_token,json=withdrawToken,proto3" json:"withdraw_token,omitempty"`
-	ExtraData           string                 `protobuf:"bytes,16,opt,name=extra_data,json=extraData,proto3" json:"extra_data,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MerchantId    string                 `protobuf:"bytes,1,opt,name=merchant_id,json=merchantId,proto3" json:"merchant_id,omitempty"`            // 商户ID
+	MerchantTxnId string                 `protobuf:"bytes,2,opt,name=merchant_txn_id,json=merchantTxnId,proto3" json:"merchant_txn_id,omitempty"` // 商户订单ID
+	PaymentCode   string                 `protobuf:"bytes,3,opt,name=payment_code,json=paymentCode,proto3" json:"payment_code,omitempty"`         // 支付类型
+	Amount        float32                `protobuf:"fixed32,4,opt,name=amount,proto3" json:"amount,omitempty"`                                    // 金额
+	Timestamp     int64                  `protobuf:"varint,5,opt,name=timestamp,proto3" json:"timestamp,omitempty"`                               // 请求时间戳（毫秒）
+	Currency      string                 `protobuf:"bytes,6,opt,name=currency,proto3" json:"currency,omitempty"`                                  // 货币类型
+	NotifyUrl     string                 `protobuf:"bytes,7,opt,name=notify_url,json=notifyUrl,proto3" json:"notify_url,omitempty"`               // 通知URL
+	AccountType   string                 `protobuf:"bytes,8,opt,name=account_type,json=accountType,proto3" json:"account_type,omitempty"`         // 账户类型
+	BankName      string                 `protobuf:"bytes,9,opt,name=bank_name,json=bankName,proto3" json:"bank_name,omitempty"`                  // 银行名称
+	BankCode      string                 `protobuf:"bytes,10,opt,name=bank_code,json=bankCode,proto3" json:"bank_code,omitempty"`                 // 银行编码
+	FirstName     string                 `protobuf:"bytes,11,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`              // 户主名字
+	LastName      string                 `protobuf:"bytes,12,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`                 // 户主姓氏
+	Birthday      string                 `protobuf:"bytes,13,opt,name=birthday,proto3" json:"birthday,omitempty"`                                 // 户主生日
+	Account       string                 `protobuf:"bytes,14,opt,name=account,proto3" json:"account,omitempty"`                                   // 户主银行账户
+	AccountExpire string                 `protobuf:"bytes,15,opt,name=account_expire,json=accountExpire,proto3" json:"account_expire,omitempty"`  // 收款账户的有效期
+	Phone         string                 `protobuf:"bytes,16,opt,name=phone,proto3" json:"phone,omitempty"`                                       // 户主手机
+	Email         string                 `protobuf:"bytes,17,opt,name=email,proto3" json:"email,omitempty"`                                       // 户主邮箱
+	Country       string                 `protobuf:"bytes,18,opt,name=country,proto3" json:"country,omitempty"`                                   // 国家代码
+	State         string                 `protobuf:"bytes,19,opt,name=state,proto3" json:"state,omitempty"`                                       // 州
+	City          string                 `protobuf:"bytes,20,opt,name=city,proto3" json:"city,omitempty"`                                         // 城市
+	ZipCode       string                 `protobuf:"bytes,21,opt,name=zip_code,json=zipCode,proto3" json:"zip_code,omitempty"`                    // 邮编
+	Address1      string                 `protobuf:"bytes,22,opt,name=address1,proto3" json:"address1,omitempty"`                                 // 地址行1
+	Address2      string                 `protobuf:"bytes,23,opt,name=address2,proto3" json:"address2,omitempty"`                                 // 地址行2
+	Address3      string                 `protobuf:"bytes,24,opt,name=address3,proto3" json:"address3,omitempty"`                                 // 地址行3
+	Sign          string                 `protobuf:"bytes,25,opt,name=sign,proto3" json:"sign,omitempty"`                                         // 签名
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreatePayoutOrderReq) Reset() {
@@ -73,72 +82,44 @@ func (*CreatePayoutOrderReq) Descriptor() ([]byte, []int) {
 	return file_payout_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CreatePayoutOrderReq) GetAppid() string {
+func (x *CreatePayoutOrderReq) GetMerchantId() string {
 	if x != nil {
-		return x.Appid
+		return x.MerchantId
 	}
 	return ""
 }
 
-func (x *CreatePayoutOrderReq) GetTransactionAmount() int64 {
+func (x *CreatePayoutOrderReq) GetMerchantTxnId() string {
 	if x != nil {
-		return x.TransactionAmount
+		return x.MerchantTxnId
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetPaymentCode() string {
+	if x != nil {
+		return x.PaymentCode
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetAmount() float32 {
+	if x != nil {
+		return x.Amount
 	}
 	return 0
 }
 
-func (x *CreatePayoutOrderReq) GetMerchantOrderNo() string {
+func (x *CreatePayoutOrderReq) GetTimestamp() int64 {
 	if x != nil {
-		return x.MerchantOrderNo
+		return x.Timestamp
 	}
-	return ""
+	return 0
 }
 
-func (x *CreatePayoutOrderReq) GetDevice() string {
+func (x *CreatePayoutOrderReq) GetCurrency() string {
 	if x != nil {
-		return x.Device
-	}
-	return ""
-}
-
-func (x *CreatePayoutOrderReq) GetWithdrawName() string {
-	if x != nil {
-		return x.WithdrawName
-	}
-	return ""
-}
-
-func (x *CreatePayoutOrderReq) GetWithdrawBankName() string {
-	if x != nil {
-		return x.WithdrawBankName
-	}
-	return ""
-}
-
-func (x *CreatePayoutOrderReq) GetWithdrawBankCode() string {
-	if x != nil {
-		return x.WithdrawBankCode
-	}
-	return ""
-}
-
-func (x *CreatePayoutOrderReq) GetWithdrawMobile() string {
-	if x != nil {
-		return x.WithdrawMobile
-	}
-	return ""
-}
-
-func (x *CreatePayoutOrderReq) GetWithdrawBankLogo() string {
-	if x != nil {
-		return x.WithdrawBankLogo
-	}
-	return ""
-}
-
-func (x *CreatePayoutOrderReq) GetWithdrawAccount() string {
-	if x != nil {
-		return x.WithdrawAccount
+		return x.Currency
 	}
 	return ""
 }
@@ -150,49 +131,143 @@ func (x *CreatePayoutOrderReq) GetNotifyUrl() string {
 	return ""
 }
 
-func (x *CreatePayoutOrderReq) GetCurrency() string {
+func (x *CreatePayoutOrderReq) GetAccountType() string {
 	if x != nil {
-		return x.Currency
+		return x.AccountType
 	}
 	return ""
 }
 
-func (x *CreatePayoutOrderReq) GetWithdrawAccountType() string {
+func (x *CreatePayoutOrderReq) GetBankName() string {
 	if x != nil {
-		return x.WithdrawAccountType
+		return x.BankName
 	}
 	return ""
 }
 
-func (x *CreatePayoutOrderReq) GetWithdrawEmail() string {
+func (x *CreatePayoutOrderReq) GetBankCode() string {
 	if x != nil {
-		return x.WithdrawEmail
+		return x.BankCode
 	}
 	return ""
 }
 
-func (x *CreatePayoutOrderReq) GetWithdrawToken() string {
+func (x *CreatePayoutOrderReq) GetFirstName() string {
 	if x != nil {
-		return x.WithdrawToken
+		return x.FirstName
 	}
 	return ""
 }
 
-func (x *CreatePayoutOrderReq) GetExtraData() string {
+func (x *CreatePayoutOrderReq) GetLastName() string {
 	if x != nil {
-		return x.ExtraData
+		return x.LastName
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetBirthday() string {
+	if x != nil {
+		return x.Birthday
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetAccount() string {
+	if x != nil {
+		return x.Account
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetAccountExpire() string {
+	if x != nil {
+		return x.AccountExpire
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetCountry() string {
+	if x != nil {
+		return x.Country
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetCity() string {
+	if x != nil {
+		return x.City
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetZipCode() string {
+	if x != nil {
+		return x.ZipCode
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetAddress1() string {
+	if x != nil {
+		return x.Address1
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetAddress2() string {
+	if x != nil {
+		return x.Address2
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetAddress3() string {
+	if x != nil {
+		return x.Address3
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderReq) GetSign() string {
+	if x != nil {
+		return x.Sign
 	}
 	return ""
 }
 
 type CreatePayoutOrderResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SystemOrderNo string                 `protobuf:"bytes,1,opt,name=system_order_no,json=systemOrderNo,proto3" json:"system_order_no,omitempty"`
-	Code          int32                  `protobuf:"varint,2,opt,name=code,proto3" json:"code,omitempty"`
-	Msg           string                 `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
-	FeeAmount     int64                  `protobuf:"varint,4,opt,name=fee_amount,json=feeAmount,proto3" json:"fee_amount,omitempty"`
-	RequestTime   string                 `protobuf:"bytes,5,opt,name=request_time,json=requestTime,proto3" json:"request_time,omitempty"`
-	Status        int64                  `protobuf:"varint,6,opt,name=status,proto3" json:"status,omitempty"`
+	OptStatus     string                 `protobuf:"bytes,1,opt,name=opt_status,json=optStatus,proto3" json:"opt_status,omitempty"`               // 操作状态 (SUCCESS，FAILED)
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`                                    // 操作信息
+	MerchantTxnId string                 `protobuf:"bytes,3,opt,name=merchant_txn_id,json=merchantTxnId,proto3" json:"merchant_txn_id,omitempty"` // 交易ID
+	Amount        float32                `protobuf:"fixed32,4,opt,name=amount,proto3" json:"amount,omitempty"`                                    // 交易金额
+	TxnId         string                 `protobuf:"bytes,5,opt,name=txn_id,json=txnId,proto3" json:"txn_id,omitempty"`                           // 交易ID
+	TxnStatus     string                 `protobuf:"bytes,6,opt,name=txn_status,json=txnStatus,proto3" json:"txn_status,omitempty"`               // 交易状态 (SUCCESS，PENDING，FAILED，REFUND)
+	FeeAmount     float32                `protobuf:"fixed32,7,opt,name=fee_amount,json=feeAmount,proto3" json:"fee_amount,omitempty"`             // 手续费
+	RequestTime   string                 `protobuf:"bytes,8,opt,name=request_time,json=requestTime,proto3" json:"request_time,omitempty"`         // 请求时间
+	Sign          string                 `protobuf:"bytes,9,opt,name=sign,proto3" json:"sign,omitempty"`                                          // 签名
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -227,28 +302,49 @@ func (*CreatePayoutOrderResp) Descriptor() ([]byte, []int) {
 	return file_payout_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreatePayoutOrderResp) GetSystemOrderNo() string {
+func (x *CreatePayoutOrderResp) GetOptStatus() string {
 	if x != nil {
-		return x.SystemOrderNo
+		return x.OptStatus
 	}
 	return ""
 }
 
-func (x *CreatePayoutOrderResp) GetCode() int32 {
+func (x *CreatePayoutOrderResp) GetMessage() string {
 	if x != nil {
-		return x.Code
+		return x.Message
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderResp) GetMerchantTxnId() string {
+	if x != nil {
+		return x.MerchantTxnId
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderResp) GetAmount() float32 {
+	if x != nil {
+		return x.Amount
 	}
 	return 0
 }
 
-func (x *CreatePayoutOrderResp) GetMsg() string {
+func (x *CreatePayoutOrderResp) GetTxnId() string {
 	if x != nil {
-		return x.Msg
+		return x.TxnId
 	}
 	return ""
 }
 
-func (x *CreatePayoutOrderResp) GetFeeAmount() int64 {
+func (x *CreatePayoutOrderResp) GetTxnStatus() string {
+	if x != nil {
+		return x.TxnStatus
+	}
+	return ""
+}
+
+func (x *CreatePayoutOrderResp) GetFeeAmount() float32 {
 	if x != nil {
 		return x.FeeAmount
 	}
@@ -262,11 +358,11 @@ func (x *CreatePayoutOrderResp) GetRequestTime() string {
 	return ""
 }
 
-func (x *CreatePayoutOrderResp) GetStatus() int64 {
+func (x *CreatePayoutOrderResp) GetSign() string {
 	if x != nil {
-		return x.Status
+		return x.Sign
 	}
-	return 0
+	return ""
 }
 
 type CallbackPayoutOrderReq struct {
@@ -4628,350 +4724,6 @@ func (x *PayoutAccountSummaryInfo) GetUpdateTime() string {
 	return ""
 }
 
-type PayoutSubmitRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	MerchantId    string                 `protobuf:"bytes,1,opt,name=merchant_id,json=merchantId,proto3" json:"merchant_id,omitempty"`            // 商户ID
-	MerchantTxnId string                 `protobuf:"bytes,2,opt,name=merchant_txn_id,json=merchantTxnId,proto3" json:"merchant_txn_id,omitempty"` // 商户订单ID
-	PaymentCode   string                 `protobuf:"bytes,3,opt,name=payment_code,json=paymentCode,proto3" json:"payment_code,omitempty"`         // 支付类型
-	Amount        float32                `protobuf:"fixed32,4,opt,name=amount,proto3" json:"amount,omitempty"`                                    // 金额
-	Timestamp     int64                  `protobuf:"varint,5,opt,name=timestamp,proto3" json:"timestamp,omitempty"`                               // 请求时间戳（毫秒）
-	Currency      string                 `protobuf:"bytes,6,opt,name=currency,proto3" json:"currency,omitempty"`                                  // 货币类型
-	NotifyUrl     string                 `protobuf:"bytes,7,opt,name=notify_url,json=notifyUrl,proto3" json:"notify_url,omitempty"`               // 通知URL
-	AccountType   string                 `protobuf:"bytes,8,opt,name=account_type,json=accountType,proto3" json:"account_type,omitempty"`         // 账户类型
-	BankName      string                 `protobuf:"bytes,9,opt,name=bank_name,json=bankName,proto3" json:"bank_name,omitempty"`                  // 银行名称
-	BankCode      string                 `protobuf:"bytes,10,opt,name=bank_code,json=bankCode,proto3" json:"bank_code,omitempty"`                 // 银行编码
-	FirstName     string                 `protobuf:"bytes,11,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`              // 户主名字
-	LastName      string                 `protobuf:"bytes,12,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`                 // 户主姓氏
-	Birthday      string                 `protobuf:"bytes,13,opt,name=birthday,proto3" json:"birthday,omitempty"`                                 // 户主生日
-	Account       string                 `protobuf:"bytes,14,opt,name=account,proto3" json:"account,omitempty"`                                   // 户主银行账户
-	AccountExpire string                 `protobuf:"bytes,15,opt,name=account_expire,json=accountExpire,proto3" json:"account_expire,omitempty"`  // 收款账户的有效期
-	Phone         string                 `protobuf:"bytes,16,opt,name=phone,proto3" json:"phone,omitempty"`                                       // 户主手机
-	Email         string                 `protobuf:"bytes,17,opt,name=email,proto3" json:"email,omitempty"`                                       // 户主邮箱
-	Country       string                 `protobuf:"bytes,18,opt,name=country,proto3" json:"country,omitempty"`                                   // 国家代码
-	State         string                 `protobuf:"bytes,19,opt,name=state,proto3" json:"state,omitempty"`                                       // 州
-	City          string                 `protobuf:"bytes,20,opt,name=city,proto3" json:"city,omitempty"`                                         // 城市
-	ZipCode       string                 `protobuf:"bytes,21,opt,name=zip_code,json=zipCode,proto3" json:"zip_code,omitempty"`                    // 邮编
-	Address1      string                 `protobuf:"bytes,22,opt,name=address1,proto3" json:"address1,omitempty"`                                 // 地址行1
-	Address2      string                 `protobuf:"bytes,23,opt,name=address2,proto3" json:"address2,omitempty"`                                 // 地址行2
-	Address3      string                 `protobuf:"bytes,24,opt,name=address3,proto3" json:"address3,omitempty"`                                 // 地址行3
-	Sign          string                 `protobuf:"bytes,25,opt,name=sign,proto3" json:"sign,omitempty"`                                         // 签名
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PayoutSubmitRequest) Reset() {
-	*x = PayoutSubmitRequest{}
-	mi := &file_payout_proto_msgTypes[49]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PayoutSubmitRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PayoutSubmitRequest) ProtoMessage() {}
-
-func (x *PayoutSubmitRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[49]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PayoutSubmitRequest.ProtoReflect.Descriptor instead.
-func (*PayoutSubmitRequest) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{49}
-}
-
-func (x *PayoutSubmitRequest) GetMerchantId() string {
-	if x != nil {
-		return x.MerchantId
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetMerchantTxnId() string {
-	if x != nil {
-		return x.MerchantTxnId
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetPaymentCode() string {
-	if x != nil {
-		return x.PaymentCode
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetAmount() float32 {
-	if x != nil {
-		return x.Amount
-	}
-	return 0
-}
-
-func (x *PayoutSubmitRequest) GetTimestamp() int64 {
-	if x != nil {
-		return x.Timestamp
-	}
-	return 0
-}
-
-func (x *PayoutSubmitRequest) GetCurrency() string {
-	if x != nil {
-		return x.Currency
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetNotifyUrl() string {
-	if x != nil {
-		return x.NotifyUrl
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetAccountType() string {
-	if x != nil {
-		return x.AccountType
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetBankName() string {
-	if x != nil {
-		return x.BankName
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetBankCode() string {
-	if x != nil {
-		return x.BankCode
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetFirstName() string {
-	if x != nil {
-		return x.FirstName
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetLastName() string {
-	if x != nil {
-		return x.LastName
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetBirthday() string {
-	if x != nil {
-		return x.Birthday
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetAccount() string {
-	if x != nil {
-		return x.Account
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetAccountExpire() string {
-	if x != nil {
-		return x.AccountExpire
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetPhone() string {
-	if x != nil {
-		return x.Phone
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetEmail() string {
-	if x != nil {
-		return x.Email
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetCountry() string {
-	if x != nil {
-		return x.Country
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetState() string {
-	if x != nil {
-		return x.State
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetCity() string {
-	if x != nil {
-		return x.City
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetZipCode() string {
-	if x != nil {
-		return x.ZipCode
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetAddress1() string {
-	if x != nil {
-		return x.Address1
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetAddress2() string {
-	if x != nil {
-		return x.Address2
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetAddress3() string {
-	if x != nil {
-		return x.Address3
-	}
-	return ""
-}
-
-func (x *PayoutSubmitRequest) GetSign() string {
-	if x != nil {
-		return x.Sign
-	}
-	return ""
-}
-
-type PayoutSubmitResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	OptStatus     string                 `protobuf:"bytes,1,opt,name=opt_status,json=optStatus,proto3" json:"opt_status,omitempty"`               // 操作状态 (SUCCESS，FAILED)
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`                                    // 操作信息
-	MerchantTxnId string                 `protobuf:"bytes,3,opt,name=merchant_txn_id,json=merchantTxnId,proto3" json:"merchant_txn_id,omitempty"` // 交易ID
-	Amount        float32                `protobuf:"fixed32,4,opt,name=amount,proto3" json:"amount,omitempty"`                                    // 交易金额
-	TxnId         string                 `protobuf:"bytes,5,opt,name=txn_id,json=txnId,proto3" json:"txn_id,omitempty"`                           // 交易ID
-	TxnStatus     string                 `protobuf:"bytes,6,opt,name=txn_status,json=txnStatus,proto3" json:"txn_status,omitempty"`               // 交易状态
-	FeeAmount     float32                `protobuf:"fixed32,7,opt,name=fee_amount,json=feeAmount,proto3" json:"fee_amount,omitempty"`             // 手续费
-	RequestTime   string                 `protobuf:"bytes,8,opt,name=request_time,json=requestTime,proto3" json:"request_time,omitempty"`         // 请求时间
-	Sign          string                 `protobuf:"bytes,9,opt,name=sign,proto3" json:"sign,omitempty"`                                          // 签名
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PayoutSubmitResponse) Reset() {
-	*x = PayoutSubmitResponse{}
-	mi := &file_payout_proto_msgTypes[50]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PayoutSubmitResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PayoutSubmitResponse) ProtoMessage() {}
-
-func (x *PayoutSubmitResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[50]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PayoutSubmitResponse.ProtoReflect.Descriptor instead.
-func (*PayoutSubmitResponse) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{50}
-}
-
-func (x *PayoutSubmitResponse) GetOptStatus() string {
-	if x != nil {
-		return x.OptStatus
-	}
-	return ""
-}
-
-func (x *PayoutSubmitResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-func (x *PayoutSubmitResponse) GetMerchantTxnId() string {
-	if x != nil {
-		return x.MerchantTxnId
-	}
-	return ""
-}
-
-func (x *PayoutSubmitResponse) GetAmount() float32 {
-	if x != nil {
-		return x.Amount
-	}
-	return 0
-}
-
-func (x *PayoutSubmitResponse) GetTxnId() string {
-	if x != nil {
-		return x.TxnId
-	}
-	return ""
-}
-
-func (x *PayoutSubmitResponse) GetTxnStatus() string {
-	if x != nil {
-		return x.TxnStatus
-	}
-	return ""
-}
-
-func (x *PayoutSubmitResponse) GetFeeAmount() float32 {
-	if x != nil {
-		return x.FeeAmount
-	}
-	return 0
-}
-
-func (x *PayoutSubmitResponse) GetRequestTime() string {
-	if x != nil {
-		return x.RequestTime
-	}
-	return ""
-}
-
-func (x *PayoutSubmitResponse) GetSign() string {
-	if x != nil {
-		return x.Sign
-	}
-	return ""
-}
-
 // ==================== 查询出金状态 ====================
 type PayoutStatusRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -4984,7 +4736,7 @@ type PayoutStatusRequest struct {
 
 func (x *PayoutStatusRequest) Reset() {
 	*x = PayoutStatusRequest{}
-	mi := &file_payout_proto_msgTypes[51]
+	mi := &file_payout_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4996,7 +4748,7 @@ func (x *PayoutStatusRequest) String() string {
 func (*PayoutStatusRequest) ProtoMessage() {}
 
 func (x *PayoutStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[51]
+	mi := &file_payout_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5009,7 +4761,7 @@ func (x *PayoutStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PayoutStatusRequest.ProtoReflect.Descriptor instead.
 func (*PayoutStatusRequest) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{51}
+	return file_payout_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *PayoutStatusRequest) GetMerchantId() string {
@@ -5046,7 +4798,7 @@ type PayoutStatusResponse struct {
 
 func (x *PayoutStatusResponse) Reset() {
 	*x = PayoutStatusResponse{}
-	mi := &file_payout_proto_msgTypes[52]
+	mi := &file_payout_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5058,7 +4810,7 @@ func (x *PayoutStatusResponse) String() string {
 func (*PayoutStatusResponse) ProtoMessage() {}
 
 func (x *PayoutStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[52]
+	mi := &file_payout_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5071,7 +4823,7 @@ func (x *PayoutStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PayoutStatusResponse.ProtoReflect.Descriptor instead.
 func (*PayoutStatusResponse) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{52}
+	return file_payout_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *PayoutStatusResponse) GetOptStatus() string {
@@ -5139,7 +4891,7 @@ type PayoutStatusData struct {
 
 func (x *PayoutStatusData) Reset() {
 	*x = PayoutStatusData{}
-	mi := &file_payout_proto_msgTypes[53]
+	mi := &file_payout_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5151,7 +4903,7 @@ func (x *PayoutStatusData) String() string {
 func (*PayoutStatusData) ProtoMessage() {}
 
 func (x *PayoutStatusData) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[53]
+	mi := &file_payout_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5164,7 +4916,7 @@ func (x *PayoutStatusData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PayoutStatusData.ProtoReflect.Descriptor instead.
 func (*PayoutStatusData) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{53}
+	return file_payout_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *PayoutStatusData) GetTxnStatus() string {
@@ -5333,7 +5085,7 @@ type PayoutBalanceRequest struct {
 
 func (x *PayoutBalanceRequest) Reset() {
 	*x = PayoutBalanceRequest{}
-	mi := &file_payout_proto_msgTypes[54]
+	mi := &file_payout_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5345,7 +5097,7 @@ func (x *PayoutBalanceRequest) String() string {
 func (*PayoutBalanceRequest) ProtoMessage() {}
 
 func (x *PayoutBalanceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[54]
+	mi := &file_payout_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5358,7 +5110,7 @@ func (x *PayoutBalanceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PayoutBalanceRequest.ProtoReflect.Descriptor instead.
 func (*PayoutBalanceRequest) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{54}
+	return file_payout_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *PayoutBalanceRequest) GetMerchantId() string {
@@ -5396,7 +5148,7 @@ type PayoutBalanceResponse struct {
 
 func (x *PayoutBalanceResponse) Reset() {
 	*x = PayoutBalanceResponse{}
-	mi := &file_payout_proto_msgTypes[55]
+	mi := &file_payout_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5408,7 +5160,7 @@ func (x *PayoutBalanceResponse) String() string {
 func (*PayoutBalanceResponse) ProtoMessage() {}
 
 func (x *PayoutBalanceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[55]
+	mi := &file_payout_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5421,7 +5173,7 @@ func (x *PayoutBalanceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PayoutBalanceResponse.ProtoReflect.Descriptor instead.
 func (*PayoutBalanceResponse) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{55}
+	return file_payout_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *PayoutBalanceResponse) GetOptStatus() string {
@@ -5484,7 +5236,7 @@ type RefundSubmitRequest struct {
 
 func (x *RefundSubmitRequest) Reset() {
 	*x = RefundSubmitRequest{}
-	mi := &file_payout_proto_msgTypes[56]
+	mi := &file_payout_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5496,7 +5248,7 @@ func (x *RefundSubmitRequest) String() string {
 func (*RefundSubmitRequest) ProtoMessage() {}
 
 func (x *RefundSubmitRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[56]
+	mi := &file_payout_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5509,7 +5261,7 @@ func (x *RefundSubmitRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefundSubmitRequest.ProtoReflect.Descriptor instead.
 func (*RefundSubmitRequest) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{56}
+	return file_payout_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *RefundSubmitRequest) GetMerchantId() string {
@@ -5592,7 +5344,7 @@ type RefundSubmitResponse struct {
 
 func (x *RefundSubmitResponse) Reset() {
 	*x = RefundSubmitResponse{}
-	mi := &file_payout_proto_msgTypes[57]
+	mi := &file_payout_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5604,7 +5356,7 @@ func (x *RefundSubmitResponse) String() string {
 func (*RefundSubmitResponse) ProtoMessage() {}
 
 func (x *RefundSubmitResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[57]
+	mi := &file_payout_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5617,7 +5369,7 @@ func (x *RefundSubmitResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefundSubmitResponse.ProtoReflect.Descriptor instead.
 func (*RefundSubmitResponse) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{57}
+	return file_payout_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *RefundSubmitResponse) GetOptStatus() string {
@@ -5695,7 +5447,7 @@ type RefundStatusRequest struct {
 
 func (x *RefundStatusRequest) Reset() {
 	*x = RefundStatusRequest{}
-	mi := &file_payout_proto_msgTypes[58]
+	mi := &file_payout_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5707,7 +5459,7 @@ func (x *RefundStatusRequest) String() string {
 func (*RefundStatusRequest) ProtoMessage() {}
 
 func (x *RefundStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[58]
+	mi := &file_payout_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5720,7 +5472,7 @@ func (x *RefundStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefundStatusRequest.ProtoReflect.Descriptor instead.
 func (*RefundStatusRequest) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{58}
+	return file_payout_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *RefundStatusRequest) GetMerchantId() string {
@@ -5757,7 +5509,7 @@ type RefundStatusResponse struct {
 
 func (x *RefundStatusResponse) Reset() {
 	*x = RefundStatusResponse{}
-	mi := &file_payout_proto_msgTypes[59]
+	mi := &file_payout_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5769,7 +5521,7 @@ func (x *RefundStatusResponse) String() string {
 func (*RefundStatusResponse) ProtoMessage() {}
 
 func (x *RefundStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[59]
+	mi := &file_payout_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5782,7 +5534,7 @@ func (x *RefundStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefundStatusResponse.ProtoReflect.Descriptor instead.
 func (*RefundStatusResponse) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{59}
+	return file_payout_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *RefundStatusResponse) GetOptStatus() string {
@@ -5835,7 +5587,7 @@ type RefundStatusData struct {
 
 func (x *RefundStatusData) Reset() {
 	*x = RefundStatusData{}
-	mi := &file_payout_proto_msgTypes[60]
+	mi := &file_payout_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5847,7 +5599,7 @@ func (x *RefundStatusData) String() string {
 func (*RefundStatusData) ProtoMessage() {}
 
 func (x *RefundStatusData) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[60]
+	mi := &file_payout_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5860,7 +5612,7 @@ func (x *RefundStatusData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefundStatusData.ProtoReflect.Descriptor instead.
 func (*RefundStatusData) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{60}
+	return file_payout_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *RefundStatusData) GetMerchantTxnId() string {
@@ -5930,7 +5682,7 @@ type GetPayoutAlarmOrderReq struct {
 
 func (x *GetPayoutAlarmOrderReq) Reset() {
 	*x = GetPayoutAlarmOrderReq{}
-	mi := &file_payout_proto_msgTypes[61]
+	mi := &file_payout_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5942,7 +5694,7 @@ func (x *GetPayoutAlarmOrderReq) String() string {
 func (*GetPayoutAlarmOrderReq) ProtoMessage() {}
 
 func (x *GetPayoutAlarmOrderReq) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[61]
+	mi := &file_payout_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5955,7 +5707,7 @@ func (x *GetPayoutAlarmOrderReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPayoutAlarmOrderReq.ProtoReflect.Descriptor instead.
 func (*GetPayoutAlarmOrderReq) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{61}
+	return file_payout_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *GetPayoutAlarmOrderReq) GetWithdrawAccount() string {
@@ -6024,7 +5776,7 @@ type GetPayoutAlarmOrderResp struct {
 
 func (x *GetPayoutAlarmOrderResp) Reset() {
 	*x = GetPayoutAlarmOrderResp{}
-	mi := &file_payout_proto_msgTypes[62]
+	mi := &file_payout_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6036,7 +5788,7 @@ func (x *GetPayoutAlarmOrderResp) String() string {
 func (*GetPayoutAlarmOrderResp) ProtoMessage() {}
 
 func (x *GetPayoutAlarmOrderResp) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[62]
+	mi := &file_payout_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6049,7 +5801,7 @@ func (x *GetPayoutAlarmOrderResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPayoutAlarmOrderResp.ProtoReflect.Descriptor instead.
 func (*GetPayoutAlarmOrderResp) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{62}
+	return file_payout_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *GetPayoutAlarmOrderResp) GetList() []*PayoutAlarmOrderInfo {
@@ -6093,7 +5845,7 @@ type PayoutAlarmOrderInfo struct {
 
 func (x *PayoutAlarmOrderInfo) Reset() {
 	*x = PayoutAlarmOrderInfo{}
-	mi := &file_payout_proto_msgTypes[63]
+	mi := &file_payout_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6105,7 +5857,7 @@ func (x *PayoutAlarmOrderInfo) String() string {
 func (*PayoutAlarmOrderInfo) ProtoMessage() {}
 
 func (x *PayoutAlarmOrderInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[63]
+	mi := &file_payout_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6118,7 +5870,7 @@ func (x *PayoutAlarmOrderInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PayoutAlarmOrderInfo.ProtoReflect.Descriptor instead.
 func (*PayoutAlarmOrderInfo) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{63}
+	return file_payout_proto_rawDescGZIP(), []int{61}
 }
 
 func (x *PayoutAlarmOrderInfo) GetId() int64 {
@@ -6234,7 +5986,7 @@ type PayoutAlarmOrderReleaseReq struct {
 
 func (x *PayoutAlarmOrderReleaseReq) Reset() {
 	*x = PayoutAlarmOrderReleaseReq{}
-	mi := &file_payout_proto_msgTypes[64]
+	mi := &file_payout_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6246,7 +5998,7 @@ func (x *PayoutAlarmOrderReleaseReq) String() string {
 func (*PayoutAlarmOrderReleaseReq) ProtoMessage() {}
 
 func (x *PayoutAlarmOrderReleaseReq) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[64]
+	mi := &file_payout_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6259,7 +6011,7 @@ func (x *PayoutAlarmOrderReleaseReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PayoutAlarmOrderReleaseReq.ProtoReflect.Descriptor instead.
 func (*PayoutAlarmOrderReleaseReq) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{64}
+	return file_payout_proto_rawDescGZIP(), []int{62}
 }
 
 type PayoutAlarmOrderReleaseResp struct {
@@ -6270,7 +6022,7 @@ type PayoutAlarmOrderReleaseResp struct {
 
 func (x *PayoutAlarmOrderReleaseResp) Reset() {
 	*x = PayoutAlarmOrderReleaseResp{}
-	mi := &file_payout_proto_msgTypes[65]
+	mi := &file_payout_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6282,7 +6034,7 @@ func (x *PayoutAlarmOrderReleaseResp) String() string {
 func (*PayoutAlarmOrderReleaseResp) ProtoMessage() {}
 
 func (x *PayoutAlarmOrderReleaseResp) ProtoReflect() protoreflect.Message {
-	mi := &file_payout_proto_msgTypes[65]
+	mi := &file_payout_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6295,42 +6047,57 @@ func (x *PayoutAlarmOrderReleaseResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PayoutAlarmOrderReleaseResp.ProtoReflect.Descriptor instead.
 func (*PayoutAlarmOrderReleaseResp) Descriptor() ([]byte, []int) {
-	return file_payout_proto_rawDescGZIP(), []int{65}
+	return file_payout_proto_rawDescGZIP(), []int{63}
 }
 
 var File_payout_proto protoreflect.FileDescriptor
 
 const file_payout_proto_rawDesc = "" +
 	"\n" +
-	"\fpayout.proto\x12\x02pb\"\xfe\x04\n" +
-	"\x14CreatePayoutOrderReq\x12\x14\n" +
-	"\x05appid\x18\x01 \x01(\tR\x05appid\x12-\n" +
-	"\x12transaction_amount\x18\x02 \x01(\x03R\x11transactionAmount\x12*\n" +
-	"\x11merchant_order_no\x18\x03 \x01(\tR\x0fmerchantOrderNo\x12\x16\n" +
-	"\x06device\x18\x04 \x01(\tR\x06device\x12#\n" +
-	"\rwithdraw_name\x18\x05 \x01(\tR\fwithdrawName\x12,\n" +
-	"\x12withdraw_bank_name\x18\x06 \x01(\tR\x10withdrawBankName\x12,\n" +
-	"\x12withdraw_bank_code\x18\v \x01(\tR\x10withdrawBankCode\x12'\n" +
-	"\x0fwithdraw_mobile\x18\a \x01(\tR\x0ewithdrawMobile\x12,\n" +
-	"\x12withdraw_bank_logo\x18\b \x01(\tR\x10withdrawBankLogo\x12)\n" +
-	"\x10withdraw_account\x18\t \x01(\tR\x0fwithdrawAccount\x12\x1d\n" +
+	"\fpayout.proto\x12\x02pb\"\xdc\x05\n" +
+	"\x14CreatePayoutOrderReq\x12\x1f\n" +
+	"\vmerchant_id\x18\x01 \x01(\tR\n" +
+	"merchantId\x12&\n" +
+	"\x0fmerchant_txn_id\x18\x02 \x01(\tR\rmerchantTxnId\x12!\n" +
+	"\fpayment_code\x18\x03 \x01(\tR\vpaymentCode\x12\x16\n" +
+	"\x06amount\x18\x04 \x01(\x02R\x06amount\x12\x1c\n" +
+	"\ttimestamp\x18\x05 \x01(\x03R\ttimestamp\x12\x1a\n" +
+	"\bcurrency\x18\x06 \x01(\tR\bcurrency\x12\x1d\n" +
 	"\n" +
-	"notify_url\x18\n" +
-	" \x01(\tR\tnotifyUrl\x12\x1a\n" +
-	"\bcurrency\x18\f \x01(\tR\bcurrency\x122\n" +
-	"\x15withdraw_account_type\x18\r \x01(\tR\x13withdrawAccountType\x12%\n" +
-	"\x0ewithdraw_email\x18\x0e \x01(\tR\rwithdrawEmail\x12%\n" +
-	"\x0ewithdraw_token\x18\x0f \x01(\tR\rwithdrawToken\x12\x1d\n" +
+	"notify_url\x18\a \x01(\tR\tnotifyUrl\x12!\n" +
+	"\faccount_type\x18\b \x01(\tR\vaccountType\x12\x1b\n" +
+	"\tbank_name\x18\t \x01(\tR\bbankName\x12\x1b\n" +
+	"\tbank_code\x18\n" +
+	" \x01(\tR\bbankCode\x12\x1d\n" +
 	"\n" +
-	"extra_data\x18\x10 \x01(\tR\textraData\"\xbf\x01\n" +
-	"\x15CreatePayoutOrderResp\x12&\n" +
-	"\x0fsystem_order_no\x18\x01 \x01(\tR\rsystemOrderNo\x12\x12\n" +
-	"\x04code\x18\x02 \x01(\x05R\x04code\x12\x10\n" +
-	"\x03msg\x18\x03 \x01(\tR\x03msg\x12\x1d\n" +
+	"first_name\x18\v \x01(\tR\tfirstName\x12\x1b\n" +
+	"\tlast_name\x18\f \x01(\tR\blastName\x12\x1a\n" +
+	"\bbirthday\x18\r \x01(\tR\bbirthday\x12\x18\n" +
+	"\aaccount\x18\x0e \x01(\tR\aaccount\x12%\n" +
+	"\x0eaccount_expire\x18\x0f \x01(\tR\raccountExpire\x12\x14\n" +
+	"\x05phone\x18\x10 \x01(\tR\x05phone\x12\x14\n" +
+	"\x05email\x18\x11 \x01(\tR\x05email\x12\x18\n" +
+	"\acountry\x18\x12 \x01(\tR\acountry\x12\x14\n" +
+	"\x05state\x18\x13 \x01(\tR\x05state\x12\x12\n" +
+	"\x04city\x18\x14 \x01(\tR\x04city\x12\x19\n" +
+	"\bzip_code\x18\x15 \x01(\tR\azipCode\x12\x1a\n" +
+	"\baddress1\x18\x16 \x01(\tR\baddress1\x12\x1a\n" +
+	"\baddress2\x18\x17 \x01(\tR\baddress2\x12\x1a\n" +
+	"\baddress3\x18\x18 \x01(\tR\baddress3\x12\x12\n" +
+	"\x04sign\x18\x19 \x01(\tR\x04sign\"\x9c\x02\n" +
+	"\x15CreatePayoutOrderResp\x12\x1d\n" +
 	"\n" +
-	"fee_amount\x18\x04 \x01(\x03R\tfeeAmount\x12!\n" +
-	"\frequest_time\x18\x05 \x01(\tR\vrequestTime\x12\x16\n" +
-	"\x06status\x18\x06 \x01(\x03R\x06status\"\xfd\x02\n" +
+	"opt_status\x18\x01 \x01(\tR\toptStatus\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12&\n" +
+	"\x0fmerchant_txn_id\x18\x03 \x01(\tR\rmerchantTxnId\x12\x16\n" +
+	"\x06amount\x18\x04 \x01(\x02R\x06amount\x12\x15\n" +
+	"\x06txn_id\x18\x05 \x01(\tR\x05txnId\x12\x1d\n" +
+	"\n" +
+	"txn_status\x18\x06 \x01(\tR\ttxnStatus\x12\x1d\n" +
+	"\n" +
+	"fee_amount\x18\a \x01(\x02R\tfeeAmount\x12!\n" +
+	"\frequest_time\x18\b \x01(\tR\vrequestTime\x12\x12\n" +
+	"\x04sign\x18\t \x01(\tR\x04sign\"\xfd\x02\n" +
 	"\x16CallbackPayoutOrderReq\x12&\n" +
 	"\x0fsystem_order_no\x18\x01 \x01(\tR\rsystemOrderNo\x12\"\n" +
 	"\rbank_order_no\x18\x02 \x01(\tR\vbankOrderNo\x12-\n" +
@@ -6793,50 +6560,7 @@ const file_payout_proto_rawDesc = "" +
 	"\vcreate_time\x18\x0e \x01(\tR\n" +
 	"createTime\x12\x1f\n" +
 	"\vupdate_time\x18\x0f \x01(\tR\n" +
-	"updateTime\"\xdb\x05\n" +
-	"\x13PayoutSubmitRequest\x12\x1f\n" +
-	"\vmerchant_id\x18\x01 \x01(\tR\n" +
-	"merchantId\x12&\n" +
-	"\x0fmerchant_txn_id\x18\x02 \x01(\tR\rmerchantTxnId\x12!\n" +
-	"\fpayment_code\x18\x03 \x01(\tR\vpaymentCode\x12\x16\n" +
-	"\x06amount\x18\x04 \x01(\x02R\x06amount\x12\x1c\n" +
-	"\ttimestamp\x18\x05 \x01(\x03R\ttimestamp\x12\x1a\n" +
-	"\bcurrency\x18\x06 \x01(\tR\bcurrency\x12\x1d\n" +
-	"\n" +
-	"notify_url\x18\a \x01(\tR\tnotifyUrl\x12!\n" +
-	"\faccount_type\x18\b \x01(\tR\vaccountType\x12\x1b\n" +
-	"\tbank_name\x18\t \x01(\tR\bbankName\x12\x1b\n" +
-	"\tbank_code\x18\n" +
-	" \x01(\tR\bbankCode\x12\x1d\n" +
-	"\n" +
-	"first_name\x18\v \x01(\tR\tfirstName\x12\x1b\n" +
-	"\tlast_name\x18\f \x01(\tR\blastName\x12\x1a\n" +
-	"\bbirthday\x18\r \x01(\tR\bbirthday\x12\x18\n" +
-	"\aaccount\x18\x0e \x01(\tR\aaccount\x12%\n" +
-	"\x0eaccount_expire\x18\x0f \x01(\tR\raccountExpire\x12\x14\n" +
-	"\x05phone\x18\x10 \x01(\tR\x05phone\x12\x14\n" +
-	"\x05email\x18\x11 \x01(\tR\x05email\x12\x18\n" +
-	"\acountry\x18\x12 \x01(\tR\acountry\x12\x14\n" +
-	"\x05state\x18\x13 \x01(\tR\x05state\x12\x12\n" +
-	"\x04city\x18\x14 \x01(\tR\x04city\x12\x19\n" +
-	"\bzip_code\x18\x15 \x01(\tR\azipCode\x12\x1a\n" +
-	"\baddress1\x18\x16 \x01(\tR\baddress1\x12\x1a\n" +
-	"\baddress2\x18\x17 \x01(\tR\baddress2\x12\x1a\n" +
-	"\baddress3\x18\x18 \x01(\tR\baddress3\x12\x12\n" +
-	"\x04sign\x18\x19 \x01(\tR\x04sign\"\x9b\x02\n" +
-	"\x14PayoutSubmitResponse\x12\x1d\n" +
-	"\n" +
-	"opt_status\x18\x01 \x01(\tR\toptStatus\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\x12&\n" +
-	"\x0fmerchant_txn_id\x18\x03 \x01(\tR\rmerchantTxnId\x12\x16\n" +
-	"\x06amount\x18\x04 \x01(\x02R\x06amount\x12\x15\n" +
-	"\x06txn_id\x18\x05 \x01(\tR\x05txnId\x12\x1d\n" +
-	"\n" +
-	"txn_status\x18\x06 \x01(\tR\ttxnStatus\x12\x1d\n" +
-	"\n" +
-	"fee_amount\x18\a \x01(\x02R\tfeeAmount\x12!\n" +
-	"\frequest_time\x18\b \x01(\tR\vrequestTime\x12\x12\n" +
-	"\x04sign\x18\t \x01(\tR\x04sign\"r\n" +
+	"updateTime\"r\n" +
 	"\x13PayoutStatusRequest\x12\x1f\n" +
 	"\vmerchant_id\x18\x01 \x01(\tR\n" +
 	"merchantId\x12&\n" +
@@ -6972,7 +6696,7 @@ const file_payout_proto_rawDesc = "" +
 	"\vupdate_time\x18\x0f \x01(\tR\n" +
 	"updateTime\"\x1c\n" +
 	"\x1aPayoutAlarmOrderReleaseReq\"\x1d\n" +
-	"\x1bPayoutAlarmOrderReleaseResp2\xfd\x0e\n" +
+	"\x1bPayoutAlarmOrderReleaseResp2\xba\x0e\n" +
 	"\x06Payout\x12=\n" +
 	"\x06Create\x12\x18.pb.CreatePayoutOrderReq\x1a\x19.pb.CreatePayoutOrderResp\x12@\n" +
 	"\aGetList\x12\x19.pb.GetPayoutOrderListReq\x1a\x1a.pb.GetPayoutOrderListResp\x12C\n" +
@@ -6994,8 +6718,7 @@ const file_payout_proto_rawDesc = "" +
 	"\x15UpdateRiskControlRule\x12\x1c.pb.UpdateRiskControlRuleReq\x1a\x1d.pb.UpdateRiskControlRuleResp\x12Z\n" +
 	"\x17GetPayoutAccountSummary\x12\x1e.pb.GetPayoutAccountSummaryReq\x1a\x1f.pb.GetPayoutAccountSummaryResp\x12N\n" +
 	"\x13GetPayoutAlarmOrder\x12\x1a.pb.GetPayoutAlarmOrderReq\x1a\x1b.pb.GetPayoutAlarmOrderResp\x12Z\n" +
-	"\x17PayoutAlarmOrderRelease\x12\x1e.pb.PayoutAlarmOrderReleaseReq\x1a\x1f.pb.PayoutAlarmOrderReleaseResp\x12A\n" +
-	"\fSubmitPayout\x12\x17.pb.PayoutSubmitRequest\x1a\x18.pb.PayoutSubmitResponse\x12D\n" +
+	"\x17PayoutAlarmOrderRelease\x12\x1e.pb.PayoutAlarmOrderReleaseReq\x1a\x1f.pb.PayoutAlarmOrderReleaseResp\x12D\n" +
 	"\x0fGetPayoutStatus\x12\x17.pb.PayoutStatusRequest\x1a\x18.pb.PayoutStatusResponse\x12G\n" +
 	"\x10GetPayoutBalance\x12\x18.pb.PayoutBalanceRequest\x1a\x19.pb.PayoutBalanceResponseB\x18Z\x16base/rpc_api/payout/pbb\x06proto3"
 
@@ -7011,7 +6734,7 @@ func file_payout_proto_rawDescGZIP() []byte {
 	return file_payout_proto_rawDescData
 }
 
-var file_payout_proto_msgTypes = make([]protoimpl.MessageInfo, 71)
+var file_payout_proto_msgTypes = make([]protoimpl.MessageInfo, 69)
 var file_payout_proto_goTypes = []any{
 	(*CreatePayoutOrderReq)(nil),                     // 0: pb.CreatePayoutOrderReq
 	(*CreatePayoutOrderResp)(nil),                    // 1: pb.CreatePayoutOrderResp
@@ -7062,28 +6785,26 @@ var file_payout_proto_goTypes = []any{
 	(*GetPayoutAccountSummaryReq)(nil),               // 46: pb.GetPayoutAccountSummaryReq
 	(*GetPayoutAccountSummaryResp)(nil),              // 47: pb.GetPayoutAccountSummaryResp
 	(*PayoutAccountSummaryInfo)(nil),                 // 48: pb.PayoutAccountSummaryInfo
-	(*PayoutSubmitRequest)(nil),                      // 49: pb.PayoutSubmitRequest
-	(*PayoutSubmitResponse)(nil),                     // 50: pb.PayoutSubmitResponse
-	(*PayoutStatusRequest)(nil),                      // 51: pb.PayoutStatusRequest
-	(*PayoutStatusResponse)(nil),                     // 52: pb.PayoutStatusResponse
-	(*PayoutStatusData)(nil),                         // 53: pb.PayoutStatusData
-	(*PayoutBalanceRequest)(nil),                     // 54: pb.PayoutBalanceRequest
-	(*PayoutBalanceResponse)(nil),                    // 55: pb.PayoutBalanceResponse
-	(*RefundSubmitRequest)(nil),                      // 56: pb.RefundSubmitRequest
-	(*RefundSubmitResponse)(nil),                     // 57: pb.RefundSubmitResponse
-	(*RefundStatusRequest)(nil),                      // 58: pb.RefundStatusRequest
-	(*RefundStatusResponse)(nil),                     // 59: pb.RefundStatusResponse
-	(*RefundStatusData)(nil),                         // 60: pb.RefundStatusData
-	(*GetPayoutAlarmOrderReq)(nil),                   // 61: pb.GetPayoutAlarmOrderReq
-	(*GetPayoutAlarmOrderResp)(nil),                  // 62: pb.GetPayoutAlarmOrderResp
-	(*PayoutAlarmOrderInfo)(nil),                     // 63: pb.PayoutAlarmOrderInfo
-	(*PayoutAlarmOrderReleaseReq)(nil),               // 64: pb.PayoutAlarmOrderReleaseReq
-	(*PayoutAlarmOrderReleaseResp)(nil),              // 65: pb.PayoutAlarmOrderReleaseResp
-	nil,                                              // 66: pb.GetPayoutOrderStatisticsDataResp.MerchantCountEntry
-	nil,                                              // 67: pb.GetPayoutOrderStatisticsDataResp.MerchantTradeTypeCountEntry
-	nil,                                              // 68: pb.GetPayoutOrderStatisticsDataResp.BankInfoCountEntry
-	nil,                                              // 69: pb.GetPayoutOrderStatisticsDataResp.BankTradeTypeCountEntry
-	nil,                                              // 70: pb.GetPayoutOrderStatisticsDataResp.TradeTypeCountEntry
+	(*PayoutStatusRequest)(nil),                      // 49: pb.PayoutStatusRequest
+	(*PayoutStatusResponse)(nil),                     // 50: pb.PayoutStatusResponse
+	(*PayoutStatusData)(nil),                         // 51: pb.PayoutStatusData
+	(*PayoutBalanceRequest)(nil),                     // 52: pb.PayoutBalanceRequest
+	(*PayoutBalanceResponse)(nil),                    // 53: pb.PayoutBalanceResponse
+	(*RefundSubmitRequest)(nil),                      // 54: pb.RefundSubmitRequest
+	(*RefundSubmitResponse)(nil),                     // 55: pb.RefundSubmitResponse
+	(*RefundStatusRequest)(nil),                      // 56: pb.RefundStatusRequest
+	(*RefundStatusResponse)(nil),                     // 57: pb.RefundStatusResponse
+	(*RefundStatusData)(nil),                         // 58: pb.RefundStatusData
+	(*GetPayoutAlarmOrderReq)(nil),                   // 59: pb.GetPayoutAlarmOrderReq
+	(*GetPayoutAlarmOrderResp)(nil),                  // 60: pb.GetPayoutAlarmOrderResp
+	(*PayoutAlarmOrderInfo)(nil),                     // 61: pb.PayoutAlarmOrderInfo
+	(*PayoutAlarmOrderReleaseReq)(nil),               // 62: pb.PayoutAlarmOrderReleaseReq
+	(*PayoutAlarmOrderReleaseResp)(nil),              // 63: pb.PayoutAlarmOrderReleaseResp
+	nil,                                              // 64: pb.GetPayoutOrderStatisticsDataResp.MerchantCountEntry
+	nil,                                              // 65: pb.GetPayoutOrderStatisticsDataResp.MerchantTradeTypeCountEntry
+	nil,                                              // 66: pb.GetPayoutOrderStatisticsDataResp.BankInfoCountEntry
+	nil,                                              // 67: pb.GetPayoutOrderStatisticsDataResp.BankTradeTypeCountEntry
+	nil,                                              // 68: pb.GetPayoutOrderStatisticsDataResp.TradeTypeCountEntry
 }
 var file_payout_proto_depIdxs = []int32{
 	6,  // 0: pb.GetPayoutOrderListResp.list:type_name -> pb.PayoutOrderInfo
@@ -7092,11 +6813,11 @@ var file_payout_proto_depIdxs = []int32{
 	12, // 3: pb.PayoutOrderListCumulativeSummaryResponse.FreezeInfo:type_name -> pb.PayoutSummary
 	12, // 4: pb.PayoutOrderListCumulativeSummaryResponse.FailedInfo:type_name -> pb.PayoutSummary
 	12, // 5: pb.PayoutOrderListCumulativeSummaryResponse.RefundedInfo:type_name -> pb.PayoutSummary
-	66, // 6: pb.GetPayoutOrderStatisticsDataResp.merchant_count:type_name -> pb.GetPayoutOrderStatisticsDataResp.MerchantCountEntry
-	67, // 7: pb.GetPayoutOrderStatisticsDataResp.merchant_trade_type_count:type_name -> pb.GetPayoutOrderStatisticsDataResp.MerchantTradeTypeCountEntry
-	68, // 8: pb.GetPayoutOrderStatisticsDataResp.bank_info_count:type_name -> pb.GetPayoutOrderStatisticsDataResp.BankInfoCountEntry
-	69, // 9: pb.GetPayoutOrderStatisticsDataResp.bank_trade_type_count:type_name -> pb.GetPayoutOrderStatisticsDataResp.BankTradeTypeCountEntry
-	70, // 10: pb.GetPayoutOrderStatisticsDataResp.trade_type_count:type_name -> pb.GetPayoutOrderStatisticsDataResp.TradeTypeCountEntry
+	64, // 6: pb.GetPayoutOrderStatisticsDataResp.merchant_count:type_name -> pb.GetPayoutOrderStatisticsDataResp.MerchantCountEntry
+	65, // 7: pb.GetPayoutOrderStatisticsDataResp.merchant_trade_type_count:type_name -> pb.GetPayoutOrderStatisticsDataResp.MerchantTradeTypeCountEntry
+	66, // 8: pb.GetPayoutOrderStatisticsDataResp.bank_info_count:type_name -> pb.GetPayoutOrderStatisticsDataResp.BankInfoCountEntry
+	67, // 9: pb.GetPayoutOrderStatisticsDataResp.bank_trade_type_count:type_name -> pb.GetPayoutOrderStatisticsDataResp.BankTradeTypeCountEntry
+	68, // 10: pb.GetPayoutOrderStatisticsDataResp.trade_type_count:type_name -> pb.GetPayoutOrderStatisticsDataResp.TradeTypeCountEntry
 	17, // 11: pb.BatchUpdateRefundPayoutOrderParam.refunds:type_name -> pb.payoutRefundObj
 	17, // 12: pb.BatchUpdateRefundPayoutOrderParam.complains:type_name -> pb.payoutRefundObj
 	6,  // 13: pb.QueryOrderInfoResp.order_info:type_name -> pb.PayoutOrderInfo
@@ -7112,9 +6833,9 @@ var file_payout_proto_depIdxs = []int32{
 	45, // 23: pb.RiskControlRuleInfo.list:type_name -> pb.RiskControlRule
 	42, // 24: pb.UpdateRiskControlRuleReq.list:type_name -> pb.RiskControlRuleInfo
 	48, // 25: pb.GetPayoutAccountSummaryResp.list:type_name -> pb.PayoutAccountSummaryInfo
-	53, // 26: pb.PayoutStatusResponse.data:type_name -> pb.PayoutStatusData
-	60, // 27: pb.RefundStatusResponse.data:type_name -> pb.RefundStatusData
-	63, // 28: pb.GetPayoutAlarmOrderResp.list:type_name -> pb.PayoutAlarmOrderInfo
+	51, // 26: pb.PayoutStatusResponse.data:type_name -> pb.PayoutStatusData
+	58, // 27: pb.RefundStatusResponse.data:type_name -> pb.RefundStatusData
+	61, // 28: pb.GetPayoutAlarmOrderResp.list:type_name -> pb.PayoutAlarmOrderInfo
 	15, // 29: pb.GetPayoutOrderStatisticsDataResp.MerchantCountEntry.value:type_name -> pb.PayoutOrderStatisticsInfo
 	15, // 30: pb.GetPayoutOrderStatisticsDataResp.MerchantTradeTypeCountEntry.value:type_name -> pb.PayoutOrderStatisticsInfo
 	15, // 31: pb.GetPayoutOrderStatisticsDataResp.BankInfoCountEntry.value:type_name -> pb.PayoutOrderStatisticsInfo
@@ -7139,37 +6860,35 @@ var file_payout_proto_depIdxs = []int32{
 	40, // 50: pb.Payout.GetRiskControlRule:input_type -> pb.GetRiskControlRuleReq
 	43, // 51: pb.Payout.UpdateRiskControlRule:input_type -> pb.UpdateRiskControlRuleReq
 	46, // 52: pb.Payout.GetPayoutAccountSummary:input_type -> pb.GetPayoutAccountSummaryReq
-	61, // 53: pb.Payout.GetPayoutAlarmOrder:input_type -> pb.GetPayoutAlarmOrderReq
-	64, // 54: pb.Payout.PayoutAlarmOrderRelease:input_type -> pb.PayoutAlarmOrderReleaseReq
-	49, // 55: pb.Payout.SubmitPayout:input_type -> pb.PayoutSubmitRequest
-	51, // 56: pb.Payout.GetPayoutStatus:input_type -> pb.PayoutStatusRequest
-	54, // 57: pb.Payout.GetPayoutBalance:input_type -> pb.PayoutBalanceRequest
-	1,  // 58: pb.Payout.Create:output_type -> pb.CreatePayoutOrderResp
-	5,  // 59: pb.Payout.GetList:output_type -> pb.GetPayoutOrderListResp
-	3,  // 60: pb.Payout.Callback:output_type -> pb.CallbackPayoutOrderResp
-	8,  // 61: pb.Payout.GetMerchantOrderInfo:output_type -> pb.GetPayoutOrderInfoResp
-	10, // 62: pb.Payout.NotifySuccess:output_type -> pb.PayoutNotifySuccessResp
-	11, // 63: pb.Payout.GetPayoutOrderListCumulativeSummary:output_type -> pb.PayoutOrderListCumulativeSummaryResponse
-	18, // 64: pb.Payout.BatchUpdateRefundPayoutOrder:output_type -> pb.BatchUpdatePayoutOrderResponse
-	14, // 65: pb.Payout.GetPayoutOrderStatisticsData:output_type -> pb.GetPayoutOrderStatisticsDataResp
-	20, // 66: pb.Payout.QueryOrderInfo:output_type -> pb.QueryOrderInfoResp
-	22, // 67: pb.Payout.QueryMerchantBalance:output_type -> pb.QueryMerchantBalanceResp
-	25, // 68: pb.Payout.QueryOrderLog:output_type -> pb.QueryPayoutOrderLogResp
-	28, // 69: pb.Payout.ManualPayoutOrder:output_type -> pb.ManualPayoutOrderResp
-	30, // 70: pb.Payout.DispatchOrder:output_type -> pb.DispatchOrderResp
-	28, // 71: pb.Payout.ResetReleaseCount:output_type -> pb.ManualPayoutOrderResp
-	36, // 72: pb.Payout.GetMerchantByOrder:output_type -> pb.GetMerchantByOrderResp
-	38, // 73: pb.Payout.GetPayoutDispatchTask:output_type -> pb.GetPayoutDispatchTaskResp
-	41, // 74: pb.Payout.GetRiskControlRule:output_type -> pb.GetRiskControlRuleResp
-	44, // 75: pb.Payout.UpdateRiskControlRule:output_type -> pb.UpdateRiskControlRuleResp
-	47, // 76: pb.Payout.GetPayoutAccountSummary:output_type -> pb.GetPayoutAccountSummaryResp
-	62, // 77: pb.Payout.GetPayoutAlarmOrder:output_type -> pb.GetPayoutAlarmOrderResp
-	65, // 78: pb.Payout.PayoutAlarmOrderRelease:output_type -> pb.PayoutAlarmOrderReleaseResp
-	50, // 79: pb.Payout.SubmitPayout:output_type -> pb.PayoutSubmitResponse
-	52, // 80: pb.Payout.GetPayoutStatus:output_type -> pb.PayoutStatusResponse
-	55, // 81: pb.Payout.GetPayoutBalance:output_type -> pb.PayoutBalanceResponse
-	58, // [58:82] is the sub-list for method output_type
-	34, // [34:58] is the sub-list for method input_type
+	59, // 53: pb.Payout.GetPayoutAlarmOrder:input_type -> pb.GetPayoutAlarmOrderReq
+	62, // 54: pb.Payout.PayoutAlarmOrderRelease:input_type -> pb.PayoutAlarmOrderReleaseReq
+	49, // 55: pb.Payout.GetPayoutStatus:input_type -> pb.PayoutStatusRequest
+	52, // 56: pb.Payout.GetPayoutBalance:input_type -> pb.PayoutBalanceRequest
+	1,  // 57: pb.Payout.Create:output_type -> pb.CreatePayoutOrderResp
+	5,  // 58: pb.Payout.GetList:output_type -> pb.GetPayoutOrderListResp
+	3,  // 59: pb.Payout.Callback:output_type -> pb.CallbackPayoutOrderResp
+	8,  // 60: pb.Payout.GetMerchantOrderInfo:output_type -> pb.GetPayoutOrderInfoResp
+	10, // 61: pb.Payout.NotifySuccess:output_type -> pb.PayoutNotifySuccessResp
+	11, // 62: pb.Payout.GetPayoutOrderListCumulativeSummary:output_type -> pb.PayoutOrderListCumulativeSummaryResponse
+	18, // 63: pb.Payout.BatchUpdateRefundPayoutOrder:output_type -> pb.BatchUpdatePayoutOrderResponse
+	14, // 64: pb.Payout.GetPayoutOrderStatisticsData:output_type -> pb.GetPayoutOrderStatisticsDataResp
+	20, // 65: pb.Payout.QueryOrderInfo:output_type -> pb.QueryOrderInfoResp
+	22, // 66: pb.Payout.QueryMerchantBalance:output_type -> pb.QueryMerchantBalanceResp
+	25, // 67: pb.Payout.QueryOrderLog:output_type -> pb.QueryPayoutOrderLogResp
+	28, // 68: pb.Payout.ManualPayoutOrder:output_type -> pb.ManualPayoutOrderResp
+	30, // 69: pb.Payout.DispatchOrder:output_type -> pb.DispatchOrderResp
+	28, // 70: pb.Payout.ResetReleaseCount:output_type -> pb.ManualPayoutOrderResp
+	36, // 71: pb.Payout.GetMerchantByOrder:output_type -> pb.GetMerchantByOrderResp
+	38, // 72: pb.Payout.GetPayoutDispatchTask:output_type -> pb.GetPayoutDispatchTaskResp
+	41, // 73: pb.Payout.GetRiskControlRule:output_type -> pb.GetRiskControlRuleResp
+	44, // 74: pb.Payout.UpdateRiskControlRule:output_type -> pb.UpdateRiskControlRuleResp
+	47, // 75: pb.Payout.GetPayoutAccountSummary:output_type -> pb.GetPayoutAccountSummaryResp
+	60, // 76: pb.Payout.GetPayoutAlarmOrder:output_type -> pb.GetPayoutAlarmOrderResp
+	63, // 77: pb.Payout.PayoutAlarmOrderRelease:output_type -> pb.PayoutAlarmOrderReleaseResp
+	50, // 78: pb.Payout.GetPayoutStatus:output_type -> pb.PayoutStatusResponse
+	53, // 79: pb.Payout.GetPayoutBalance:output_type -> pb.PayoutBalanceResponse
+	57, // [57:80] is the sub-list for method output_type
+	34, // [34:57] is the sub-list for method input_type
 	34, // [34:34] is the sub-list for extension type_name
 	34, // [34:34] is the sub-list for extension extendee
 	0,  // [0:34] is the sub-list for field type_name
@@ -7186,7 +6905,7 @@ func file_payout_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_payout_proto_rawDesc), len(file_payout_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   71,
+			NumMessages:   69,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
